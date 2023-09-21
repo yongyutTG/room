@@ -1,0 +1,66 @@
+<div class="modal fade" tabindex="-1" id="roomview-modal-info">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-blue" id="roomview-title"></h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section>
+          <div id="garden-view-info" class="roomview-info-item">
+            เป็นห้องที่มองเห็นวิวสวน ซึ่งส่วนใหญ่จะอยู่ห่างจากทะเลที่สุด
+            แต่ร่มรื่นไปด้วยบรรยากาศของส่วน หรือต้นไม้
+          </div>
+          <div id="seaview-info" class="roomview-info-item">
+            เป็นห้องพักที่มองเห็นวิวทะเล โดยอาจจะมีทั้งห้อง ซึ่งส่วนใหญ่จะเป็นห้องใหญ่
+          </div>
+          <div id="poolview-info" class="roomview-info-item">
+            เป็นห้องที่มองเห็นสระน้ำ แต่ไม่สามารถเดินลงสระน้ำได้เลย
+          </div>
+          <div id="pool-access-info" class="roomview-info-item">
+            เป็นห้องที่หลังห้องติดกับสระนำ สามารถเดินลงสระได้เลย
+            เหมาะกับกลุ่มเพื่อนฝูงที่อยากมีปาร์ตี้ริมสระ แต่ไม่ค่อยแนะนำสำหรับท่านที่อยากได้ความเป็นส่วนตัว
+            เพราะสระว่ายน้ำรวมอาจจะมีแขกท่านอื่นใช้บริการได้ตลอดเวลา
+          </div>
+          <div id="beach-front-info" class="roomview-info-item">
+            เป็นห้องติดหาด ส่วนใหญ่แล้วจะมีจำนวนห้องไม่มาก ท่านใดที่อยากตื่นมานอนเห็นชายหาด
+            ต้องรีบสำรองห้องแบบนี้ไว้ก่อน เพราะปกติจะเต็มเร็วที่สุด
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="fw-bold ac-btn bg-none bg-none text-darkgray" data-bs-dismiss="modal">
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .roomview-info-item {
+    display: none;
+  }
+</style>
+<script>
+  const roomviewModalInfo = new bootstrap.Modal($('#roomview-modal-info'))
+  const roomviewViewinfo = $('.roomview-viewinfo')
+  const roomviewInfoItem = $('.roomview-info-item')
+  const roomviewTitle = $('#roomview-title')
+  roomviewViewinfo.click(function() {
+    const rv = $(this).attr('data-roomview')
+    roomviewTitle.text(Display.getRoomview(rv))
+    for (let i = 0; i < roomviewInfoItem.length; i++) {
+      const itemEl = $(roomviewInfoItem[i])
+      const id = itemEl.attr('id')
+      if (`${rv}-info` == id) {
+        itemEl.css('display', 'block')
+      } else {
+        itemEl.css('display', 'none')
+      }
+    }
+    console.log(rv)
+    roomviewModalInfo.show()
+  })
+</script>

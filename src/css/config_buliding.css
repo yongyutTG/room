@@ -1,0 +1,15 @@
+#building-form{
+    padding: 14px 28px;
+    border-radius: 7px;
+    border: 1px solid gainsboro;
+}
+
+#building-submit i {
+    margin-right: 7px;
+}
+#update-building i {
+    margin-left: 7px;
+}
+.input-group-text i {
+    margin-left: 7px;
+}

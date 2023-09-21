@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head id="head">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+  <script src="/src/jquery-3.6.3.min.js"></script>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/axios"></script>
+  <script src="/sweetalert2/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
+  <script src="/js/validate.js"></script>
+  <script src="/js/sweetalert.js"></script>
+  <script src="/js/display_web.js"></script>
+  <script src="/js/inputNumber.js"></script>
+</head>
+
+<body>
+  <div class="overload"></div>
+  <div id="admin">
+    <div id="bar">
+      <div id="bar-toggle">
+        <h5 class="fw-bold">ผู้ดูแลระบบ</h5>
+      </div>
+      <div id="bar-content">
+
+        <button id="toggle-btn" data-toggle="<%- togglebar  %>">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <button class="fw-bold ac-btn bg-none logout" id="sign-out">
+          ออกจากระบบ
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </div>
+    <div id="page">
+      <%- include('./sidebar') %>
+      <div id="main">
+        <%- include(template) %>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $('#sign-out').click(function() {
+      axios.post('/api/sign-out')
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            Swal.fire({
+              position: 'top',
+              icon: 'success',
+              title: 'ออกจากระบบสำเร็จ',
+              showConfirmButton: false,
+              timer: 1000
+            })
+            setInterval(() => {
+              window.location.assign('/admin')
+            }, 1000)
+
+          }
+
+          if (!result) {
+            queryFail('ออกจากระบบ', 'เกิดข้อผิดพลาด ไม่สามารถออกสู่ระบบได้ ', '')
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    })
+    const urlName = new URL(window.location.href).searchParams
+    const pType = urlName.get('p')
+
+    const menuLink = $('.menu-link')
+    for (let i = 0; i < menuLink.length; i++) {
+      const a = $(menuLink[i])
+      const href = menuLink[i].href
+      const link = new URL(href).searchParams.get('p')
+      if (link == pType) {
+        a.parent().addClass('active')
+      }
+    }
+    const body = document.querySelector('body')
+    const bodyHeight = body.offsetHeight
+
+    const bar = document.getElementById('bar')
+    const barHeight = bar.offsetHeight
+    const page = document.getElementById('page')
+    const pageHeight = page.offsetHeight
+
+    const screenWidth = screen.width
+
+    const main = $('#main')
+    const sidebar = $('#sidebar')
+    const barToggle = $('#bar-toggle')
+    const barContent = $('#bar-content')
+    const ph = bodyHeight - barHeight
+    const overLoad = $('.overload')
+
+    window.addEventListener('resize', () => {
+      const page = $('#page')
+      const pageHeight = page.innerHeight()
+      const body = document.querySelector('body')
+      const bodyHeight = body.offsetHeight
+      const bar = document.getElementById('bar')
+      const barHeight = Number.parseFloat(bar.offsetHeight)
+      const screenHeight = Number.parseFloat(screen.height)
+      const heightSet = bodyHeight - barHeight
+
+      page.innerHeight(`${heightSet}px`)
+      sidebar.css('height', `100%`)
+      main.css('height', `100%`)
+      main.css('overflowY', 'scroll')
+
+    })
+
+
+    const toggleBtn = document.getElementById('toggle-btn')
+    page.style.height = `${ph}px`
+    let status = toggleBtn.getAttribute('data-toggle')
+
+    toggleBtn.addEventListener('click', () => {
+      sessiontoggleBar()
+    })
+
+
+    window.addEventListener('load', toggleBar)
+
+    function toggleBar() {
+      status = toggleBtn.getAttribute('data-toggle')
+      if (status == 'off') {
+        offToggle()
+      } else if (status == 'on') {
+        onToggle()
+      }
+    }
+
+    function offToggle() {
+      main.css('width', '100%')
+      barContent.css('width', '100%')
+      barToggle.css('width', '0%')
+      barToggle.css('display', 'none')
+      sidebar.css('width', '0%')
+      sidebar.css('display', 'none')
+      toggleBtn.setAttribute('data-toggle', 'on')
+    }
+
+    function onToggle() {
+      main.css('width', '75%')
+      barContent.css('width', '75%')
+      sidebar.css('width', '25%')
+      sidebar.css('display', 'block')
+      barToggle.css('width', '25%')
+      barToggle.css('display', 'block')
+      toggleBtn.setAttribute('data-toggle', 'off')
+    }
+
+    function sessiontoggleBar() {
+      status = toggleBtn.getAttribute('data-toggle')
+      let toggleSwitch = ''
+      if (status == 'on') {
+        offToggle()
+        toggleSwitch = 'on'
+      } else if (status == 'off') {
+        onToggle()
+        toggleSwitch = 'off'
+      }
+
+      axios({
+          method: 'post',
+          url: '/api/togglebar',
+          data: {
+            'toggle_bar': toggleSwitch
+          }
+        })
+        .then(function(response) {
+          const result = response.data.result
+          if (result) {
+            toggleBar()
+          }
+          if (!result) {
+            toggleBar()
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+  </script>
+</body>
+
+</html>

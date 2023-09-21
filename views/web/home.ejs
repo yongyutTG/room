@@ -1,0 +1,177 @@
+<link rel="stylesheet" href="/css/web/home.css">
+<% const slide = data.slide %>
+<div class="container">
+  <div id="carouselSlide" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+      <% for(let i = 0;i<slide.length;i++){ %>
+      <% if(i==0){ %>
+      <button type="button" data-bs-target="#carouselSlide" data-bs-slide-to="<%= i  %>" class="active" aria-current="true" aria-label="Slide <%= i+1  %>"></button>
+      <% }else if(i > 0) { %>
+      <button type="button" data-bs-target="#carouselSlide" data-bs-slide-to="<%= i  %>" aria-label="Slide <%= i+1  %>"></button>
+      <%  } %>
+      <% } %>
+
+    </div>
+    <div class="carousel-inner">
+      <%   for (let i = 0; i < slide.length; i++) { %>
+      <% const displayDescript = slide[i].descript_status=='on' ? 'style="display:block;"' : 'style="display:none"'  %>
+      <% const displayTitle = slide[i].title_status=='on' ? 'style="display:block;"' : 'style="display:none"'  %>
+
+      <%  if (i == 0) { %>
+      <div class="carousel-item active">
+        <img src="/src/slide/<%= slide[i].src  %>" class="d-block w-100 carousel-img ">
+        <div class="carousel-caption d-md-block">
+          <h5 class="carousel-title" <%- displayTitle %>>
+            <%= slide[i].title   %>
+          </h5>
+          <h5 <%- displayDescript  %>>
+            <%=  slide[i].descript%>
+          </h5>
+        </div>
+      </div>
+      <%  } else if (i != 0) { %>
+      <div class="carousel-item">
+        <img src="/src/slide/<%= slide[i].src  %>" class="d-block w-100 carousel-img ">
+        <div class="carousel-caption d-md-block">
+          <h5 class="carousel-title" <%- displayTitle %>>
+            <%= slide[i].title   %>
+          </h5>
+          <h5 <%- displayDescript  %>>
+            <%= slide[i].descript%></h5>
+        </div>
+      </div>
+      <%     } %>
+      <%   } %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselSlide" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselSlide" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <% const room_about = data.room_about %>
+  <% if(room_about.map((r)=>r.status=='on').length >0) { %>
+  <div id="feature">
+    <h5 class="title-text">ห้องพักของเรา</h5>
+    <div class="wrapper-feature">
+
+      <% for(let i =0;i<room_about.length;i++) { %>
+      <div class="feature-items">
+        <% let roomAboutBoroder = room_about[i].img == '' ? `style="border:2px solid #E0E0E0"` :'' %>
+        <% imgEl = `<img src="/src/about_room/${room_about[i].img}">` %>
+        <% imgIcon = '<i class="fa-solid fa-bed"></i>' %>
+        <% const aboutRoomImg = room_about[i].img == '' ?  imgIcon : imgEl   %>
+        <h5 class="future-room-title">
+          <%= room_about[i].title %>
+        </h5>
+        <div class="future-room-img" <%- roomAboutBoroder  %>>
+          <%- aboutRoomImg  %>
+        </div>
+
+        <div class="wrapper-room-about">
+          <div class="room-about-desc">
+            <p><%= room_about[i].descript %></p>
+          </div>
+        </div>
+      </div>
+      <%  } %>
+    </div>
+  </div>
+  <% } %>
+
+  <% const rooms = data.room %>
+  <% if(rooms.length >0) {  %>
+  <h5 class="title-text">
+    อัพเดตล่าสุด
+  </h5>
+  <div id="room-section">
+    <% for(let i =0 ;i<rooms.length;i++ ){%>
+    <div class="wrapper-room">
+
+      <div class="wrapper-room-img">
+        <img src="/src/img/example_room/<%= rooms[i].example_room.split(',')[0] %>">
+      </div>
+
+      <div class="wrapper-descript">
+        <% if(rooms[i].room_type !='roomtype-no-specify') { %>
+        <h6 class="r-title-label room">
+          <i class="fa-solid fa-person-shelter"></i>
+          <%= rooms[i].room  %>
+        </h6>
+        <% } %>
+        <% if(rooms[i].bed_type !='bedtype-no-specify') { %>
+        <h6 class="r-title-label bed">
+          <i class="fa-solid fa-mattress-pillow"></i>
+          <%= rooms[i].bed  %>
+        </h6>
+        <% } %> 
+        <% if(rooms[i].roomview !='view-no-specify') { %>
+        <h6 class="r-title-label view">
+          <i class="fa-solid fa-mountain"></i>
+          <%= rooms[i].view  %>
+        </h6>
+        <% } %>
+
+        <% if(rooms[i].detail.length >= 50) { %>
+        <h5 class="room-descript">
+          <%= rooms[i].detail.length > 150 ? rooms[i].detail.substring(0,147)+'...'  : rooms[i].detail   %>
+        </h5>
+        <%  } %>
+
+        <div class="r-price-s">
+          <label class="r-price-label">
+            <i class="fa-solid fa-tags"></i>
+            ราคา</label>
+          <div class="r-text-price">
+            <span>
+              <%= rooms[i].min_price_format %>
+            </span>
+
+            <% if(rooms[i].max_price != rooms[i].min_price){ %>
+            <label> - </label>
+            <span>
+              <%= rooms[i].max_price_format %>
+            </span>
+            <%  } %>
+          </div>
+        </div>
+        <% const link = `/room/${btoa(rooms[i].room_id)}/${btoa(rooms[i].room_number_id)}?n=${rooms[i].room_number}` %>
+        <a href="<%= link %>" class="ac-btn room-link-detail">
+          ดูรายละเอียด
+        </a>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <% } %>
+
+  <% const facility= data.facility %>
+  <% if(facility.length>0){ %>
+  <div>
+    <h5 class="title-text">
+      <i class="fa-solid fa-utensils"></i>
+      สิ่งอำนวยความสะดวกบริเวณที่พัก
+    </h5>
+    <div class="row">
+      <% for (let i=0;i<facility.length;i++) { %>
+      <div class="my-2 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="facility-wrapper">
+          <h5 class="facility-subject">
+            <%= facility[i].subject %>
+          </h5>
+          <div class="facility-text">
+            <img src="/src/facility/<%= facility[i].img  %>" class="facility-img">
+            <p class="facility-descript">
+              <%- facility[i].description %>
+            </p>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <% } %>
+
+</div>
+<%- include('footer') %>

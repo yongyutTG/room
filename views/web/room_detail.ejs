@@ -1,0 +1,188 @@
+<link rel="stylesheet" href="/css/web/room_detail.css">
+<% const  example_room = entries.example_room.split(',') %>
+
+<div class="container" id="room-detail">
+
+
+  <div id="exampleCarousel" class="carousel slide" data-bs-ride="true">
+    <div class="carousel-indicators">
+      <% for(let i =0;i< example_room.length;i++){ %>
+      <% if(i==0){ %>
+      <button type="button" data-bs-target="#exampleCarousel" data-bs-slide-to="<%= i %>" class="active" aria-current="true" aria-label="Slide <%= i+1 %>"></button>
+      <% } %>
+      <% if(i > 0){ %>
+      <button type="button" data-bs-target="#exampleCarousel" data-bs-slide-to="<%= i %>" aria-current="true" aria-label="Slide <%= i+1 %>"></button>
+      <% } %>
+      <%  } %>
+    </div>
+    <div class="carousel-inner">
+      <% for(let i =0;i<example_room.length;i++){ %>
+      <% if(i==0){ %>
+      <div class="carousel-item active">
+        <img src="/src/img/example_room/<%= example_room[i]  %>" class="d-block w-100">
+      </div>
+      <% } %>
+      <% if(i>0){ %>
+      <div class="carousel-item">
+        <img src="/src/img/example_room/<%= example_room[i]  %>" class="d-block w-100">
+      </div>
+      <% } %>
+      <% } %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#exampleCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#exampleCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <h3 id="room-number-label">
+    <i class="fa-solid fa-house-chimney"></i>
+    <%= entries.number %>
+  </h3>
+  <div class="room-bar">
+    <% if(entries.room_type !='roomtype-no-specify') { %>
+    <h5 class="room-label-title" id="room-type-label">
+      <i class="fa-solid fa-chart-area"></i>
+      <%= entries.room %>
+    </h5>
+    <% } %>
+    <% if(entries.bed_type !='bedtype-no-specify') { %>
+    <h5 class="room-label-title" id="room-bed-label">
+      <span><i class="fa-solid fa-bed"></i></span>
+      <%= entries.bed %>
+    </h5>
+    <% } %>
+    <% if(entries.roomview !='view-no-specify') { %>
+    <h5 class="room-label-title" id="room-view-label">
+      <span>
+        <i class="fa-solid fa-mountain"></i>
+      </span>
+      <%= entries.view %>
+    </h5>
+    <%  } %>
+  </div>
+
+
+  <% if(entries.room_type !='roomtype-no-specify') { %>
+  <p class="p-text-descript">
+    <i class="fa-solid fa-chart-area"></i>
+    <%= entries.room_descript %>
+  </p>
+  <% } %>
+
+  <% if(entries.bed_type !='bedtype-no-specify') { %>
+  <p class="p-text-descript">
+    <i class="fa-solid fa-mattress-pillow"></i>
+    <%= entries.bed_descript %>
+  </p>
+  <% } %>
+
+  <% if(entries.roomview !='view-no-specify') { %>
+  <p class="p-text-descript">
+    <i class="fa-solid fa-mountain"></i>
+    <%= entries.view_descript %>
+  </p>
+  <%  } %>
+
+  <div class="my-2">
+    <h5 class="fw-bold m-0">
+      <i class="fa-solid fa-check-to-slot"></i>
+      สิ่งอำนวยความสะดวก
+    </h5>
+    <div class="special-options">
+      <% const special_options_display = entries.special_options_display %>
+      <% for(let i = 0 ;i< special_options_display.length;i++) { %>
+      <p class="room-sp-opt">
+        <i class="fa-solid fa-circle-check"></i>
+        <%= special_options_display[i] %>
+      </p>
+      <%  } %>
+    </div>
+  </div>
+
+  <h5 class="fw-bold text-dark">
+    <i class="fa-solid fa-comment"></i>
+    รายละเอียด
+  </h5>
+  <div class="room-descript">
+    <%= entries.detail  %>
+  </div>
+
+  <div class="my-2">
+    <h5 class="fw-bold text-dark">
+      <i class="fa-solid fa-tags"></i>
+      จำนวนการพัก และราคา
+    </h5>
+    <% const data_price = entries.data_price %>
+    <table class="table">
+      <tbody>
+        <% for(let i =0;i<data_price.length;i++) {%>
+        <tr>
+          <td>
+            <span class="label-price">
+              <%= data_price[i].count  %>
+              <%= data_price[i].unit  %>
+            </span>
+          </td>
+          <td> <span class="text-price"><%= data_price[i].price  %></span></td>
+        </tr>
+        <% }%>
+      </tbody>
+    </table>
+  </div>
+  <div class="my-2">
+    <h5 class="fw-bold m-0">
+      <i class="fa-solid fa-circle-plus"></i>
+      เพิ่มเติม
+    </h5>
+    <ul class="more-opt">
+      <li class="more-items">
+       <span>-</span>
+        <span>ห้องน้ำ</span>
+        <span class="r-text-d"><%= entries.toilet_count %></span>
+        <span>ห้อง</span>
+      </li>
+      <li class="more-items">
+        <span>-</span>
+        <span>จำนวนเข้าพักมากสุด</span>
+        <span class="r-text-d"><%= entries.max_people %></span>
+        <span>คน</span>
+      </li>
+      <li class="more-items">
+        <span>-</span>
+        <span>หากคนเกิน คิดคนละ </span>
+        <span class="r-text-d"><%= entries.price_over_people %></span>
+        <span>บาท</span>
+      </li>
+      <li class="more-items">
+        <span>-</span>
+        <span>ค่าของเสียหาย</span>
+        <span class="r-text-d"><%= entries.damage %></span>
+        <span>บาท</span>
+      </li>
+    </ul>
+  </div>
+
+  <% if(data.about.length >0)  { %>
+  <div>
+    <span>โทร : </span>
+    <span><%=  data.about[0].contact_number %></span>
+  </div>
+  <% } %>
+
+  <% if(data.social.length >0) { %>
+  <% for(let i =0 ;i< data.social.length;i++) { %>
+  <% if(data.social[i].id=='line' && data.social[i].status=='on'){ %>
+  <div>
+    <span>LINE : </span>
+    <span><%= data.social[i].social  %></span>
+  </div>
+  <% } %>
+  <% } %>
+  <% } %>
+
+</div>
+<%- include('footer') %>

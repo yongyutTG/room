@@ -1,0 +1,569 @@
+@font-face {
+    font-family: Sarabun;
+    src: url('/src/font/Sarabun/Sarabun-Regular.ttf');
+}
+
+@font-face {
+    font-family: Mitr;
+    src: url('/src/font/Mitr/Mitr-Regular.ttf');
+}
+
+@font-face {
+    font-family: Athiti;
+    src: url('/src/font/Athiti/Athiti-Regular.ttf');
+}
+
+@font-face {
+    font-family: Maitree;
+    src: url('/src/font/Maitree/Maitree-Regular.ttf');
+}
+
+@font-face {
+    font-family: Pridi;
+    src: url('/src/font/Pridi/Pridi-Regular.ttf');
+}
+
+@font-face {
+    font-family: Thasadith;
+    src: url('/src/font/Thasadith/Thasadith-Regular.ttf');
+}
+
+@font-face {
+    font-family: SF Thonburi;
+    src: url('/src/font/SF_Thonburi/SFThonburi-Regular.ttf');
+}
+
+@font-face {
+    font-family: IBM Plex Sans Thai;
+    src: url('/src/font/IBM_Plex_Sans_Thai/IBMPlexSansThai-Regular.ttf');
+}
+
+
+@font-face {
+    font-family: Kanit;
+    src: url('/src/font/Kanit/Kanit-Regular.ttf');
+}
+
+@font-face {
+    font-family: Prompt;
+    src: url('/src/font/Prompt/Kanit-Regular.ttf');
+}
+
+@font-face {
+    font-family: Bai Jamjuree;
+    src: url('/src/font/Bai_Jamjuree/BaiJamjuree-Regular.ttf');
+}
+
+@font-face {
+    font-family: supermarket;
+    src: url('/src/font/supermarket/supermarket.ttf');
+}
+
+@font-face {
+    font-family: CS PraJad;
+    src: url('/src/font/CS_PraJad/CSPraJad-v2.otf');
+}
+
+@font-face {
+    font-family: Trirong;
+    src: url('/src/font/Trirong/Trirong-Regular.ttf');
+}
+@font-face {
+    font-family:Niramit ;
+    src: url('/src/font/Niramit/Niramit-Regular.ttf');
+}
+
+
+* {
+    box-sizing: border-box;
+    font-family: SF Thonburi, sans-serif;
+}
+
+
+
+.bg-teal {
+    background-color: #009966 !important;
+    color: white !important;
+}
+
+.bg-yellow {
+    background-color: #F1C40F;
+    border: 1px solid #F1C40F !important;
+    color: #212121 !important;
+}
+
+.bg-blue {
+    background-color: #0066FF !important;
+    color: white !important;
+}
+
+
+.bg-lightviolet {
+    background-color: #7E57C2;
+    border: 1px solid #7E57C2 !important;
+    color: white !important;
+}
+
+.bg-violet {
+    background-color: #6666FF;
+    color: white !important;
+}
+
+.bg-lineargray {
+    background-color: #AEB6BF !important;
+    color: white !important;
+}
+
+.bg-darkgray {
+    background-color: #263238;
+    color: white !important;
+}
+
+.bg-light-gray {
+    background-color: #ECF0F1;
+}
+
+.bg-red {
+    background-color: #FF0033;
+    color: white;
+}
+
+.bg-pink {
+    background-color: #E91E63;
+    color: white !important;
+}
+
+.bg-dark-pink {
+    background-color: #FF0066;
+    color: white !important;
+}
+
+.bg-none {
+    background: none !important;
+}
+
+.bg-orange {
+    background-color: #FF5722;
+    ;
+}
+
+.text-pink {
+    color: #E91E63;
+}
+
+.text-linearteal {
+    text-transform: uppercase;
+    background: linear-gradient(to right, #27AE60 0%, #16A085 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ac-btn>i {
+    font-size: 22px;
+}
+
+.text-teal {
+    color: #009966;
+}
+
+.text-red {
+    color: #F44336;
+}
+
+.text-darkgray {
+    color: #263238;
+}
+
+.text-violet {
+    color: #7E57C2;
+}
+
+.text-blue {
+    color: #0066FF;
+}
+
+.text-lightgray {
+    color: #B3B6B7;
+}
+
+.text-dark-pink {
+    color: #CC0033;
+}
+
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 32px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #0066FF;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #0066FF;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+
+.table thead tr {
+    border-bottom: 2px double black !important;
+}
+
+
+.form-control,
+.form-select {
+    font-weight: bolder !important;
+    color: #7B7D7D !important;
+    border: 2px solid gainsboro !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border: 2px solid #0066FF !important;
+    outline-width: 0px !important;
+    outline: none !important;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.0) !important;
+    color: #424949 !important;
+}
+
+.form-control:disabled::placeholder {
+    color: #ABB2B9;
+}
+
+
+.form-control:focus {
+    background-color: white !important;
+}
+
+
+.check-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.ac-btn {
+    padding: 4px 8px;
+    border: 0;
+    outline: 0;
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+    height: max-content;
+    align-self: center;
+    font-weight: bolder;
+}
+
+button.ac-btn:hover {
+    filter: brightness(80%);
+    cursor: pointer;
+}
+
+
+.empty-table {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
+}
+
+.empty-validate {
+    margin: 12px 0;
+    color: #F44336;
+    display: none;
+    font-weight: bold;
+}
+
+.ac-close-modal {
+    background: none;
+    color: #212F3C;
+}
+
+
+.example-preview {
+    padding: 18px;
+    height: 300px;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 2px solid #EEEEEE;
+    background: white;
+}
+
+.example-preview::-webkit-scrollbar {
+    width: 5px;
+}
+
+.example-preview::-webkit-scrollbar-track {
+    background-color: #EBEDEF;
+}
+
+.example-preview::-webkit-scrollbar-thumb {
+    background: #626567;
+    border-radius: 36px !important;
+}
+
+.example-editing {
+    position: relative;
+    width: 22%;
+    height: 220px;
+    margin: 6px;
+}
+
+.example-editing .example-imgview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.img-acout {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #E0E0E0;
+    color: #424949;
+}
+
+.example-imgview {
+    width: 22%;
+    height: 220px;
+    object-fit: cover;
+    margin: 6px;
+    position: relative;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.check-input-group {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.check-input-group.inline-flex {
+    margin: 8px;
+}
+
+.check-input {
+    width: 22px;
+    height: 22px;
+}
+
+
+
+.check-label {
+    color: #797D7F;
+    font-weight: bold;
+    margin-left: 12px;
+}
+
+.check-input:hover,
+.check-label:hover {
+    cursor: pointer;
+}
+
+
+.form-check button {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.form-check-items {
+    display: flex;
+    background-color: #17202A;
+}
+
+.form-check-input,
+.form-check-label {
+    font-size: 1.2rem;
+    padding: 4px;
+}
+
+.form-check-input {
+    align-self: flex-end;
+}
+
+
+.form-check-label {
+    margin-left: 12px;
+}
+
+.form-check-inline-flex {
+    display: inline-flexbox;
+}
+
+.form-check-input:hover,
+.form-check-label:hover {
+    cursor: pointer;
+}
+
+.label-upload {
+    display: block;
+    width: max-content;
+    padding: 6px 12px;
+    margin: 6px 0;
+    border-radius: 7px;
+}
+
+.label-upload:hover {
+    filter: brightness(80%);
+    cursor: pointer;
+}
+
+.room-upload {
+    display: none;
+}
+
+#room-number {
+    display: block;
+}
+
+.border-radius-4 {
+    border-radius: 4px;
+}
+
+.border-radius-7 {
+    border-radius: 7px;
+}
+
+.border-radius-12 {
+    border-radius: 7px;
+}
+
+.modal-title {
+    font-weight: bolder;
+    text-transform: capitalize !important;
+}
+
+
+.empty-icon-table {
+    font-size: 4rem;
+}
+
+
+#room-update i {
+    margin-right: 7px;
+}
+
+.modal-example-room {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.modal-example-room-items {
+    width: 280px;
+    object-fit: contain;
+    margin: 12px;
+}
+
+.modal-label-text {
+    padding: 7px 24px;
+    display: inline-flex;
+}
+
+.modal-header {
+    background-color: #EEEEEE;
+}
+
+.text-number-r {
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    margin: 7px 4px;
+    padding: 2px 12px;
+    border-radius: 18px;
+}
+
+.form-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-weight: bold;
+}
+
+.input-group-text {
+    background-color: #E0E0E0 !important;
+    font-weight: bold !important;
+    color: #424949;
+    border: none !important;
+}
+
+td {
+    color: #7B7D7D !important;
+}
+
+table {
+    font-weight: bold;
+}
+
+.entries-d {
+    font-weight: bolder;
+    margin: 4px 0;
+}
+
+.entries-text {
+    color: #626567;
+}
+
+.entries-count {
+    color: #0066FF;
+}

@@ -1,0 +1,279 @@
+.d-wrapper-s {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.d-wrapper {}
+
+.d-wrapper-items {
+  width: 280px;
+  margin: 12px 6px;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.d-title {
+  font-weight: bold;
+  padding: 8px 12px;
+  margin: 0;
+  position: relative;
+  color: whitesmoke;
+  border-bottom: 4px solid black;
+}
+
+.d-title i {
+  position: absolute;
+  right: 10px;
+
+}
+
+.d-text {
+  display: flex;
+  justify-content: space-between;
+  height: 120px;
+}
+
+.d-icon,
+.d-text-count,
+.d-text-count-w {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-icon {
+  width: 160px;
+  color: white;
+  margin: 7px;
+  border-radius: 14px;
+}
+
+.d-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  font-size: 3rem;
+  padding: 18px;
+  border-radius: 50%;
+}
+
+.d-text-count {
+  width: 120px;
+  padding: 12px;
+  margin: 7px;
+  border-radius: 50%;
+}
+
+.d-text-count-w {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.booking-today .d-title {
+  background-color: #FFCC00;
+  color: black;
+}
+
+.booking-today .d-icon {
+  color: #FFCC00;
+}
+
+
+
+.booking-today .d-text-count {
+  border-left: 4px solid #FFCC00;
+  border-bottom: 4px solid #FFCC00;
+}
+
+.checkin-today .d-title {
+  background-color: #FF0066;
+}
+
+.checkin-today .d-icon {
+  color: #FF0066;
+}
+
+.checkin-today .d-text-count {
+  border-left: 4px solid #FF0066;
+  border-bottom: 4px solid #FF0066;
+}
+
+.checkout-today .d-title{
+  background-color: #009966;
+}
+.checkout-today .d-icon {
+  color: #009966;
+}
+
+.checkout-today .d-text-count {
+  border-left: 4px solid #009966;
+  border-bottom: 4px solid #009966;
+}
+
+.room-empty .d-title{
+  background-color: #0066FF;
+}
+.room-empty .d-icon i {
+  color: rgba(0, 102, 255, 1);
+}
+
+.room-empty .d-text-count {
+  border-bottom: 4px solid #0066FF;
+  border-left: 4px solid #0066FF;
+}
+
+.non-empty .d-title{
+  background-color: #FF0033;
+}
+.non-empty .d-icon i {
+  color: rgba(255, 0, 51, 1);
+}
+
+.non-empty .d-text-count {
+  border-bottom: 4px solid #FF0033;
+  border-left: 4px solid #FF0033;
+}
+
+.list-room-all .d-title{
+  background-color: #003399;
+}
+.list-room-all .d-icon i {
+  color: rgba(0, 51, 153, 1);
+}
+
+.list-room-all .d-text-count {
+  border-bottom: 4px solid #003399;
+  border-left: 4px solid #003399;
+}
+
+.week-table,
+.month-table,
+.year-table {
+  display: none;
+}
+
+.week-table:first-child,
+.month-table:first-child,
+.year-table:first-child {
+  display: block;
+}
+
+.total-d-title {
+  font-weight: bold;
+  padding: 6px 12px;
+  margin: 0;
+}
+
+.total-d-text {
+  display: flex;
+  justify-content: space-between;
+  height: 120px;
+}
+
+.total-d-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.total-d-text-count {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.total-d-icon {
+  width: 100px;
+  color: white;
+}
+
+.total-d-icon i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;
+  padding: 18px;
+  border-radius: 50%;
+}
+
+.total-d-text-count {
+  width: 180px;
+  padding: 12px;
+  font-size: 1.4rem;
+  font-weight: bolder;
+}
+
+.today-total {
+  background-color: rgba(0, 153, 153, 0.2);
+}
+
+.today-total .total-d-title {
+  color: white;
+  background-color: #009999;
+}
+
+.today-total .total-d-icon i {
+  color: rgba(0, 153, 153, 1);
+}
+
+
+.week-total {
+  background-color: rgba(204, 0, 51, 0.2);
+}
+
+.week-total .total-d-title {
+  color: white;
+  background-color: #CC0033;
+}
+
+
+.week-total .total-d-icon i {
+  color: rgba(204, 0, 51, 1);
+}
+
+
+.month-total {
+  background-color: rgba(255, 102, 0, 0.2);
+}
+
+.month-total .total-d-title {
+  color: white;
+  background-color: #FF6600;
+}
+
+
+.month-total .total-d-icon i {
+  color: rgba(255, 102, 0, 1);
+}
+
+
+.year-total {
+  background-color: rgba(55, 71, 79, 0.2);
+}
+
+.year-total .total-d-title {
+  color: white;
+  background-color: #37474F;
+}
+
+
+.year-total .total-d-icon i {
+  color: rgba(55, 71, 79, 1);
+}
+.to-week-table,
+.to-month-table,
+.to-year-table {
+  background: none !important;
+  color: #BDBDBD;
+}
+.to-week-table.active,
+.to-month-table.active,
+.to-year-table.active {
+ color: #0066FF;
+ 
+}

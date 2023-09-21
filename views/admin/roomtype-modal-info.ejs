@@ -1,0 +1,95 @@
+<div class="modal fade" tabindex="-1" id="roomtype-modal-info">
+  <div class="modal-dialog  modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-blue" id="roomtype-title">Modal title</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section>
+          <div id="standard-info" class="roomtype-info-item">
+            ห้องพักที่มีขนาดและการตกแต่งตามมาตรฐานทั่วไป มีสิ่งอำนวยความสะดวกเท่าที่จำเป็น
+          </div>
+          <div id="superior-info" class="roomtype-info-item">
+            เป็นห้องที่มีลักษณะคล้ายกับห้อง Standard แต่มีขนาดห้องกว้างกว่าเล็กน้อย ทัศนียภาพดีกว่า
+            และอาจมีสิ่งอำนวยความสะดวกเพิ่มขึ้นมา 1-2 ชิ้น
+          </div>
+          <div id="deluxe-info" class="roomtype-info-item">
+            ขนาดห้องอาจเท่าหรือกว้างกว่าห้อง Standard แต่มีการตกแต่งสวยงามเป็นพิเศษ ให้ความรู้สึกหรูหรา
+            มีเตียงขนาดใหญ่เป็นพิเศษ มีสิ่งอำนวยความสะดวกครบครัน
+            และยังสามารถมองเห็นวิวในมุมที่สวยที่สุดของโรงแรม
+          </div>
+          <div id="suite-info" class="roomtype-info-item">
+            เป็นห้องที่มีส่วนของห้องนั่งเล่นอยู่ด้วย มีการแบ่งสัดส่วนที่ชัดเจน
+            ครบครันด้วยเฟอร์นิเจอร์และสิ่งอำนวยความสะดวก ทำให้ห้องประเภทนี้มีขนาดกว้างกว่าห้องประเภทอื่น
+            และมีการตกแต่งที่หรูหรา เหมาะสำหรับผู้เข้าพักเป็นครอบครัวหรือคู่รัก
+          </div>
+          <div id="family-info" class="roomtype-info-item">
+            ห้องพักที่เหมาะสำหรับครอบครัวหรือกลุ่มเพื่อน มีเตียงหลายหลังอยู่ภายในห้อง ส่วนมากจะพักได้ไม่เกิน
+            4-6 ท่าน
+          </div>
+          <div id="studio-info" class="roomtype-info-item">
+            ห้องพักขนาดใหญ่ อารมณ์เหมือนคอนโด มีการแบ่งสัดส่วนของห้องชัดเจน แยกห้องนั่งเล่นออกจากห้องนอน
+            อาจมีบริเวณครัวเล็กๆที่สามารถประกอบอาหารภายในห้องพักได้
+          </div>
+          <div id="connecting-info" class="roomtype-info-item">
+            ห้องพักที่มีประตูเชื่อมต่อไปยังอีกห้องหนึ่งที่ติดกันได้ สามารถเปิดถึงกันได้
+          </div>
+          <div id="cabana-info" class="roomtype-info-item">
+            ห้องที่อยู่ระดับพื้นดิน หรือใกล้สระว่ายน้ำ หรือชายหาด
+          </div>
+          <div id="duplex-info" class="roomtype-info-item">
+            ห้องพักมีสองชั้น อาจจะแบ่งเป็นห้องนั่งเล่นห้องครัวชั้นนึง ส่วนอีกชั้นเป็นห้องนอน ขนาดห้องเกิน
+            100
+            ตารางเมตรขึ้นไป เหมาะกับการพักผ่อนยาวๆกับครอบครัวใหญ่ที่มีสมาชิกหลายคน
+          </div>
+          <div id="villa-info" class="roomtype-info-item">
+            ลักษณะเป็นบ้านพัก มีบริเวณบ้าน มีสวน ลานจอดรถ เหมือนบ้านที่อยู่อาศัย ส่วนมากมักมีเพียง 1 ห้องนอน
+          </div>
+          <div id="adjoining-info" class="roomtype-info-item">
+            ห้องพัก 2 ห้อง ที่อยู่ติดกัน
+          </div>
+          <div id="honeymoon-info" class="roomtype-info-item">
+            ห้องสำหรับคู่รัก จะมีเตียงนอนขนาดใหญ่สำหรับ 2 คน มีสิ่งอำนวยความสะดวก
+            และการตกแต่งช่วยเพิ่มบรรยากาศดีๆ
+            ให้กับคู่รักมากกว่าห้องพักมาตรฐานทั่วไป
+          </div>
+
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="fw-bold ac-btn bg-none bg-none text-darkgray" data-bs-dismiss="modal">
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .roomtype-info-item {
+    display: none;
+  }
+</style>
+<script>
+  const roomtypeModalInfo = new bootstrap.Modal($('#roomtype-modal-info'))
+  const roomtypeViewinfo = $('.roomtype-viewinfo')
+  const roomtypeInfoItem = $('.roomtype-info-item')
+  const roomtypeTitle = $('#roomtype-title')
+  roomtypeViewinfo.click(function() {
+    const ry = $(this).attr('data-roomtype')
+    roomtypeTitle.text(Display.getRoomtype(ry))
+    for (let i = 0; i < roomtypeInfoItem.length; i++) {
+      const itemEl = $(roomtypeInfoItem[i])
+      const id = itemEl.attr('id')
+      if (`${ry}-info` == id) {
+        itemEl.css('display', 'block')
+      } else {
+        itemEl.css('display', 'none')
+      }
+    }
+    console.log(ry)
+    roomtypeModalInfo.show()
+  })
+</script>

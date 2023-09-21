@@ -1,0 +1,181 @@
+<link rel="stylesheet" href="/css/room_about.css">
+<div class="container">
+  <h4 class="fw-bold">ข้อมูลเกี่ยวกับห้องพัก</h4>
+  <div class="wrapper-content-page">
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th style="width:5% ;" class="text-center">#</th>
+          <th class="text-center" style="width:20% ;">รูปภาพประกอบ</th>
+          <th style="width:15% ;">ห้องพัก</th>
+          <th style="width:35% ;">คำอธิบาย</th>
+          <th class="text-center" style="width:15% ;">รูปภาพ</th>
+          <th style="width:10% ;">ปิด - เปิด</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% let idx = 1 %>
+        <%  for(let i =0;i<entries.length;i++) { %>
+        <tr>
+          <td class="text-center"> <%= idx++ %> </td>
+          <td class="text-center">
+            <% let border = entries[i].img !='' ?'style="border:0 ;"':'style="border:1px solid gainsboro"'  %>
+            <div class="wrapper-room-img" <%- border %>>
+              <% if(entries[i].img !=''){ %>
+              <img src="/src/about_room/<%= entries[i].img  %>" class="room-about-img">
+              <% } %>
+            </div>
+  
+          </td>
+          <td>
+            <p class="room"><%= entries[i].room %></p>
+          </td>
+          <td><%= entries[i].descript %></td>
+          <td class="text-center">
+            <label for="room-upload-file-<%= i %>" class="label-upload text-darkgray">
+              <input type="file" accept="image/*" class="room-upload-file" id="room-upload-file-<%= i %>">
+              <i class="fa-solid fa-paperclip"></i>
+              <span>เลือกรูปภาพ</span>
+            </label>
+  
+            <button class="fw-bold ac-btn  confirm-upload border-radius-7 m-1" data-id="<%= entries[i].id %>" data-img="<%= entries[i].img %>">
+              <i class="fa-regular fa-circle-check"></i>
+              ตกลง
+            </button>
+  
+            <button class="fw-bold ac-btn  cancel-upload border-radius-7 m-1" data-img="<%= entries[i].img %>">
+              <i class="fa-solid fa-xmark"></i>
+              ยกเลิก
+            </button>
+  
+          </td>
+          <td class="text-center">
+            <%  const status = entries[i].status=='on' ? 'checked' :'' %>
+            <label class="switch">
+              <input type="checkbox" class="switch-status" value="<%= entries[i].id %>" <%- status  %>>
+              <span class="slider round"></span>
+            </label>
+          </td>
+        </tr>
+        <% } %>
+  
+      </tbody>
+    </table>
+    </div>
+  </div>
+  
+</div>
+
+<script>
+  $('.switch-status').change(function() {
+    const id = $(this).val()
+    const status = $(this).is(':checked') ? 'on' : 'off'
+
+    axios.post('/api/about-status', {
+        'id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+
+        if (result) {
+          querySuccess('ปรับสถานะสำเร็จ', 1000)
+        }
+
+        if (!result) {
+          queryFail('เปิด - ปิด สถานะการแสดงผล', 'อัพเดคสถานะล้มเหลว', res.data.err)
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+
+
+
+  $('.room-upload-file').change(function() {
+    const f = $(this)[0].files[0]
+    const row = $(this).parent().parent().parent()
+    const imgCol = row.children(':eq(1)')
+    const wrapper = imgCol.children()
+    const img = wrapper.children()
+    const confirmBtn = $(this).parent().parent().children(':eq(1)')
+    const cancelBtn = $(this).parent().parent().children(':eq(2)')
+
+
+    confirmBtn.css('display', 'inline-flex')
+    cancelBtn.css('display', 'inline-flex')
+
+    if (f != undefined) {
+      const src = URL.createObjectURL(f)
+      if (img.length != 0) {
+        img.attr('src', src)
+      }
+
+      if (img.length == 0) {
+        wrapper.html(`<img src="${src}" class="room-about-img">`)
+      }
+
+      wrapper.css('border', '0')
+    }
+  })
+
+  $('.cancel-upload').click(function() {
+
+    $(this).css('display', 'none')
+    $(this).prev().css('display', 'none')
+
+    const row = $(this).parent().parent()
+    const imgCol = row.children(':eq(1)')
+    const wrapper = imgCol.children()
+    const img = wrapper.children()
+    const src = $(this).attr('data-img')
+
+
+    if (src != '') {
+      if (img.length != 0) {
+        img.attr('src', `/src/about_room/${src}`)
+      }
+
+    }
+
+    if (src == '') {
+      if (img.length != 0) {
+        wrapper.children().remove()
+      }
+    }
+
+  })
+
+  $('.confirm-upload').click(function() {
+    const id = $(this).attr('data-id')
+    const oldImg = $(this).attr('data-img')
+
+    const img = $(this).prev().children()[0].files[0]
+    const formData = new FormData()
+    formData.append('id', id)
+    formData.append('img', img)
+    formData.append('old_img', oldImg)
+
+    axios.post("/api/about-img-upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        const result = res.data.result
+
+        if (result) {
+          querySuccess('เพิ่มรูปภาพสำเร็จ', 1000)
+        }
+
+        if (!result) {
+          queryFail('เพิ่มรูปภาพ', 'เพิ่มรูปภาพไม่สำเร็จ', res.data.err)
+        }
+      })
+      .catch((err)=>{
+        statusErr()
+      })
+  })
+</script>

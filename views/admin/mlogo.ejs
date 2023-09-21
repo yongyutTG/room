@@ -1,0 +1,481 @@
+<link rel="stylesheet" href="/css/mlogo.css">
+<div class="container">
+  <% let logo = ''  %>
+  <% let type = ''  %>
+  <% let icon = ''  %>
+  <% let title = ''  %>
+  <% let textChecked = ''  %>
+  <% let fileChecked = '' %>
+  <% let textWrapper = `style="display:none;"`  %>
+  <% let pictureWrapper = `style="display:none;"`  %>
+  <% let dataPicture =''  %>
+  <% let textLogo =''  %>
+  <% let textLogoStatus = '' %>
+
+
+  <% let logoPlattern =`style="display:none;"`  %>
+  <% let platternStatus =''  %>
+  <% let logoTextDisplay =`style="display:inline;"`  %>
+  <% let logoFileDisplay =`style="display:inline;"`  %>
+  <% let displayEditLogo = `style="display:inline-flex;"`   %>
+  <% let displayEditIcon = `style="display:inline-flex;"`   %>
+  <% let displayEditTitle = `style="display:inline-flex;"`   %>
+  <% if(entries.length ==1) {
+
+    type = entries[0].type != '' ?  entries[0].type  : ''
+    logo = entries[0].logo != '' ? entries[0].logo : ''
+    icon = entries[0].icon != '' ? entries[0].icon : ''
+    title  = entries[0].title != '' ? entries[0].title : ''
+
+  
+    logoTextDisplay =`style="display:none;"`
+    logoFileDisplay =`style="display:none;"`
+
+  displayEditLogo = `style="display:none"`
+  displayEditIcon = `style="display:none;"`  
+  displayEditTitle = `style="display:none;"`
+
+  if(entries[0].logo !=''){
+    logoPlattern =`style="display:flex;"`
+    platternStatus = 'disabled'
+  }
+  
+  if(type=='file') {
+    fileChecked = 'checked'
+    pictureWrapper = `style="display:block;"`
+    dataPicture = entries[0].logo
+  }  
+
+  if(type=='text') {  
+    textChecked = 'checked'
+    textWrapper = `style="display:block;"`
+    textLogo = logo
+    textLogoStatus = 'disabled'
+  } 
+
+  }  %>
+  <h4 class="fw-bold">จัดการ Logo</h4>
+    <div class="wrapper-content-page" id="logo-wrapper">
+      <h6 class="fw-bold label-title bg-darkgray">Logo</h6>
+      <div id="logo-plattern" class="input-group" <%- logoPlattern  %>>
+        <div class="check-input-group m-2">
+          <input class="check-input" type="radio" name="logo-plattern" id="text-logo" value="text-logo" <%= textChecked %> <%= platternStatus  %>>
+          <label class="check-label" for="text-logo">
+            ข้อความ
+          </label>
+        </div>
+        <div class="check-input-group m-2">
+          <input class="check-input" type="radio" name="logo-plattern" id="picture-logo" value="picture-logo" <%= fileChecked %> <%= platternStatus  %>>
+          <label class="check-label" for="picture-logo">
+            รูปภาพ
+          </label>
+        </div>
+      </div>
+
+      <div id="picture-wrapper" <%- pictureWrapper   %>>
+        <label for="logo-file" id="label-file-logo" class="label-file" <%- logoFileDisplay   %>>
+          <i class="fa-solid fa-paperclip"></i>
+          เลือกรูปภาพ
+          <input id="logo-file" type="file" accept="image/*">
+        </label>
+
+        <div id="picture-logo-preview" data-picture="<%= dataPicture  %>"></div>
+
+      </div>
+      <div id="text-wrapper" <%- textWrapper %>>
+        <div class="my-3">
+          <input type="email" class="form-control" id="logo-text" <%= textLogoStatus %> value="<%= textLogo %>" placeholder="ป้อน logo ที่ต้องการแสดง">
+        </div>
+      </div>
+
+      <button class="fw-bold ac-btn edit" id="edit-logo">
+        แก้ไข
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="fw-bold ac-btn ok" id="edit-logo-submit">
+        ตกลง
+      </button>
+
+      <button class="fw-bold ac-btn cancel" id="edit-logo-cancel">
+        ยกเลิก
+      </button>
+      <p class="empty-validate" id="validate-logo"></p>
+
+      <script>
+
+        $('[name="logo-plattern"]').change(function() {
+          const plattern = $(this).val()
+          if (plattern == 'text-logo') {
+            validateformEmpty(false, $('#validate-logo'), '')
+            $('#picture-wrapper').css('display', 'none')
+            $('#text-wrapper').css('display', 'block')
+          }
+
+          if (plattern == 'picture-logo') {
+            validateformEmpty(false, $('#validate-logo'), '')
+            $('#picture-wrapper').css('display', 'block')
+            $('#text-wrapper').css('display', 'none')
+          }
+        })
+
+        $('#edit-logo').click(function() {
+          console.log('edit-logo')
+          $(this).css('display', 'none')
+          $(this).next().css('display', 'inline-flex')
+          $(this).next().next().css('display', 'inline-flex')
+          $('#label-file-logo').css('display', 'inline')
+          $('#logo-plattern').css('display', 'flex')
+          $('#logo-text').prop('disabled', false)
+          $('[name="logo-plattern"]').prop('disabled', false)
+        })
+
+
+        $('#edit-logo-submit').click(function() {
+          let emptyCount = 0
+          const plattern = $('[name="logo-plattern"]').filter(':checked').val()
+          if (plattern == undefined) {
+            emptyCount++
+            validateformEmpty(true, $('#validate-logo'), 'เลือกรูปแบบ logo')
+          } else if (plattern != undefined) {
+            if (plattern == 'text-logo') {
+              const v = $('#logo-text').val().trim()
+              if (v == '') {
+                validateformEmpty(true, $('#validate-logo'), 'กรุณาป้อนข้อความ')
+                emptyCount++
+              } else {
+                validateformEmpty(false, $('#validate-logo'), '')
+              }
+            }
+
+            if (plattern == 'picture-logo') {
+              const f = $('#logo-file')[0].files.length
+
+              if (f == 0) {
+                validateformEmpty(true, $('#validate-logo'), 'กรุณาเลือกรูปภาพ')
+                emptyCount++
+              } else {
+                validateformEmpty(false, $('#validate-logo'), '')
+              }
+            }
+
+
+          }
+
+          if (emptyCount == 0) {
+            const formData = new FormData()
+            if (plattern == 'text-logo') {
+              formData.append('logo', $('#logo-text').val())
+            }
+
+            if (plattern == 'picture-logo') {
+              formData.append('logo', $('#logo-file')[0].files[0])
+            }
+
+
+            axios({
+              method: 'post',
+              url: '/api/add-logo',
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then((res) => {
+              const result = res.data.result
+              if (result) {
+                Swal.fire({
+                  position: 'top',
+                  icon: 'success',
+                  title: 'เพิ่มสำเร็จ',
+                  showConfirmButton: false,
+                  timer: 1000
+                })
+                $('[name="logo-plattern"]').prop('disabled', true)
+                $('#label-file-logo').css('display', 'none')
+                $('#edit-logo').css('display', 'inline')
+                $('#edit-logo-submit').css('display', 'none')
+                $('#edit-logo-cancel').css('display', 'none')
+                $('#logo-text').prop('disabled', true)
+              }
+
+              if (!result) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'เพิ่ม logo',
+                  text: 'เกิดข้อผิดพลาด ไม่สามารถเพิ่มได้'
+                })
+              }
+            }).catch((err) => {
+              statusErr()
+            })
+          }
+        })
+      </script>
+    </div>
+
+    <div class="wrapper-content-page"  id="icon-wrapper">
+      <h6 class="fw-bold label-title bg-darkgray">Icon</h6>
+      <label for="icon-file" id="label-file-icon" class="label-file">
+        <i class="fa-solid fa-paperclip"></i>
+        เลือกไอคอน
+        <input id="icon-file" type="file" accept="image/*">
+      </label>
+      <div id="icon-preview" data-icon="<%= icon %>"></div>
+
+      <button class="fw-bold ac-btn edit" id="edit-icon">
+        แก้ไข
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+
+      <button class="fw-bold ac-btn ok" id="edit-icon-submit">
+        ตกลง
+      </button>
+
+      <button class="fw-bold ac-btn cancel" id="edit-icon-cancel">
+        ยกเลิก
+      </button>
+
+      <p class="empty-validate" id="validate-icon"></p>
+
+
+      <script>
+        $('#edit-icon').click(function() {
+          $(this).css('display', 'none')
+          $(this).next().css('display', 'inline-flex')
+          $(this).next().next().css('display', 'inline-flex')
+          $('#label-file-icon').css('display', 'inline')
+        })
+
+        $('#edit-icon-submit').click(function() {
+          let emptyCount = 0
+          const iconFile = $('#icon-file')[0].files.length
+          if (iconFile == 0) {
+            validateformEmpty(true, $('#validate-icon'), 'กรุณาเลือกไอคอน')
+            emptyCount++
+          } else {
+            validateformEmpty(false, $('#validate-icon'), '')
+          }
+
+
+          if (emptyCount == 0) {
+            const formData = new FormData()
+            formData.append('icon', $('#icon-file')[0].files[0])
+
+            axios({
+              method: 'post',
+              url: '/api/add-icon',
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }).then((res) => {
+              const result = res.data.result
+              if (result) {
+                Swal.fire({
+                  position: 'top',
+                  icon: 'success',
+                  title: 'เพิ่มสำเร็จ',
+                  showConfirmButton: false,
+                  timer: 1000
+                })
+                $('#label-file-icon').css('display', 'none')
+                $('#edit-icon').css('display', 'inline')
+                $('#edit-icon-submit').css('display', 'none')
+                $('#edit-icon-cancel').css('display', 'none')
+              }
+
+              if (!result) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'เพิ่ม Icon',
+                  text: 'เกิดข้อผิดพลาด ไม่สามารถเพิ่มได้'
+                })
+                $('#title').val(defaultTitle)
+              }
+
+            }).catch((err) => {
+              statusErr()
+            })
+          }
+        })
+      </script>
+    </div>
+
+
+    <script>
+      window.addEventListener('load', () => {
+        const dataPicture = $('#picture-logo-preview').attr('data-picture')
+        const icon = $('#icon-preview').attr('data-icon')
+        if (dataPicture != '') {
+          const img = `<img src="/src/logo/${dataPicture}">`
+          $('#picture-logo-preview').html(img)
+        }
+
+        if (icon != '') {
+          const img = `<img src="/src/logo/${icon}">`
+          $('#icon-preview').html(img)
+        }
+      })
+
+
+      $('#logo-file').change(function() {
+        const logoFile = $(this)[0].files[0]
+        if (logoFile != undefined) {
+          const src = URL.createObjectURL(logoFile)
+          const img = `<img src="${src}">`
+          $('#picture-logo-preview').html(img)
+        } else {
+          $('#picture-logo-preview').children().remove()
+        }
+      })
+
+
+      $('#icon-file').change(function() {
+        const iconFile = $(this)[0].files[0]
+        if (iconFile != undefined) {
+          const src = URL.createObjectURL(iconFile)
+          const img = `<img src="${src}">`
+          $('#icon-preview').html(img)
+        } else {
+          $('#icon-preview').children().remove()
+        }
+      })
+    </script>
+    <div class="wrapper-content-page" id="title-wrapper" class="my-3">
+      <h6 class="fw-bold form-label label-title bg-darkgray">Title</h6>
+      <input type="email" class="form-control my-3" id="title" value="<%= title %>" disabled>
+
+      <button class="fw-bold ac-btn edit" id="edit-title">
+        แก้ไข
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+
+      <button class="fw-bold ac-btn ok" id="edit-title-submit">
+        ตกลง
+      </button>
+
+      <button class="fw-bold ac-btn cancel" id="edit-title-cancel">
+        ยกเลิก
+      </button>
+
+      <p class="empty-validate" id="validate-title"></p>
+
+    </div>
+    <script>
+      const defaultTitle = $('#title').val()
+      $('#edit-title').click(function() {
+        $(this).css('display', 'none')
+        $(this).next().css('display', 'inline-flex')
+        $(this).next().next().css('display', 'inline-flex')
+        $('#title').prop('disabled', false)
+      })
+
+      $('#edit-title-submit').click(function() {
+        let emptyCount = 0
+        const title = $('#title').val().trim()
+        if (title == '') {
+          validateformEmpty(true, $('#validate-title'), 'กรุณาป้อน Title')
+          emptyCount++
+        } else {
+          validateformEmpty(false, $('#validate-title'), '')
+        }
+
+        if (emptyCount == 0) {
+          axios.post('/api/add-title', {
+            'title': $('#title').val()
+          }).then((res) => {
+            const result = res.data.result
+            console.log(result)
+            if (result) {
+              Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: 'เพิ่มสำเร็จ',
+                showConfirmButton: false,
+                timer: 1000
+              })
+              $('#title').prop('disabled', true)
+              $('#edit-title').css('display', 'inline')
+              $('#edit-title-submit').css('display', 'none')
+              $('#edit-title-cancel').css('display', 'none')
+            }
+
+            if (!result) {
+              Swal.fire({
+                icon: 'error',
+                title: 'เพิ่ม Title',
+                text: 'เกิดข้อผิดพลาด ไม่สามารถเพิ่มได้'
+              })
+              $('#title').val(defaultTitle)
+            }
+
+          }).catch((err) => {
+            statusErr()
+          })
+        }
+      })
+    </script>
+</div>
+<script>
+  $('.cancel').click(function() {
+    window.location.reload()
+  })
+  $('#logo-submit').click(function() {
+    let emptyCount = 0
+
+    if ($('#icon-preview').attr('data-icon') == '') {
+      const iconFile = $('#icon-file')[0].files.length
+
+      if (iconFile == 0) {
+        validateformEmpty(true, $('#validate-icon'), 'กรุณาเลือกไอคอน')
+
+        emptyCount++
+      } else {
+        validateformEmpty(false, $('#validate-icon'), '')
+      }
+    }
+
+    const title = $('#title').val().trim()
+    if (title == '') {
+      validateformEmpty(true, $('#validate-title'), 'กรุณาป้อน Title')
+      emptyCount++
+    } else {
+      validateformEmpty(false, $('#validate-title'), '')
+    }
+
+    if (emptyCount == 0) {
+      const formData = new FormData()
+
+
+      if (plattern == 'text-logo') {
+        formData.append('logo', $('#logo-text').val())
+      }
+
+      if (plattern == 'picture-logo') {
+        formData.append('logo', $('#logo-file')[0].files[0])
+      }
+
+      axios({
+        method: 'post',
+        url: '/api/add-logo',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((res) => {
+        const result = res.data.result
+        if (result) {
+          querySuccess('เพิ่มสำเร็จ', 1000)
+        }
+
+        if (!result) {
+          const err = res.data.err
+          queryFail('เพิ่ม logo', 'เกิดข้อผิดพลาด ไม่สามารถเพิ่มได้', err)
+        }
+
+      }).catch((err) => {
+        statusErr()
+      })
+
+    }
+  })
+</script>

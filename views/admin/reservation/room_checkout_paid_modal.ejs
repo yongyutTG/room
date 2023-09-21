@@ -1,0 +1,23 @@
+<div class="modal" id="checkout-paid-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">ชำระเงินเพิ่ม</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="my-3">
+          <label class="form-label">เพิ่มยอด</label>
+          <input type="number" id="checkout-paid-total" onkeyup="inputNumber(event)" min="0" class="form-control" placeholder="ป้อนยอดที่ชำระเพิ่ม">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="checkout-paid" class="ac-btn bg-blue border-radius-7">
+          ชำระ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

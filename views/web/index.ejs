@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<% const title= data.logo.length == 1 ?  data.logo[0].title : 'ห้องพัก'  %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <% if(data.meta.length > 0){ %>
+  <% for(let i =0 ;i< data.meta.length;i++){ %>
+  <meta name="<%= data.meta[i].meta_name  %>" content="<%= data.meta[i].content  %>">
+  <% } %>
+  <% } %>
+  <title><%= title  %></title>
+  <% if(data.logo.length == 1){ %>
+  <link rel="icon" type="image/x-icon" href="/src/logo/<%= data.logo[0].icon  %>">
+  <% } %>
+  <link rel="stylesheet" href="/css/web/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="/css/web/navbar.css">
+  <link rel="stylesheet" href="/css/web/footer.css">
+  <script src="/bootstrap/js/bootstrap.bundle.js"></script>
+  <script src="/src/jquery-3.6.3.min.js"></script>
+  <script src="/sweetalert2/sweetalert2.min.js"></script>
+  <script src="/axios"></script>
+  <script language="javascript" type="text/javascript" src="/js/validate.js"></script>
+  <script language="javascript" type="text/javascript" src="/js/sweetalert.js"></script>
+</head>
+
+<body>
+  <%- include('navbar') %>
+  <main id="main">
+    <%- include(template) %>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<div>
+  <div class="row">
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-8 col-sm-12 col-xs-12">
+      <div class="input-group my-3">
+        <span class="input-group-text">จำนวนห้อง</span>
+        <input type="number" value="1" min="1" class="form-control" id="count-room" />
+        <button class="ac-btn text-blue bg-none" id="add-count-room">
+          <i class="fa-solid fa-circle-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <% roomsub =  JSON.parse(entries[0].room_sub)  %>
+  <div id="room-group">
+    <% for(let i=0;i<roomsub.length;i++) {%>
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="input-group my-1 input-room-number">
+          <input type="text" name="room-number" data-before-room="<%= roomsub[i].room_number %>" data-numberId="<%= roomsub[i].room_number_id  %>" value="<%= roomsub[i].room_number %>" class="form-control" placeholder="หมายเลขห้อง" onkeyup="duplicateRoom(event)" />
+          <select class="form-select" data-building-before="<%= roomsub[i].building %>" data-active="<%= roomsub[i].building %>" onchange="buildingfloorItems(event)" name="building-items">
+            <% for(let i=0;i<building.length;i++){ %>
+            <option value="<%= building[i].building_id  %>">
+              <%= building[i].building_name  %>
+            </option>
+            <%   } %>
+          </select>
+          <select class="form-select" data-active="<% roomsub[i].building_floor %>" name="building-floor-items">
+            <% for(let f =1;f<=Number.parseInt(roomsub[i].floor_count);f++){ %>
+            <option value="<%= f  %>">
+              <%= f  %>
+            </option>
+            <%    } %>
+          </select>
+          <button class="ac-btn text-darkgray bg-none input-room-number" onclick="deleteInputNumber(event)" data-roomId="<%= entries[0].room_id %>" data-numberId="<%= roomsub[i].room_number_id %>">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <%} %>
+  </div>
+  <p class="empty-validate" id="validate-roomnumber"></p>
+</div>
+
+<script>
+  $.each($('[name="building-items"]'), (index, opt) => {
+    $(opt).val($(opt).attr('data-active'))
+  })
+  $.each($('[name="building-fllor-items"]'), (index, opt) => {
+    $(opt).val($(opt).attr('data-active'))
+  })
+
+  let isUniqueRoom = true
+
+  function duplicateRoom(event) {
+    const selfEl = $(event.target)
+    const n = selfEl.attr('name')
+    let numberRoom = ''
+    let buildingNameId = ''
+    let numberInputEl = ''
+    let buildingInputEl = ''
+
+    let beforeRoom = ''
+    let beforeBuilding = ''
+    if (n == 'room-number') {
+      numberRoom = selfEl.val()
+      buildingNameId = selfEl.parent().children(':eq(1)').val()
+      numberInputEl = selfEl
+      buildingInputEl = selfEl.parent().children(':eq(1)')
+    }
+
+
+    if (n == 'building-items') {
+      buildingNameId = selfEl.val()
+      numberRoom = selfEl.parent().children(':eq(0)').val()
+      numberInputEl = selfEl.parent().children(':eq(0)')
+      buildingInputEl = selfEl
+    }
+
+    beforeRoom = selfEl.attr('data-before-room')
+    beforeBuilding = buildingInputEl.attr('data-building-before')
+
+
+    if (buildingNameId != '' && numberRoom != '') {
+      if (beforeBuilding != beforeBuilding || beforeRoom != numberRoom) {
+        axios.post('/api/duplicate-room', {
+            'number_room': numberRoom,
+            'building_id': buildingNameId
+          })
+          .then((res) => {
+            const result = res.data.result
+            if (!result) {
+              isUniqueRoom = false
+              validateformEmpty(true, $("#validate-roomnumber"), 'ไม่สามารถใช้หมายเลขนี้ได้ หมายเลขนี้ใช้งานแล้ว')
+            }
+
+            if (result) {
+              isUniqueRoom = true
+              validateformEmpty(false, $("#validate-roomnumber"), '')
+            }
+          })
+          .catch((err) => {
+            statusErr()
+          })
+      }
+
+    }
+  }
+
+
+  $('#add-count-room').click(function() {
+    let roomInputEl = ``
+    const count = $("#count-room").val()
+    axios.post('/api/fetch-building')
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          statusErr()
+        }
+        if (result) {
+          const entries = res.data.entries
+          let buildingEl
+          entries.forEach(e => {
+            buildingEl += `<option value="${e.building_id}">${e.building_name}</option>`
+          })
+          for (let i = 1; i <= count; i++) {
+            roomInputEl += `
+            <div class="row">
+              <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="input-group my-1">
+                  <input type="text" name="room-number" data-numberId=""  class="form-control" onkeyup="duplicateRoom(event)" placeholder="หมายเลขห้อง">
+                  <select class="form-select" onchange="buildingfloorItems(event)" name ="building-items">
+                    <option value="" selected>เลือกอาคาร</option>
+                    ${buildingEl}
+                  </select>
+                  <select class="form-select" disabled name="building-floor-items">
+                  <option value="" selected>เลือกชั้น</option>
+                  </select>
+                  <button class="ac-btn text-darkgary bg-none" onclick="deleteInputNumber(event)">
+                    <i class="fa-solid fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+            <div>
+          `
+          }
+          $('#room-group').append(roomInputEl);
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+
+  function deleteInputNumber(event) {
+    const tagName = $(event.target).prop('tagName')
+    const element = tagName == 'I' ? $(event.target).parent() : $(event.target)
+    const inputRoomNumber = $('.input-room-number').length
+
+    if (inputRoomNumber > 1) {
+      axios.post('/api/delete-roomnumber', {
+          'room_id': element.attr('data-roomId'),
+          'room_number_id': element.attr('data-numberId')
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            $(element).parent().remove()
+          }
+
+          if (!result) {
+            queryFail('ลบห้องพัก', 'ไม่ห้องห้องนี้ เนื่องจากมีการเข้าพักห้องนี้อยู่', '')
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+  }
+
+
+
+  function buildingfloorItems(e) {
+
+    const selfEl = (e.target);
+    const building = $(selfEl).val();
+    const floorChildren = $(selfEl).next()
+
+    duplicateRoom(e)
+    if (building == '') {
+      floorChildren.html(`<option value="">เลือกชั้น</option>`);
+      floorChildren.prop('disabled', true)
+    } else if (building != '') {
+      const data = {
+        building: building,
+      };
+      axios
+        .post("/api/building-floor", data)
+        .then((res) => {
+          const data = res.data;
+          if (data.result) {
+            const entries = data.entries;
+            let floorEl = `<option value="" selected>เลือกชั้น</option>`;
+            for (let i = 1; i <= entries; i++) {
+              floorEl += `<option value="${i}">${i}</option>`;
+            }
+            floorChildren.html(floorEl);
+            floorChildren.prop('disabled', false)
+          }
+          if (!data.result) {
+            statusErr()
+          }
+
+        })
+
+        .catch((err) => {
+          statusErr()
+        });
+    };
+  }
+</script>

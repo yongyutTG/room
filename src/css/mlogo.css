@@ -1,0 +1,109 @@
+#logo-file,
+#icon-file {
+  display: none;
+}
+
+.label-file {
+  padding: 8px;
+  border-radius: 7px;
+  font-weight: bold;
+  margin: 18px 0;
+}
+
+.label-file:hover {
+  cursor: pointer;
+}
+
+#picture-wrapper,
+#text-wrapper {
+  display: none;
+  margin: 12px 0;
+}
+
+
+#picture-logo-preview,
+#icon-preview {
+  width: 150px;
+  height: 150px;
+  margin: 24px 0;
+}
+
+
+#picture-logo-preview img,
+#icon-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+.label-file.disabled {
+  filter: brightness(80%);
+}
+
+
+.ok,
+.cancel {
+  border-radius: 7px;
+  display: none;
+}
+
+.ok {
+  color: white;
+  background-color: #0066FF;
+}
+
+.edit {
+  border-radius: 7px;
+  color: #0066FF;
+  background: none;
+}
+
+.cancel {
+  background: none;
+  border: 2px solid black;
+}
+
+.edit i,
+.ok i,
+.cancel i {
+  margin-left: 7px;
+}
+
+.label-title {
+  padding: 2px 12px;
+  width: fit-content;
+  color: whitesmoke;
+  border-radius: 12px;
+  margin: 7px 0 18px;
+}
+
+#label-logo {
+  background-color: #2ECC71;
+}
+
+#label-icon {
+  background-color: #2196F3;
+}
+
+#label-title {
+  background-color: #E91E63;
+}
+
+#label-file-logo {
+  color: #2ECC71;
+  border: 2px solid #2ECC71;
+}
+
+
+#label-file-icon {
+  color: #2196F3;
+  border: 2px solid #2196F3;
+  display: none;
+}
+
+#title:disabled {
+  font-weight: bold;
+  background-color: #ECF0F1 !important;
+  border: 1px solid #ECF0F1 !important;
+}

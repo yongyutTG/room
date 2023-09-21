@@ -1,0 +1,249 @@
+<div class="wrapper-page">
+  <div class="row">
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-clock"></i>
+          เวลา
+        </span>
+        <select class="form-select" id="select-times">
+          <option value="">เลือกจำนวน</option>
+          <% for(let i=1;i<=60;i++){ %>
+          <option value="<%= i %>"> <%= i %></option>
+          <%  } %>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-brands fa-usps"></i>
+          หน่วยเวลา
+        </span>
+        <select class="form-select" id="set-unit">
+          <option value="">เลือกหน่วย</option>
+          <option value="minutes">นาที</option>
+          <option value="hours">ชั่วโมง</option>
+          <option value="days">วัน</option>
+          <option value="weeks">สัปดาห์</option>
+          <option value="months">เดือน</option>
+          <option value="years">ปี</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-building-columns"></i>
+          ประเภทห้อง
+        </span>
+        <select class="form-select" id="room-type">
+          <option value="">เลือกประเภท</option>
+          <option value="standard">Standard</option>
+          <option value="superior">Superior</option>
+          <option value="deluxe">Deluxe</option>
+          <option value="suite">Suite</option>
+          <option value="family">Family</option>
+          <option value="studio">Studio</option>
+          <option value="connecting">Connecting</option>
+          <option value="duplex">Duplex</option>
+          <option value="villa">Villa</option>
+          <option value="adjoining">Adjoining</option>
+          <option value="cabana">Cabana</option>
+          <option value="honeymoon">Honeymoon</option>
+          <option value="more-typeroom">อื่น ๆ</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-mattress-pillow"></i>
+          ประเภทเตียง
+        </span>
+        <select class="form-select" id="bedtype">
+          <option value="">เลือกรูปแบบเตียง</option>
+          <option value="king-sized">King Sized</option>
+          <option value="queen-sized">Queen Sized</option>
+          <option value="single-bed">Single</option>
+          <option value="twin-bed">Twin</option>
+          <option value="double-bed">Double</option>
+          <option value="triple-bed">Triple</option>
+          <option value="quad-bed">Quad</option>
+          <option value="more-bed">อื่น ๆ</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-mountain"></i>
+          วิวห้อง
+        </span>
+        <select class="form-select txt-none-outline" id="room-view">
+          <option value="">เลือกวิว</option>
+          <option value="garden-view">Garden View</option>
+          <option value="seaview">Seaview</option>
+          <option value="poolview">Poolview</option>
+          <option value="pool-access">Pool Access</option>
+          <option value="beach-front">Beach Front</option>
+          <option value="more-view">อื่น ๆ</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-building"></i>
+          อาคาร
+        </span>
+        <select class="form-select" id="building" onchange="buildingfloorItems()">
+          <option value="" selected>เลือกอาคาร</option>
+          <% for(let i =0 ;i< building_list.length;i++) {
+            let build = ''
+            if(building_list[i].building_name !='' ){
+              build = building_list[i].building_name
+            }else{
+              build = building_list[i].building_number
+            }
+          %>
+          <option value="<%= building_list[i].building_id  %>">
+            <%= build %>
+          </option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+        <span class="input-group-text">
+          <i class="fa-solid fa-tent"></i>
+          ชั้น
+        </span>
+        <select class="form-select" id="building-floor">
+          <option value="" selected>เลือกอาคาร</option>
+          <% for(let i =0 ;i< floor_list;i++) { %>
+          <option value="<%= i+1  %>">
+            <%= i+1 %>
+          </option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="input-group my-2">
+
+        <button class="m-1 ac-btn text-blue" id="room-reset">
+          รีเซ็ตค่า
+        </button>
+        <button class="m-1 ac-btn text-blue" id="room-entries">
+          ทั้งหมด
+        </button>
+        <button class="m-1 ac-btn bg-blue" id="room-include">
+          ค้นหา
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+  $('#room-reset').click(function() {
+    $('#select-times').val('')
+    $('#set-unit').val('')
+    $('#room-type').val('')
+    $('#bedtype').val('')
+    $('#room-view').val('')
+    $('#building').val('')
+    $('#building-floor').val('')
+  })
+  $('#room-entries').click(function() {
+    const thisPage = window.location.href
+    const route = !thisPage.includes('&') ? thisPage : thisPage.substring(0, thisPage.indexOf('&'))
+    window.location.assign(route)
+  })
+
+  $('#room-include').click(function() {
+    const roomType = $('#room-type').val()
+    const bedType = $('#bedtype').val()
+    const roomView = $('#room-view').val()
+    const building = $('#building').val()
+    const buildingFloor = $('#building-floor').val()
+
+    let queryString = ``
+
+    const times = $('#select-times').val()
+    const setUnit = $('#set-unit').val()
+
+    if (roomType != '') {
+      queryString += `&rt=${roomType}`
+    }
+    if (bedType != '') {
+      queryString += `&b=${bedType}`
+    }
+    if (roomView != '') {
+      queryString += `&view=${roomView}`
+    }
+    if (building != '') {
+      queryString += `&build=${building}`
+    }
+    if (buildingFloor != '') {
+      queryString += `&floor=${buildingFloor}`
+    }
+
+    if (times != '' && setUnit != '') {
+      queryString += `&times=${times}&unit=${setUnit}`
+    }
+
+    if (queryString != '') {
+      const page = Display.thisPage(window.location.href)
+      queryString = `${page}${queryString}`
+      route(queryString)
+    }
+  })
+
+  function route(path) {
+    window.location.assign(path)
+  }
+
+  function checkOperator(op) {
+    let params = ''
+    if (op.includes('?') == true) {
+      params = '&'
+    } else if (op.includes('?') == false) {
+      params = '?'
+    }
+    return params
+  }
+
+  function buildingfloorItems(e) {
+    const buildingFloor = $('#building-floor')
+    const selfEl = (event).target;
+    const building = $(selfEl).val();
+    const floorChildren = $(selfEl).next()
+
+    if (building == '') {
+      buildingFloor.html(`<option value="">เลือกชั้น</option>`);
+      buildingFloor.prop('disabled', true)
+    } else if (building != '') {
+      const data = {
+        building: building,
+      };
+      axios
+        .post("/api/building-floor", data)
+        .then((res) => {
+          const data = res.data;
+          const entries = data.entries;
+          let floorEl = `<option value="" selected>เลือกชั้น</option>`;
+          for (let i = 1; i <= entries; i++) {
+            floorEl += `<option value="${i}">${i}</option>`;
+          }
+          buildingFloor.html(floorEl);
+          buildingFloor.prop('disabled', false)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+  }
+</script>

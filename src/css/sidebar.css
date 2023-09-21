@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+#bar {
+    background-color: #17202A;
+    box-shadow: 2px 2px 7px 1px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 16px;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+
+#page {
+    display: flex;
+}
+
+#sidebar,
+#bar-toggle {
+    width: 25%;
+}
+
+#main,
+#bar-content {
+    width: 75%;
+}
+
+#bar-toggle {
+    width: 25%;
+    color: white;
+    margin: 0;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-items {
+    width: 100%;
+    transition: border-bottom 2s ease-in-out;
+}
+
+
+.sub-menu .read-more {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #F7F9F9;
+}
+
+.menu-items {
+    width: 100%;
+    padding:6px 12px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.menu-link {
+    width: 100%;
+    text-decoration: none;
+    color: #17202A;
+    font-weight: bold;
+}
+
+
+.menu-link i {
+    font-weight: bold;
+    min-width: 25px !important;
+    max-width: 25px !important;
+    margin-right: 12px;
+}
+
+.menu-link:hover {
+    color: #5D6D7E;
+}
+
+
+#sidebar {
+    background-color: #F0F3F4;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+#username-bar {
+    display: flex;
+    padding: 12px;
+    align-items: center;
+    font-weight: bold;
+    color: #17202A;
+}
+
+#username-bar i {
+    font-size: 1.4rem;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-profile {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.user {
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-text {
+    margin: 0;
+}
+
+
+#main {
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1.2rem 0;
+    padding: 1rem;
+    background-color: #E5E8E8;
+}
+
+
+#bar-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+#toggle-btn {
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    background: none;
+    outline: none;
+}
+
+#toggle-btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.overload {
+    position: fixed;
+    animation-fill-mode: both;
+    animation-duration: 0.8s;
+    animation-name: slidein;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F7F9F9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.menu-items.active {
+    background-color: #D0D3D4;
+}
+
+
+.menu-items.active a i {
+    color: black;
+}
+
+.menu-items.active a span {
+    color: black;
+}
+
+.logout {
+    color: white;
+    text-decoration: none;
+}
+
+.logout>i {
+    padding-left: 12px;
+}
+
+.logout:hover {
+    color: white;
+}
+
+.wrapper-page {
+    background-color: white;
+    padding: 14px 24px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+.wrapper-content-page {
+    margin: 18px 0;
+    background-color: white;
+    padding: 14px 24px;
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+@keyframes slidein {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}

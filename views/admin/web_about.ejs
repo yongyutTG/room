@@ -1,0 +1,183 @@
+<link rel="stylesheet" href="/css/web_about.css">
+<div class="container">
+  <% let company = '' %>
+  <% let location = '' %>
+  <% let roadAlley = '' %>
+  <% let subDistrict = '' %>
+  <% let district = '' %>
+  <% let province = '' %>
+  <% let postcode = '' %>
+  <% let contactNumber = '' %>
+  <% let email = '' %>
+  <% if(entries.length == 1) {
+    company = entries[0].company
+    location = entries[0].location
+    roadAlley =  entries[0].road_alley
+    subDistrict = entries[0].sub_district
+    district = entries[0].district
+    province = entries[0].province
+    postcode = entries[0].postcode
+    contactNumber = entries[0].contact_number
+    email = entries[0].email
+  } %>
+  <h4 class="fw-bold">เกี่ยวกับบริษัท แบรนด์</h4>
+  <div class="wrapper-content-page">
+    <div class="my-2">
+      <label class="fw-bold form-label text-darkgray">
+        <i class="fa-regular fa-registered"></i>
+        ชื่อบริษัท
+      </label>
+      <input type="text" class="form-control" id="company" value="<%= company  %>">
+    </div>
+    <p class="empty-validate" id="validate-company"></p>
+    <div class="my-3">
+      <label class="fw-bold form-label text-darkgray">
+        <i class="fa-solid fa-location-dot"></i>
+        ที่ตั้ง</label>
+    </div>
+    <div class="my-2">
+      <input type="text" class="form-control" id="location" placeholder="บ้านเลขที่ ชื่ออาคาร" value="<%= location  %>">
+    </div>
+    <p class="empty-validate" id="validate-location"></p>
+
+    <div class="my-2">
+      <input type="text" class="form-control" id="road-alley" placeholder="ถนน/ซอย" value="<%= roadAlley  %>">
+    </div>
+    <p class="empty-validate" id="validate-road-alley"></p>
+    <div class="my-2">
+      <input type="text" class="form-control" id="sub-district" placeholder="แขวง/ตำบล" value="<%= subDistrict  %>">
+    </div>
+    <p class="empty-validate" id="validate-sub-district"></p>
+
+    <div class="my-2">
+      <input type="text" class="form-control" id="district" placeholder="เขต/อำเภอ" value="<%= district  %>">
+    </div>
+    <p class="empty-validate" id="validate-district"></p>
+    <div class="my-2">
+      <input type="text" class="form-control" id="province" placeholder="จังหวัด" value="<%= province  %>">
+    </div>
+    <p class="empty-validate" id="validate-province"></p>
+
+    <div class="my-2">
+      <input type="text" class="form-control" id="postcode" placeholder="รหัสไปรษณีย์" value="<%= postcode  %>">
+    </div>
+    <p class="empty-validate" id="validate-postcode"></p>
+    <div class="my-2">
+      <label class="fw-bold form-label text-darkgray">
+        <i class="fa-solid fa-phone"></i>
+        เบอร์ติดต่อ
+      </label>
+      <input type="text" class="form-control" id="contact-number" value="<%= contactNumber  %>">
+
+    </div>
+    <p class="empty-validate" id="validate-contact"></p>
+    <div class="my-2">
+      <label class="fw-bold form-label text-darkgray">
+        <i class="fa-regular fa-envelope-open"></i>
+        อีเมล
+      </label>
+      <input type="text" class="form-control" id="email" value="<%= email  %>">
+    </div>
+    <p class="empty-validate" id="validate-email"></p>
+    <button class="fw-bold ac-btn bg-blue border-radius-7" id="contact-submit">
+      <i class="fa-solid fa-plus"></i>
+      บันทึก
+    </button>
+  </div>
+</div>
+
+<script>
+  $('#contact-submit').click(function() {
+    const contactForm = [{
+        'name': 'company',
+        'input': $('#company'),
+        'validate': $('#validate-company'),
+        'msg': 'กรอกชื่อบริษัทของคุณ'
+      }, {
+        'name': 'location',
+        'input': $('#location'),
+        'validate': $('#validate-location'),
+        'msg': 'กรอกที่ตั้งบริษัทของคุณ'
+      }, {
+        'name': 'road-alley',
+        'input': $('#road-alley'),
+        'validate': $('#validate-road-alley'),
+        'msg': 'กรอกชื่อถนน-ซอย'
+      }, {
+        'name': 'sub-distict',
+        'input': $('#sub-district'),
+        'validate': $('#validate-sub-district'),
+        'msg': 'กรอกแขวง - ตำบล'
+      }, {
+        'name': 'distict',
+        'input': $('#district'),
+        'validate': $('#validate-district'),
+        'msg': 'กรอกเขต - อำเภอ'
+      }, {
+        'name': 'province',
+        'input': $('#province'),
+        'validate': $('#validate-province'),
+        'msg': 'กรอกจังหวัด'
+      },
+      {
+        'name': 'postcode',
+        'input': $('#postcode'),
+        'validate': $('#validate-postcode'),
+        'msg': 'กรอกรหัสไปรษณีย์'
+      }, {
+        'name': 'contact',
+        'input': $('#contact-number'),
+        'validate': $('#validate-contact'),
+        'msg': 'กรอกเบอร์ติดต่อ'
+      }, {
+        'name': 'email',
+        'input': $('#email'),
+        'validate': $('#validate-email'),
+        'msg': 'กรอกอีเมล'
+      }
+    ]
+    let emptyCount = 0
+    contactForm.forEach((fd) => {
+      const {
+        input,
+        msg,
+        validate
+      } = fd
+
+      const v = input.val().trim()
+      if (v == '') {
+        validateformEmpty(true, validate, msg)
+        emptyCount++
+      } else {
+        validateformEmpty(false, validate, msg)
+      }
+    })
+
+    if (emptyCount == 0) {
+      axios.post('/api/contact-about', {
+          'company': $('#company').val(),
+          'location': $('#location').val(),
+          'road_alley': $('#road-alley').val(),
+          'sub_district': $('#sub-district').val(),
+          'district': $('#district').val(),
+          'province': $('#province').val(),
+          'postcode': $('#postcode').val(),
+          'contact_number': $('#contact-number').val(),
+          'email': $('#email').val()
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('บันทึกสำเร็จ', 1200)
+          }
+
+          if (!result) {
+            queryFail('เกี่ยวกับเว็บไซต์', 'บันทึกข้อมูลล้มเหลว', res.data.err)
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+  })
+</script>

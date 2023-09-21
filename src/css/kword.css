@@ -1,0 +1,18 @@
+#meta-form {
+  border: 2px solid #4D5656;
+  padding: 12px 18px;
+  border-radius: 12px;
+}
+
+
+
+.check-input-group {
+  border-radius: 7px !important;
+  padding: 2px 12px;
+}
+
+
+#meta-submit i {
+  margin-right: 7px;
+}
+

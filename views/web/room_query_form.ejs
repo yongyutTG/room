@@ -1,0 +1,136 @@
+<div class="query-room-form">
+  <div class="container">
+    <h5 class="label-text-r" id="title-form">
+      <i class="fa-solid fa-location-dot"></i>
+      ค้นหาห้องพัก
+    </h5>
+    <div class="row">
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <select class="form-select" id="count-times">
+            <option value="">เลือกเวลา</option>
+            <% for(let i =0;i<list_times.length;i++) { %>
+            <option value="<%= list_times[i].value %>">
+              <%= list_times[i].label %>
+            </option>
+            <%  } %>
+          </select>
+        </div>
+      </div>
+  
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <select class="form-select txt-none-outline" id="room-type">
+            <option value="">ประเภทห้อง</option>
+            <option value="standard">Standard</option>
+            <option value="superior">Superior</option>
+            <option value="deluxe">Deluxe</option>
+            <option value="suite">Suite</option>
+            <option value="family">Family</option>
+            <option value="studio">Studio</option>
+            <option value="connecting">Connecting</option>
+            <option value="duplex">Duplex</option>
+            <option value="villa">Villa</option>
+            <option value="adjoining">Adjoining</option>
+            <option value="cabana">Cabana</option>
+            <option value="honeymoon">Honeymoon</option>
+            <option value="more-typeroom">อื่น ๆ</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <select class="form-select txt-none-outline" id="room-view">
+            <option value="">วิวห้อง</option>
+            <option value="garden-view">Garden View</option>
+            <option value="seaview">Seaview</option>
+            <option value="poolview">Poolview</option>
+            <option value="pool-access">Pool Access</option>
+            <option value="beach-front">Beach Front</option>
+            <option value="more-view">อื่น ๆ</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <select class="form-select txt-none-outline" id="bedtype">
+            <option value="">ประเภทเตียง</option>
+            <option value="king-sized">King Sized</option>
+            <option value="queen-sized">Queen Sized</option>
+            <option value="single-bed">Single</option>
+            <option value="twin-bed">Twin</option>
+            <option value="double-bed">Double</option>
+            <option value="triple-bed">Triple</option>
+            <option value="quad-bed">Quad</option>
+            <option value="more-bed">อื่น ๆ</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <input class="form-control" id="min-price" type="number" placeholder="ราคาเริ่มต้น" />
+          <p class="empty-validate" id="validate-min"></p>
+        </div>
+      </div>
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <input class="form-control" id="max-price" type="number" placeholder="ราคาสูงสุด" />
+          <p class="empty-validate" id="validate-max"></p>
+        </div>
+      </div>
+      <div class="col-xxl-3-col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <button class="ac-btn border-radius-7" id="searchRoom-submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            ค้นหา
+          </button>
+          <button class="fw-bold ac-btn  border-radius-7" id="roomfind-reset">
+            ล้าง
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+<% const queryParams = query_params %>
+<% if(query_include_count > 0){ %>
+<div class="query-wrapper">
+
+  <% if(queryParams.times !=''){ %>
+  <span class="query-text-label">จำนวน</span>
+  <span class="query-text">
+    <%= queryParams.times +' '+ queryParams.unit_text %>
+  </span>
+  <%  } %>
+
+  <% if(queryParams.rt){ %>
+  <span class="query-text-label">ประเภท</span>
+  <span class="query-text">
+    '<%= queryParams.room_type_text %>'
+  </span>
+  <% } %>
+
+  <% if(queryParams.b) { %>
+  <span class="query-text-label">เตียง</span>
+  <span class="query-text">
+    '<%= queryParams.bed_type_text %>'
+  </span>
+  <% } %>
+
+  <% if(queryParams.view) { %>
+  <span class="query-text-label">วิว</span>
+  <span class="query-text">
+    '<%= queryParams.view_text %>'
+  </span>
+  <% } %>
+
+  <% if(queryParams.max) { %>
+  <span class="query-text-label">ช่วงราคา</span>
+  <span class="query-text">
+    <%= queryParams.min_text + ' ถึง ' + queryParams.max_text  %>
+  </span>
+  <% } %>
+</div>
+<% } %>

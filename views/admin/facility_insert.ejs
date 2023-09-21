@@ -1,0 +1,129 @@
+<link rel="stylesheet" href="/css/facility.css">
+<div class="container">
+  <h4 class="fw-bold">เพิ่มสิ่งอำนวยความสะดวก</h4>
+  <div class="wrapper-content-page">
+    <div class="my-3">
+      <label class="form-label">ชื่อสิ่งอำนวยความสะดวก</label>
+      <input type="text" class="form-control" id="facility-subject" placeholder="ป้อนสิ่งอำนวยความสะดวกเพิ่มเติ่ม เช่น สระว่ายน้ำ ร้านสะดวกซื้อ ร้านกาแฟ">
+    </div>
+    <p class="empty-validate" id="validate-subject"></p>
+    <div class="my-3">
+      <label class="form-label">คำอธิบาย</label>
+      <textarea class="form-control" id="facility-descript" rows="8" placeholder="ป้อนคำอธิบาย หรือ รายละเอียดที่เกี่ยวกับสิ่งอำนวยความสะดวก"></textarea>
+    </div>
+    <p class="empty-validate" id="validate-descript"></p>
+    <div class="my-3">
+      <label for="facility-img" class="label-upload  fw-bold">
+        <input type="file"  id="facility-img" accept="image/*">
+        <i class="fa-regular fa-images"></i>
+        รูปภาพประกอบ
+      </label>
+      <div id="facility-img-preview"></div>
+    </div>
+    <p class="empty-validate" id="validate-img"></p>
+    <button id="facility-insert" class="ac-btn bg-darkgray border-radius-7">
+      <i class="fa-solid fa-plus"></i>
+      บันทึก
+    </button>
+  </div>
+</div>
+
+<script>
+  $('#facility-insert').click(function() {
+    const facilityForm = [{
+        'name': 'subject',
+        'formtype': 'text',
+        'input': $('#facility-subject'),
+        'validate': $('#validate-subject'),
+        'msg': 'กรุณาป้อนสิ่งอำนวยความสะดวก'
+      },
+      {
+        'name': 'description',
+        'formtype': 'text',
+        'input': $('#facility-descript'),
+        'validate': $('#validate-descript'),
+        'msg': 'กรุณาป้อนอธิบาย หรือ รายละเอียด'
+      },
+      {
+        'name': 'subject',
+        'formtype': 'file',
+        'input': $('#facility-img'),
+        'validate': $('#validate-img'),
+        'msg': 'กรุณาป้อนสิ่งอำนวยความสะดวก'
+      }
+    ]
+
+    let emptyCount = 0
+    facilityForm.forEach((fd) => {
+      const {
+        input,
+        validate,
+        formtype,
+        msg
+      } = fd
+
+      if (formtype == 'text') {
+        const val = input.val().trim()
+        if (val == '') {
+          emptyCount++
+          validateformEmpty(true, validate, msg)
+        } else {
+          validateformEmpty(false, validate, '')
+        }
+      }
+
+      if (formtype == 'file') {
+        const file = input[0].files.length
+        if (file == 0) {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+
+    })
+
+    if (emptyCount == 0) {
+      const formData = new FormData()
+      formData.append('subject', $('#facility-subject').val())
+      formData.append('descript', $('#facility-descript').val())
+      formData.append('img', $('#facility-img')[0].files[0])
+      axios.post('/api/insert-facility', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((res) => {
+          const result = res.data.result
+
+          if (result) {
+            querySuccess('เพิ่มสำเร็จ', 1000)
+          }
+
+          if (!result) {
+            queryFail('เพิ่มสิ่งอำนวยความสะดวก', 'บันทึกไม่สำเร็จ โปรดลองอีกครั้ง', '')
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+  })
+  $('#facility-img').change(function() {
+    const file = $(this)[0].files[0]
+
+    if (file) {
+      const src = URL.createObjectURL(file)
+      $('#facility-img-preview')
+        .css('border', 'none')
+        .html(`<img src="${src}">`)
+    }
+    if (!file) {
+      $('#facility-img-preview').
+      css('border', '2px solid gainsboro').
+      children().remove()
+    }
+
+  })
+</script>

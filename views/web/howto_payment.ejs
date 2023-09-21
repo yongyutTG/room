@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/css/web/howto_payment.css">
+<div class="wrapper" id="howto-payment">
+  <div class="container">
+    <h4 class="fw-bold">ช่องทางการชำระเงิน</h4>
+    <div id="bank-payment">
+      <% for(let i=0;i<payment.length;i++){ %>
+      <% if(payment[i].status =='on'){ %>
+      <div class="bank-transfer-items">
+        <label class="bank-transfer-label" for="<%= payment[i].payment_id  %>">
+          <div class="bank-title">
+            <img src="/src/n_bank/<%= payment[i].bank_name  %>.png" class="bank-title-img">
+            <div>
+              <h5 class="bankname">
+                <%= payment[i].bank_display  %>
+              </h5>
+              <h6 class="b-account-name">
+                <%= payment[i].account_name  %>
+              </h6>
+            </div>
+          </div>
+          <div>
+            <h5 class="bank-number <%= payment[i].bank_name %>">
+              <%= payment[i].bank_number  %>
+            </h5>
+          </div>
+        </label>
+      </div>
+      <%    } %>
+      <% } %>
+    </div>
+    <% if(data.qrcode.length >0) { %>
+    <h5 class="fw-bold">
+      <i class="fa-solid fa-barcode"></i>
+      QR Code
+    </h5>
+    <img src="/src/qrcode/<%= data.qrcode[0].img %>" class="qrcode-img">
+    <%    } %>
+    <section id="payment-help">
+      <h5>ท่านสามารถเลือกชำระค่าบริการ ดังต่อไปนี้</h5>
+      <h6 class="descript-text-payment">1. โอนเงินผ่านทางเค้าน์เตอร์ธนาคาร</h6>
+      <h6 class="descript-text-payment">2. โอนเงินผ่านเครื่อง ATM ของธนาคาร</h6>
+      <h6 class="descript-text-payment">3. โอนเงินผ่านแอบพลิเคชั่น</h6>
+
+      <h5>หมายเหตุ</h5>
+      <h6 class="descript-text-payment">* หลังจากโอนเงินเรียบร้อยแล้ว กรุณาเก็บหลักฐานไว้เพื่อเป็นข้อมูลในการแจ้งยืนยันการโอนเงิน</h6>
+    </section>
+  </div>
+
+</div>
+<%- include('footer')  %>

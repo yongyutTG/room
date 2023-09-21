@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark ">
+  <div class="container">
+    <% if(data.logo.length ==1) { %>
+    <% if(data.logo[0].type == 'text'){ %>
+    <a class="navbar-brand" href="/">
+      <%= data.logo[0].logo  %>
+    </a>
+    <% } %>
+    <% if(data.logo[0].type =='file'){ %>
+    <a class="navbar-brand" href="/">
+      <img src="/src/logo/<%= data.logo[0].logo  %>">
+    </a>
+    <% } %>
+    <%} %>
+    <% if(data.logo.length ==0) { %>
+    <a class="navbar-brand" href="/">Hotal</a>
+    <% } %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/">หน้าแรก</a>
+        <a class="nav-link" href="/room"> ห้องพัก </a>
+        <a class="nav-link" href="/about">เกี่ยวกับเรา</a>
+        <a class="nav-link" href="/howto-payment">ช่องทางการชำระเงิน</a>
+      </div>
+    </div>
+  </div>
+</nav>

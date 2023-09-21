@@ -1,0 +1,138 @@
+<div class="modal fade" tabindex="-1" id="manage-slide-modal">
+  <div class="modal-dialog  modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="fw-bold modal-title">เพิ่มรูปภาพสไลด์</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="my-2">
+          <h6 class="form-label">หัวเรื่อง</h6>
+          <input type="text" class="form-control" id="slide-title">
+        </div>
+        <p class="empty-validate" id="validate-title"></p>
+        <div class="my-2">
+          <h6 class="form-label">คำอธิบาย</h6>
+          <input type="text" class="form-control" id="slide-desc">
+        </div>
+        <p class="empty-validate" id="validate-desc"></p>
+        <div>
+          <label for="upload-slide" class="label-upload">
+            <input type="file" id="upload-slide" accept="image/*">
+            <i class="fa-solid fa-image"></i>
+            เลือกรูปภาพ
+          </label>
+          <div id="preview-slide"></div>
+          <p class="empty-validate" id="validate-slide"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ac-btn bg-blue border-radius-7" id="slide-submit">
+          <i class="fa-solid fa-plus"></i>
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $('#slide-submit').click(function() {
+    const slideForm = [{
+        'name': 'title',
+        'formtype': 'text',
+        'input': $('#slide-title'),
+        'validate': $('#validate-title'),
+        'msg': 'กรุณากรอกหัวเรื่อง'
+      },
+      {
+        'name': 'desceription',
+        'formtype': 'text',
+        'input': $('#slide-desc'),
+        'validate': $('#validate-desc'),
+        'msg': 'กรุณากรอกคำอธิบาย'
+      },
+      {
+        'name': 'img',
+        'formtype': 'file',
+        'input': $('#upload-slide'),
+        'validate': $('#validate-slide'),
+        'msg': 'กรุณาเลือกรูปภาพที่ต้องการอัพโหลด'
+      }
+
+
+    ]
+    let emptyCount = 0
+    slideForm.forEach((fd) => {
+      const {
+        formtype,
+        input,
+        validate,
+        msg
+      } = fd
+
+      if (formtype == 'text') {
+        const val = input.val().trim()
+        if (val == '') {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, '')
+        }
+      }
+
+
+      if (formtype == 'file') {
+        const f = input[0].files.length
+        if (f == 0) {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else if (f == 1) {
+          validateformEmpty(false, validate, '')
+        }
+      }
+
+    })
+
+    if (emptyCount == 0) {
+      const formData = new FormData()
+
+      formData.append('title', $('#slide-title').val())
+      formData.append('descript', $('#slide-desc').val())
+      formData.append('slide', $('#upload-slide')[0].files[0])
+
+      axios.post('/api/add-slide', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('เพิ่มสไลด์สำเร็จ', 1000)
+          }
+
+          if (!result) {
+            queryFail('เพิ่มสไลด์รูปภาพ', 'เกิดข้อผิดพลาด  ไม่สำมารถเพิ่มภาพสไลด์ได้', res.data.err)
+          }
+        })
+        .catch((err)=>{
+          statusErr()
+        })
+    }
+  })
+
+  $('#upload-slide').change(function() {
+    const file = $(this)[0].files[0]
+    if (file != undefined) {
+      const src = URL.createObjectURL(file)
+      $('#preview-slide').html(`<img src="${src}">`).css('border', '0')
+    }
+
+    if (file == undefined) {
+      $('#preview-slide').css('border', '1px solid gainsboro').children().remove()
+    }
+
+  })
+</script>

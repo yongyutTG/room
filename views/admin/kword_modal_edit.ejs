@@ -1,0 +1,118 @@
+<div class="modal" tabindex="-1" id="keyword-modal-edit">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="meta-title">Meta SEO</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="my-1">
+          <h6 class="form-label">
+            Keyword SEO
+          </h6>
+          <input type="text" class="form-control" id="meta-edit-text" placeholder="input your text">
+        </div>
+        <p class="empty-validate" id="validate-edit-text"></p>
+        <h6 class="fw-bold">เลือกคุณสมบัติ (name)</h6>
+        <div class="check-input-group">
+          <div class="check-input-group inline-flex">
+            <input class="check-input" name="meta-edit" type="radio" value="description" id="edit-description">
+            <h6 class="check-label" for="edit-description">
+              Description
+            </h6>
+          </div>
+
+          <div class="check-input-group inline-flex">
+            <input class="check-input" name="meta-edit" type="radio" value="keywords" id="edit-keywords">
+            <label class="check-label" for="edit-keywords">
+              Keywords
+            </label>
+          </div>
+          <div class="check-input-group inline-flex">
+            <input class="check-input" name="meta-edit" type="radio" value="author" id="edit-author">
+            <label class="check-label" for="edit-author">
+              Author
+            </label>
+          </div>
+        </div>
+        <p class="empty-validate" id="validate-edit-name"></p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ac-btn bg-blue border-radius-4" id="meta-edit-submit">
+          ตกลง
+        </button>
+        <button type="button" class="ac-btn bg-darkgray border-radius-4" data-bs-dismiss="modal">
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#meta-edit-submit').click(function() {
+    const metaForm = [{
+      'name': 'text',
+      'input': $('#meta-edit-text'),
+      'validate': $('#validate-edit-text'),
+      'msg': 'กรุณาป้อนข้อความ'
+    }, {
+      'name': 'name',
+      'input': $('[name="meta-edit"]'),
+      'validate': $('#validate-edit-name'),
+      'msg': 'กรุณาเลือกคุณสมบัติ'
+    }]
+    let emptyCount = 0
+    metaForm.forEach((fd) => {
+      const {
+        name,
+        input,
+        validate,
+        msg
+      } = fd
+
+      if (name == 'text') {
+        const v = input.val().trim()
+        if (v == '') {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+      if (name == 'name') {
+        const checked = input.filter(':checked').length
+        if (checked == 0) {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+    })
+
+    if (emptyCount == 0) {
+      axios.post('/api/meta-update', {
+          'id': $(this).attr('data-id'),
+          'content': $('#meta-edit-text').val(),
+          'name': $('[name="meta-edit"]').filter(':checked').val()
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('แก้ไขสำเร็จ', 1000)
+          }
+          if (!result) {
+            const err = res.data.err
+            queryFail('อัพเดต SEO', 'แก้ไขไม่สำเร็จ โปรดลองอีกครั้ง', err)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  })
+</script>

@@ -1,0 +1,20 @@
+<div class="modal" id="payment-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">เพิ่มการชำระเงิน</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%- include('payment_modal_form')  %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ac-btn bg-blue border-radius-4" id="payment-submit">
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

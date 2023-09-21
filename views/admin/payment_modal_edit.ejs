@@ -1,0 +1,133 @@
+<div class="modal" id="payment-modal-edit">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">เพิ่มการชำระเงิน</h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%- include('payment_modal_edit_form')  %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ac-btn bg-blue border-radius-4" id="edit-payment-submit">
+          บันทึก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('#edit-payment-submit').click(function() {
+    const editPaymentForm = [{
+        'name': 'bankname',
+        'input': $('#edit-bankname'),
+        'validate': $('#edit-validate-bankname'),
+        'msg': 'เลือกธนาคาร'
+      },
+      {
+        'name': 'bank_branch',
+        'input': $('#edit-bankbranch'),
+        'validate': $('#edit-validate-bankbranch'),
+        'msg': 'ป้อนสาขาธนาคาร'
+      }, {
+        'name': 'bank_number',
+        'input': $('#edit-banknumber'),
+        'validate': $('#edit-validate-banknumber'),
+        'msg': 'ป้อนหมายเลขบัญชี'
+      },
+      {
+        'name': 'account_name',
+        'input': $('#edit-accountname'),
+        'validate': $('#edit-validate-accountname'),
+        'msg': 'ป้อนชื่อบัญชี'
+      }
+    ]
+    let emptyCount = 0
+    const id = $(this).attr('data-id')
+    editPaymentForm.forEach((fd) => {
+      const {
+        msg,
+        validate,
+        input
+      } = fd
+
+      const v = input.val().trim()
+      if (v == '') {
+        validateformEmpty(true, validate, msg)
+        emptyCount++
+      } else {
+        validateformEmpty(false, validate, '')
+      }
+    })
+
+
+    const fd = {
+      'bankname': $('#edit-bankname').val(),
+      'bank_branch': $('#edit-bankbranch').val(),
+      'bank_number': $('#edit-banknumber').val(),
+      'account_name': $('#edit-accountname').val(),
+      'id': id
+    }
+    if (emptyCount == 0) {
+      axios.post('/api/edit-payment', fd)
+        .then((res) => {
+          const result = res.data.result
+          if (result == true) {
+            querySuccess('แก้เรียบร้อย', 1200)
+          } else if (result == false) {
+            const err = res.data.err
+            queryFail('แก้ไขช่องทางการชำระเงิน', 'แก้ไขล้มเหลว', err)
+          }
+        }).catch((err) => {
+          statusErr()
+        })
+    }
+
+  })
+  $('.payment-edit').click(function() {
+    const id = $(this).attr('data-id')
+    axios.put('/api/payment-edit', {
+        'id': id
+      })
+      .then((res) => {
+        const data = res.data.entries[0]
+        const {
+          account_name,
+          bank_branch,
+          bank_name,
+          bank_number,
+          created,
+          modified,
+          payment_id
+        } = data
+
+
+        const editBankname = $('#edit-bankname')
+        const editBanknameOpt = editBankname.children()
+
+        for (let i = 0; i < editBanknameOpt.length; i++) {
+          const optVal = $(editBanknameOpt[i]).val()
+
+          if (optVal == bank_name) {
+            $(editBanknameOpt[i]).prop('selected', true)
+          }
+        }
+
+        $('#edit-bankbranch').val(bank_branch)
+        $('#edit-banknumber').val(bank_number)
+        $('#edit-accountname').val(account_name)
+        $('#edit-payment-submit').attr('data-id', id)
+
+        const paymentNodalEdit = new bootstrap.Modal($('#payment-modal-edit'))
+        paymentNodalEdit.show()
+      })
+      .catch((err) => {
+        statusErr()
+      })
+
+  })
+</script>

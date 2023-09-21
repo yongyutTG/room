@@ -1,0 +1,86 @@
+<div class="modal" tabindex="-1" id="room-modal">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="room-title"></h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body p-4">
+        <table class="table">
+          <tr>
+            <th>หมายเลขห้อง</th>
+            <td>
+              <p class="text-room" id="txt-roomnumber"></p>
+            </td>
+          </tr>
+
+          <tr>
+            <th>ประเภทห้อง</th>
+            <td>
+              <p class="text-room" id="txt-roomtype"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>ประเภทเตียง</th>
+            <td>
+              <p class="text-room" id="txt-roombedtype"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>วิวของห้อง</th>
+            <td>
+              <p class="text-room" id="txt-roombedtype"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>ชั้น</th>
+            <td>
+              <p class="text-room" id="txt-roombedtype"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>อาคาร</th>
+            <td>
+              <p class="text-room" id="txt-roombedtype"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>วันที่เพิ่ม</th>
+            <td>
+              <p class="text-room" id="txt-created"></p>
+            </td>
+          </tr>
+          <tr>
+            <th>แก้ไขล่าสุด</th>
+            <td>
+              <p class="text-room" id="txt-modified"></p>
+            </td>
+          </tr>
+        </table>
+
+        <div class="my-3">
+          <h3 for="desc-room" class="form-label">คำอธิบาย - รายละเอียด</h3>
+          <textarea class="form-control" id="txt-desc-room" rows="8" disabled readonly></textarea>
+        </div>
+
+
+        <div id="fileupload-preview">
+          <h3>รูปภาพตัวอย่าง</h3>
+          <div id="room-example-preview">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="ac-btn bg-darkgray border-radius-12" data-bs-dismiss="modal">
+          ปิด
+        </button>
+        <button type="button" id="edit-room" class="ac-btn bg-linearteal border-radius-12">
+          แก้ไข
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

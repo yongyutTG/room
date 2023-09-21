@@ -1,0 +1,29 @@
+#profile {
+  display: none;
+}
+.table-profile{
+  width: 100%;
+  height: 70px;
+  object-fit: contain;
+}
+#profile-preview {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #ccc;
+}
+
+#profile-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+#user-admin-submit i {
+  margin-right: 7px
+}
+
+#update-admin i {
+  margin-left: 7px;
+}
+

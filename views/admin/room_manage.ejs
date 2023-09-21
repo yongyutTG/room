@@ -1,0 +1,441 @@
+<link rel="stylesheet" href="/css/room_manage.css">
+<div class="container">
+  <h4 class="fw-bold">จัดการห้องพัก</h4>
+  <div class="wrapper-page">
+    <div class="input-group my-2">
+      <span class="input-group-text">หมายเลขห้อง</span>
+      <select class="form-select" id="r-number" name="single-filter">
+
+        <option value="" selected>เลือก</option>
+        <% for (let i =0;i<room_number.length;i++) { %>
+        <% const numberSelected = q_number == room_number[i].room_id ? 'selected'  : '' %>
+        <% const number  = JSON.parse(room_number[i].room_sub).map((r)=>r.room_number).join('-') %>
+
+        <option value="<%= room_number[i].room_id  %>" <%= numberSelected  %>>
+          <%= number  %>
+        </option>
+        <% } %>
+      </select>
+    </div>
+    <div class="row my-2">
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_roomtype  %>" id="active-roomtype">
+        <h6 class="fw-bold">ประเภทห้องพัก</span>
+          <div class="input-group my-2">
+            <select class="form-select" id="r-type" name="multi-filter">
+              <option value="" selected>เลือก</option>
+              <option value="standard">Standard</option>
+              <option value="superior">Superior</option>
+              <option value="deluxe">Deluxe</option>
+              <option value="suite">Suite</option>
+              <option value="family">Family</option>
+              <option value="studio">Studio</option>
+              <option value="connecting">Connecting</option>
+              <option value="duplex">Duplex</option>
+              <option value="villa">Villa</option>
+              <option value="adjoining">Adjoining</option>
+              <option value="cabana">Cabana</option>
+              <option value="honeymoon">Honeymoon</option>
+              <option value="roomtype-no-specify">ไม่ระบุ</option>
+            </select>
+          </div>
+      </div>
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <h6 class="fw-bold">ประเภทเตียง</h6>
+        <input type="hidden" value="<%= q_bed  %>" id="active-bed">
+        <div class="input-group my-2">
+          <select class="form-select" id="b-type" name="multi-filter">
+            <option selected value="">เลือก</option>
+            <option value="king-sized">King Sized</option>
+            <option value="queen-sized">Queen Sized</option>
+            <option value="single-bed">Single</option>
+            <option value="twin-bed">Twin</option>
+            <option value="double-bed">Double</option>
+            <option value="triple-bed">Triple</option>
+            <option value="quad-bed">Quad</option>
+            <option value="bedtype-no-specify">ไม่ระบุ</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_view  %>" id="active-view">
+        <h6 class="fw-bold">วิว</h6>
+        <div class="input-group my-2">
+          <select class="form-select" id="r-view" name="multi-filter">
+            <option value="" selected>เลือก</option>
+            <option value="garden-view">Garden View</option>
+            <option value="seaview">Seaview</option>
+            <option value="poolview">Poolview</option>
+            <option value="pool-access">Pool Access</option>
+            <option value="beach-front">Beach Front</option>
+            <option value="view-no-specify">ไม่ระบุ</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_date  %>" id="active-date">
+        <h6 class="fw-bold">วันเพิ่ม</h6>
+        <div class="input-group mb-3">
+          <select class="form-select" id="d-created" name="multi-filter">
+            <option value="" selected>เลือก</option>
+            <% for (let i =0;i<_dt.length;i++) { %>
+
+            <option value="<%= _dt[i]  %>">
+              <%= _dt[i]  %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_list  %>" id="active-entries">
+        <div class="input-group mb-3">
+          <span class="input-group-text">รายการ</span>
+          <select class="form-select" id="entries" name="multi-filter">
+            <option value="" selected>เลือก</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="all">100</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <button class="fw-bold ac-btn text-blue border-radius-7" id="room-m-reset">
+          รีเซ็ตค่า
+        </button>
+
+        <button class="ac-btn text-blue border-radius-7" id="room-m-entries">
+          แสดงทั้งหมด
+        </button>
+
+        <button class="ac-btn bg-blue border-radius-7" id="room-m-search">
+          ค้นหา
+        </button>
+
+      </div>
+
+    </div>
+    <script>
+      $('#room-m-search').click(function() {
+        let route = ''
+        const rNumber = $('#r-number').val()
+        const rType = $('#r-type').val()
+        const bType = $('#b-type').val()
+        const rView = $('#r-view').val()
+        const dCreated = $('#d-created').val()
+        const entries = $('#entries').val()
+
+        route += setqueryParams(rNumber, 'n')
+        route += setqueryParams(rType, 'rt')
+        route += setqueryParams(bType, 'bed')
+        route += setqueryParams(rView, 'view')
+        route += setqueryParams(dCreated, 'dt')
+        route += setqueryParams(entries, 'list')
+
+        if (route != '') {
+          const thisPage = window.location.href
+          const end = thisPage.includes('&') ? thisPage.indexOf('&') : -1
+          route = end >= 0 ? thisPage.substring(0, end) + route : thisPage + route
+          window.location.assign(route)
+        }
+      })
+
+      function setqueryParams(search, key) {
+        return search != '' ? `&${key}=${search}` : ''
+      }
+
+      $('#r-type').val($('#active-roomtype').val())
+      $('#b-type').val($('#active-bed').val())
+      $('#r-view').val($('#active-view').val())
+      $('#d-created').val($('#active-date').val())
+      $('#entries').val($('#active-entries').val())
+      $('[name="multi-filter"]').change(function() {
+        $('[name="single-filter"]').val('')
+      })
+
+      $('[name="single-filter"]').change(function() {
+        $('[name="multi-filter"]').val('')
+      })
+
+      $('#room-m-reset').click(function() {
+        $('[name="single-filter"]').val('')
+        $('[name="multi-filter"]').val('')
+      })
+
+      $('#room-m-entries').click(function() {
+        const thisPage = window.location.href
+        const route = !thisPage.includes('&') ? thisPage : thisPage.substring(0, thisPage.indexOf('&'))
+        window.location.assign(route)
+      })
+    </script>
+
+  </div>
+  <div class="wrapper-content-page">
+    <% if(entries.length==0) { %>
+    <div class="empty-table my-3">
+      <div class="empty-icon-table">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h6 class="fw-bold text-darkgray">ไม่มีข้อมูล</h6>
+    </div>
+    <% }else if(entries.length>=1) { %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr class="align-middle">
+            <th class="text-center">ลำดับ</th>
+            <th>หมายเลขห้อง</th>
+            <th>แก้ไขล่าสุด</th>
+            <th class="text-center">ดูข้อมูล</th>
+            <th class="text-center">แก้ไข</th>
+            <th class="text-center">ลบ</th>
+          </tr>
+        </thead>
+        <tbody class="align-middle">
+          <% for(let  i=0; i< entries.length; i++) {%>
+
+          <tr>
+            <td class="text-center"><%= (i+1)%></td>
+
+            <td><%- JSON.parse(entries[i].room_sub).map((n)=>`<p class="text-number-r">${n.room_number}</p>`).join(' ') %></td>
+            <td><%= entries[i].modified %></td>
+
+            <td class="text-center">
+              <button class="fw-bold ac-btn text-darkgray bg-none room-detail" data-id="<%= entries[i].room_id  %>">
+                <i class="fa-solid fa-book-open-reader"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="fw-bold ac-btn  text-darkgray bg-none room-edit" data-id="<%= entries[i].room_id  %>">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="fw-bold ac-btn bg-none text-darkgray room-del" data-groupid="<%= entries[i].room_id  %>" data-imgdelete="<%= entries[i].example_room  %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+
+</div>
+<input type="hidden" id="building-id-enteies">
+<input type="hidden" id="building-name-enteies">
+<%- include('room_manage_modal') %>
+<script>
+  const buildingIdEnteies = $('#building-id-enteies')
+  const buildingnameEnteies = $('#building-name-enteies')
+  window.addEventListener('load', () => {
+    axios.post('/api/fetch-building')
+      .then((res) => {
+        const {
+          result,
+          entries
+        } = res.data
+        const idtextval = []
+        const ntextval = []
+        for (let i = 0; i < entries.length; i++) {
+          const id = entries[i].building_id
+          const n = entries[i].building_name
+
+          idtextval.push(id)
+          ntextval.push(n)
+        }
+
+        buildingIdEnteies.val(idtextval.join(','))
+        buildingnameEnteies.val(ntextval.join(','))
+      }).catch(err => {
+        statusErr()
+      })
+  })
+
+
+  $("#edit-room").click(function() {
+    const id = $(this).attr("data-id");
+    window.location.assign(`/admin/?p=room-edit&id=${id}`);
+  });
+
+
+  $(".room-edit").click(function() {
+    const id = $(this).attr("data-id");
+    window.location.assign(`/admin/?p=room-edit&id=${id}`);
+  });
+
+  $(".room-del").click(function() {
+    const id = $(this).attr('data-groupid')
+    const exam = $(this).attr('data-imgdelete')
+    const data = {
+      'room_id': id,
+      'img': JSON.stringify(exam.split(','))
+    }
+    confirm('ลบข้อมูลห้องพัก', 'ต้องการลบข้อมูลห้องพักรายการนี้ใช่หรือไม่ ? ').then((result) => {
+      if (result.isConfirmed) {
+        axios.post('/api/room-delete', data)
+          .then((res) => {
+            const result = res.data.result
+            if (result) {
+              querySuccess('ลบสำเร็จ', 1000)
+            }
+            if (!result) {
+              queryFail('ลบข้อมูลห้องพัก', 'ลบข้อมูลล้มเหลว! โปรดลองใหม่อีกครั้งภายหลัง', res.data.err)
+            }
+          })
+      }
+    }).catch((err) => {
+      statusErr()
+    })
+
+  })
+  $('.room-detail').click(function() {
+    const roomId = $(this).attr("data-id");
+    axios({
+        url: "/api/query-room",
+        method: "post",
+        data: {
+          room_id: roomId
+        },
+      })
+      .then((res) => {
+        const data = res.data;
+        if (!data.result) {
+          queryFail('ข้อมูลห้องพัก', 'โหลดข้อมูลล้มเหลว', data.err)
+        }
+
+        if (data.result) {
+          const textRoom = $(".text-room");
+          const buildingId = buildingIdEnteies.val().split(',')
+          const buildingname = buildingnameEnteies.val().split(',')
+          const roomnumber = JSON.parse(data.entries[0].room_sub)
+          const dataPrice = data.entries[0].data_price == '' ? 0 : JSON.parse(data.entries[0].data_price)
+          let roomEntriesEl = '';
+          let exampleRoomEl = '';
+          let priceEntriesEl = ''
+
+
+          if (dataPrice.length == 0 || dataPrice == 0) {
+            $('#price-table').css('display', 'none')
+          }
+
+          if (dataPrice.length > 0) {
+            dataPrice.forEach((p, i) => {
+              const unit = Display.unitTimes(p.unit)
+              const price = Display.setNumberFormat(p.price)
+              const idxCol = `<td class="text-center">${i + 1}</td>`;
+              const unitCol = `<td>${unit}</td>`;
+              const timesCol = `<td>${p.times}</td>`;
+              const priceCol = `<td class="text-end">${price}</td>`;
+              const row = `
+                            <tr class="align-middle">
+                              ${idxCol}
+                              ${timesCol}
+                              ${unitCol}
+                              ${priceCol}
+                            </tr>
+                          `
+              priceEntriesEl += row;
+
+            })
+          }
+
+
+          roomnumber.forEach((e, i) => {
+
+            const idx = buildingId.indexOf(e.building)
+            const bn = buildingname[idx] == undefined ? 'ไม่พบข้อมูลนี้' : buildingname[idx]
+            const status = e.status == "empty" ? `<p class="m-0 fw-bold text-lightgray">ว่าง</p>` : `<p class="m-0 fw-bold text-dark-pink">ไม่ว่าง</p>`;
+
+            const idxCol = `<td class="text-center text-lightgray">${i + 1}</td>`;
+            const nCol = `<td><p class="text-number-r">${e.room_number}</p></td>`;
+            const buildingCol = `<td class="text-lightgray">${bn}</td>`;
+            const buildingFloorCol = `<td class="text-lightgray">${e.building_floor}</td>`;
+            const statusCol = `<td>${status}</td>`;
+
+            const row = `
+                        <tr class="align-middle">
+                            ${idxCol}
+                            ${nCol}
+                            ${buildingCol}
+                            ${buildingFloorCol}
+                            ${statusCol}
+                        </tr>
+                        `;
+            roomEntriesEl += row;
+          })
+
+
+          const entries = data.entries
+          const {
+            room_id,
+            example_room,
+            created,
+            modified
+          } = entries[0]
+
+
+          const roomType = Display.getRoomtype(data.entries[0].room_type);
+          const bedType = Display.resBed(data.entries[0].bed_type);
+          const roomView = Display.getRoomview(data.entries[0].roomview);
+          const detail = data.entries[0].detail
+          const descriptSectionDisplay = data.entries[0].detail == '' ? 'none' : 'block'
+          const txtRow = [roomType, bedType, roomView, created, modified];
+
+
+          let specialOptionsEl = ''
+          const special_options = entries[0].special_options.split(',').map((opt) => Display.resSpecialOptions(opt))
+
+
+          for (let i = 0; i < textRoom.length; i++) {
+            const txt = txtRow[i];
+            $(textRoom[i]).text(txt);
+          }
+
+
+
+          example_room.split(",").forEach((e) => {
+            const src = `<img src = "/src/img/example_room/${e}" class="modal-example-room-items">`;
+            exampleRoomEl += src;
+          });
+
+
+          for (let i = 0; i < special_options.length; i++) {
+            specialOptionsEl += ` <label class="more-sp-label">
+                                    <i class="fa-regular fa-square-check"></i>
+                                    <span class="more-sp-text">${special_options[i]}</span>
+                                  </label>`
+          }
+
+          $('#more-options').html(specialOptionsEl)
+          $('#room-title').text(room_id);
+          $("#room-example-preview").html(exampleRoomEl);
+          $("#text-desc-room").text(detail);
+          $("#edit-room").attr("data-id", room_id);
+          $('#room-entries').html(roomEntriesEl);
+          $('#descript-section').css('display', descriptSectionDisplay)
+          $('#price-entries').html(priceEntriesEl)
+          new bootstrap.Modal("#room-modal").show();
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      });
+  });
+</script>

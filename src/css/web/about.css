@@ -1,0 +1,101 @@
+#about-wrapper {
+    padding: 18px;
+}
+
+
+#company {
+    background-image: linear-gradient(#1B2631, #212121);
+    background: url('/src/bg/company-w.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 64px 36px;
+    color: #F5F5F5;
+}
+
+.contact-items {
+    display: flex;
+}
+
+.contact-items-text {
+    font-weight: bolder;
+    margin-left: 14px;
+    color: #7B7D7D;
+}
+
+#social {
+   margin: 14px 0;
+}
+
+
+#contact-time {
+    padding: 18px;
+    color: whitesmoke;
+}
+
+#tracking {
+    width: 100%;
+    padding: 24px;
+    background-color: #F5F5F5;
+}
+
+
+.about-tracking-items {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.about-tracking-items i {
+    color: #1B2631;
+    font-size: 1.8rem;
+    margin-right: 12px;
+}
+
+.tracking-items-title {
+    margin: 0;
+}
+
+.tracking-items-subject,
+.tracking-items-text {
+    margin: 0;
+    padding: 0;
+}
+
+.tracking-items-subject {
+    font-weight: bolder;
+}
+
+.tracking-items-text {
+    color: #424949;
+}
+
+footer {
+    margin-top: 0;
+}
+
+@media only screen and (max-width:540px) {
+    #company {
+        width: 100%;
+    }
+
+    .contact-items {
+        display: block
+    }
+
+    .contact-items-text {
+        margin: 0;
+    }
+
+    .contact-items-label {
+        margin: 12px 0;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    #company {
+        padding: 32px 7px;
+        font-size: 0.8rem;
+    }
+}

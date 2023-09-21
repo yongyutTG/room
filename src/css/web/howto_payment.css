@@ -1,0 +1,152 @@
+#howto-payment {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}
+
+#bank-payment {
+    width: 540px;
+}
+
+.bank-transfer-items {
+    display: flex;
+    align-items: center;
+    padding: 12px 4px;
+}
+
+
+.booking-bank-transfer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bank-transfer-input {
+    width: 22px;
+    height: 22px;
+    margin-right: 14px;
+}
+
+.bank-transfer-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bankname,
+.b-account-name {
+    margin: 0;
+}
+
+.b-account-name {
+    color: #626567;
+}
+
+.bankname {
+    font-weight: bolder;
+    color: #263238;
+}
+
+.bank-title {
+    display: flex;
+    align-items: center;
+}
+
+.bank-title-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    margin-right: 12px;
+}
+
+.bank-number {
+    font-weight: bolder;
+}
+
+.bank-number.bbl {
+    color: #013194;
+}
+
+.bank-number.scb {
+    color: #4d297c;
+}
+
+.bank-number.k-bank {
+    color: #03a950;
+}
+
+
+.bank-number.uob {
+    color: #dc0a1a;
+}
+
+.bank-number.cimb {
+    color: #830101;
+}
+
+.bank-number.gsb {
+    color: #ed078d;
+}
+
+
+.bank-number.ktb {
+    color: #13a1e4;
+}
+
+
+.bank-number.tisco {
+    color: #13a1e4;
+}
+
+
+.bank-number.ttb {
+    color: #f68b1f;
+}
+
+#payment-help h5 {
+    font-weight: bolder;
+}
+
+.descript-text-payment {
+    color: #9E9E9E;
+}
+
+.room-number {
+    background-color: #0066FF;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 14px;
+}
+
+.room-number i {
+    margin-right: 7px;
+}
+
+.qrcode-img {
+    width: 250px;
+    margin: 14px 0;
+}
+
+.bank-transfer-input:hover,
+.bank-transfer-label:hover {
+    cursor: pointer;
+}
+
+@media screen and (max-width:540px) {
+    #bank-payment {
+        width: 100%;
+    }
+
+    .bank-transfer-label {
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .bank-number {
+        margin-left: 55px;
+    }
+}

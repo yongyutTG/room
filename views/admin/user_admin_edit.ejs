@@ -1,0 +1,253 @@
+<link rel="stylesheet" href="/css/user_admin.css">
+<div class="container">
+  <h4 class="fw-bold">สร้างบัญชีผู้ใช้งานระบบ</h4>
+  <div class="wrapper-content-page">
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-3">
+          <label class="fw-bold form-label">ชื่อ</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-id-card"></i>
+            </span>
+            <input type="email" class="form-control" value="<%= entries[0].fname %>" id="fname" placeholder="กรุณาป้อนชื่อ">
+          </div>
+
+        </div>
+        <p class="empty-validate" id="validate-fname"></p>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-3">
+          <label class="fw-bold form-label">นามสกุล</label>
+          <div class="input-group">
+            <span class="input-group-text" id="input-group-text-lname">
+              <i class="fa-solid fa-id-card"></i>
+            </span>
+            <input type="email" class="form-control" value="<%= entries[0].lname %>" id="lname" placeholder="กรุณาป้อนนามสกุล">
+          </div>
+        </div>
+        <p class="empty-validate" id="validate-lname"></p>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-3">
+          <label class="fw-bold form-label">ผู้ใช้งานระบบ</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-chalkboard-user"></i>
+            </span>
+            <input type="text" class="form-control" value="<%= entries[0].username %>" id="username" placeholder="username">
+          </div>
+
+        </div>
+        <p class="empty-validate" id="validate-username"></p>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-3">
+          <label class="fw-bold form-label">รหัสผ่าน</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-key"></i>
+            </span>
+            <input type="email" class="form-control" value="<%= entries[0].password %>" id="password" placeholder="กรุณาป้อนรหัสผ่าน">
+          </div>
+        </div>
+        <p class="empty-validate" id="validate-password"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper-content-page my-3">
+    <input type="hidden" id="private-level-active" value="<%= entries[0].private_level %>">
+    <h5 class="fw-bold form-label">ระดับการเข้าถึง</h5>
+    <div class="check-input-group p-2 my-2">
+      <div class="form-check" id="form-check-genaral">
+        <input class="check-input" type="radio" name="private-level" id="genaral" value="genaral">
+        <label class="check-label" for="genaral">
+          ทั่วไป
+        </label>
+      </div>
+      <div class="form-check" id="form-check-manager">
+        <input class="check-input" type="radio" name="private-level" id="manager" value="manager">
+        <label class="check-label" for="manager">
+          ผู้จัดการ
+        </label>
+      </div>
+
+      <div class="form-check" id="form-check-admin">
+        <input class="check-input" type="radio" name="private-level" id="admin-p" value="admin-p">
+        <label class="check-label" for="admin-p">
+          ผู้ดูแลระบบ
+        </label>
+      </div>
+      <div class="form-check" id="form-check-cashier">
+        <input class="check-input" type="radio" name="private-level" id="cashier" value="cashier">
+        <label class="check-label" for="cashier">
+          แคชเชียร์
+        </label>
+      </div>
+    </div>
+    <p class="empty-validate" id="validate-private-level"></p>
+  </div>
+
+  <div class="wrapper-content-page">
+    <label for="profile" class="fw-bold label-upload bg-blue " id="label-profile">
+      <i class="fa-solid fa-photo-film"></i>
+      เลือกรูปโปรไฟล์
+      <input type="file" id="profile" accept="image/*">
+    </label>
+    <input type="hidden" value="<%= entries[0].profile %>" id="old-profile">
+    <div class="my-2" id="profile-preview"></div>
+    <p class="empty-validate" id="validate-profile"></p>
+    <button class="fw-bold ac-btn bg-darkgray  border-radius-7" id="update-admin" data-id="<%= entries[0].admin_id  %>">
+      อัพเดต
+      <i class="fa-regular fa-pen-to-square"></i>
+    </button>
+  </div>
+
+</div>
+<script>
+  $('#update-admin').click(function() {
+    const adminForm = [{
+        'name': 'fname',
+        'formtype': 'text',
+        'input': $('#fname'),
+        'validate': $('#validate-fname'),
+        'msg': 'กรุณาป้อนชื่อ'
+      },
+      {
+        'name': 'lname',
+        'formtype': 'text',
+        'input': $('#lname'),
+        'validate': $('#validate-lname'),
+        'msg': 'กรุณาป้อนนามสกุล'
+      },
+      {
+        'name': 'username',
+        'formtype': 'text',
+        'input': $('#username'),
+        'validate': $('#validate-username'),
+        'msg': 'กรุณาป้อนชื่อผู้ใช้'
+      },
+      {
+        'name': 'password',
+        'formtype': 'text',
+        'input': $('#password'),
+        'validate': $('#validate-password'),
+        'msg': 'กรุณาป้อนรหัสผ่าน'
+      }, {
+        'name': 'private-level',
+        'formtype': 'radio',
+        'input': $('[name="private-level"]'),
+        'validate': $('#validate-private-level'),
+        'msg': 'กรุณาเลือกระดับการเข้าถึง'
+      }, {
+        'name': 'profile',
+        'formtype': 'file',
+        'input': $('#profile'),
+        'validate': $('#validate-profile'),
+        'msg': 'กรุณาเลือกรูปโปรไฟล์'
+      }
+    ]
+    let emptyCount = 0
+    adminForm.forEach((fd) => {
+      const {
+        formtype,
+        input,
+        validate,
+        msg
+      } = fd
+      if (formtype == 'text') {
+        const v = input.val().trim()
+        if (v == '') {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+
+        }
+      }
+
+      if (formtype == 'radio') {
+        const check = input.filter(':checked').length
+        if (check == 0) {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+
+        }
+      }
+
+      if (formtype == 'file') {
+        const file = input[0].files.length
+        if (file == 0) {
+          if ($('#old-profile').val() == '') {
+            validateformEmpty(true, validate, msg)
+            emptyCount++
+          } else {
+            validateformEmpty(false, validate, msg)
+          }
+
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+    })
+
+    if (emptyCount == 0) {
+      const formData = new FormData()
+      formData.append('admin_id', $(this).attr('data-id'))
+      formData.append('old_profile', $('#old-profile').val())
+      formData.append('fname', $('#fname').val())
+      formData.append('lname', $('#lname').val())
+      formData.append('username', $('#username').val())
+      formData.append('password', $('#password').val())
+      formData.append('private_level', $('[name="private-level"]').filter(':checked').val())
+
+      if ($('#profile')[0].files[0] != undefined) {
+        formData.append('profile', $('#profile')[0].files[0])
+      }
+
+      axios.post('/api/update-admin', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('เพิ่มสำเร็จ', 1000)
+          }
+
+          if (!result) {
+            queryFail('เพิ่มพนักงาน', 'ไม่สามารถเพิ่มได้', res.data.err)
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+
+    }
+  })
+  $('#profile').change(function() {
+    const file = $(this)[0].files[0]
+    if (file != undefined) {
+      const img = `<img src="${URL.createObjectURL(file)}">`
+      $('#profile-preview').html(img)
+    } else {
+      $('#profile-preview').children().remove()
+    }
+  })
+
+
+  window.addEventListener('load', () => {
+    const oldProfile = $('#old-profile').val()
+    if (oldProfile != '') {
+      $('#profile-preview').html(`<img src="/src/profile/${oldProfile}">`)
+    }
+    $.each($('[name="private-level"]'), (index, element) => {
+      if ($(element).val() == $('#private-level-active').val()) {
+        $(element).prop('checked', true)
+      }
+    })
+  })
+</script>

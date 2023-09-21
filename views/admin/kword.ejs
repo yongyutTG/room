@@ -1,0 +1,225 @@
+<link rel="stylesheet" href="/css/kword.css">
+<div class="container">
+  <h4 class="fw-bold">Meta SEO</h4>
+  <div class="wrapper-page">
+    <div class="my-3">
+      <h6 class="fw-bold form-label">
+        Keyword SEO
+      </h6>
+      <input type="text" class="form-control" id="meta-text" placeholder="ป้อนข้อความ">
+    </div>
+    <p class="empty-validate" id="validate-text"></p>
+    <h6 class="fw-bold">เลือกคุณสมบัติ (name)</h6>
+    <div class="input-group">
+      <div class="check-input-group inline-flex" id="meta-description">
+        <input class="check-input" name="meta" type="radio" value="description" id="description">
+        <label class="check-label" for="description">
+          Description
+        </label>
+      </div>
+
+      <div class="check-input-group inline-flex" id="meta-keyword">
+        <input class="check-input" name="meta" type="radio" value="keywords" id="keywords">
+        <label class="check-label" for="keywords">
+          Keywords
+        </label>
+      </div>
+      <div class="check-input-group inline-flex" id="meta-auther">
+        <input class="check-input" name="meta" type="radio" value="author" id="author">
+        <label class="check-label" for="author">
+          Author
+        </label>
+      </div>
+    </div>
+    <p class="empty-validate" id="validate-name"></p>
+    <button class="m-2 ac-btn bg-blue border-radius-7" id="meta-submit">
+      <i class="fa-solid fa-plus"></i>
+      บันทึก
+    </button>
+  </div>
+  <div class="wrapper-content-page">
+    <% if(entries.length ==0) { %>
+    <div class="empty-table">
+      <div class="empty-icon-table">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h6 class="fw-bold">ไม่มีข้อมูล</h6>
+    </div>
+
+    <% } else if(entries.length >0){ %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr class="align-middle">
+            <th class="text-center">ลำดับ</th>
+            <th>Name</th>
+            <th>Content</th>
+            <th class="text-center">แก้ไข</th>
+            <th class="text-center">ลบ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% 
+              let idx = 1
+              for(let i =0;i< entries.length;i++) {
+            %>
+          <tr class="align-middle">
+            <td class="text-center">
+              <%= idx++ %>
+            </td>
+            <td>
+              <%=  entries[i].meta_name %>
+            </td>
+            <td>
+              <%=  entries[i].content %>
+            </td>
+            <td class="text-center">
+              <button class="ac-btn bg-none text-darkgray meta-edit" data-id="<%= entries[i].meta_id %>">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="ac-btn bg-none  text-darkgray meta-delete" data-id="<%= entries[i].meta_id %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+
+  <%-  include('kword_modal_edit') %>
+</div>
+<script>
+  $('.meta-delete').click(function() {
+    const id = $(this).attr('data-id')
+    confirm('ลบ Meta', 'คุณต้องการลบรายการนี้ ใช่หรือ ไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/meta-delete', {
+              'id': id
+            })
+            .then((res) => {
+              const result = res.data.result
+              if (result) {
+                querySuccess('ลบไขสำเร็จ', 1000)
+              }
+              if (!result) {
+                const err = res.data.err
+                queryFail('ลบ SEO', 'ลบไม่สำเร็จ โปรดลองอีกครั้ง', err)
+              }
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+  })
+
+  $('.meta-edit').click(function() {
+    const id = $(this).attr('data-id')
+    axios.post('/api/meta-edit', {
+        'id': id
+      })
+      .then((res) => {
+        const result = res.data.result
+        const {
+          meta_id,
+          meta_name,
+          content
+        } = res.data.entries[0]
+        const keywordModalEdit = new bootstrap.Modal($('#keyword-modal-edit'))
+        $('#meta-edit-submit').attr('data-id', meta_id)
+        $('#meta-edit-text').val(content)
+        const metaEditRadio = $('[name="meta-edit"]')
+
+        for (let i = 0; i < metaEditRadio.length; i++) {
+          const m = $(metaEditRadio[i])
+          const v = m.val()
+
+          if (v == meta_name) {
+            m.prop('checked', true)
+          }
+        }
+        keywordModalEdit.show()
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+
+
+  $('#meta-submit').click(function() {
+    const metaForm = [{
+      'name': 'text',
+      'input': $('#meta-text'),
+      'validate': $('#validate-text'),
+      'msg': 'กรุณาป้อนข้อความ'
+    }, {
+      'name': 'name',
+      'input': $('[name="meta"]'),
+      'validate': $('#validate-name'),
+      'msg': 'กรุณาเลือกคุณสมบัติ'
+    }]
+    let emptyCount = 0
+    metaForm.forEach((fd) => {
+      const {
+        name,
+        input,
+        validate,
+        msg
+      } = fd
+
+      if (name == 'text') {
+        const v = input.val().trim()
+        if (v == '') {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+      if (name == 'name') {
+        const checked = input.filter(':checked').length
+        if (checked == 0) {
+          validateformEmpty(true, validate, msg)
+          emptyCount++
+        } else {
+          validateformEmpty(false, validate, msg)
+        }
+      }
+    })
+
+    if (emptyCount == 0) {
+      axios.post('/api/add-meta', {
+          'content': $('#meta-text').val(),
+          'name': $('[name="meta"]').filter(':checked').val()
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('เพิ่มสำเร็จ', 1000)
+          }
+          if (!result) {
+            const err = res.data.err
+            queryFail('เพิ่ม SEO', 'เพิ่มไม่สำเร็จ โปรดลองอีกครั้ง', err)
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+  })
+</script>

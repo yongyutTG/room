@@ -1,0 +1,94 @@
+<link rel="stylesheet" href="/css/facility.css">
+<div class="container">
+  <h4 class="fw-bold">
+    สิ่งอำนวยความสะดวก
+  </h4>
+  <div class="wrapper-content-page">
+    <% if(entries.length ==0) { %>
+    <div class="empty-table">
+      <div class="empty-icon-table">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h6 class="text-darkgray fw-bold">ไม่มีข้อมูล</h6>
+    </div>
+    <%  }else { %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="width: 5%;">รายการ</th>
+            <th style="width: 10%;">รูปภาพ</th>
+            <th style="width: 10%;">ชื่อ</th>
+            <th style="width: 55%;">คำอธิบาย</th>
+            <th style="width: 5%;">แก้ไข</th>
+            <th style="width: 5%;">ลบ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i =0;i<entries.length;i++){ %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td>
+              <img src="/src/facility/<%=  entries[i].img %>" class="facility-img-table">
+            </td>
+            <td><%= entries[i].subject %></td>
+            <td><%= entries[i].description %></td>
+            <td>
+              <button class="ac-btn text-darkgray bg-none facility-edit" data-id="<%= entries[i].facility_id  %>">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td>
+              <button class="ac-btn text-darkgray bg-none facility-delete" data-id="<%= entries[i].facility_id  %>" data-img="<%= entries[i].img  %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <%   } %>
+  </div>
+
+
+</div>
+
+<script>
+  $('.facility-edit').click(function() {
+    window.location.assign(`/admin/?p=facility-edit&id=${$(this).attr('data-id')}`)
+  })
+  $('.facility-delete').click(function() {
+    confirm('ลบสิ่งอำนวยความสะดวก', 'คุณต้องการลบสิ่งอำนวยความสะดวกนี้ใช่ หรือไม่ ?').then((result) => {
+      if (result.isConfirmed) {
+        axios.post('/api/delete-facility', {
+            'facility_id': $(this).attr('data-id'),
+            'img': $(this).attr('data-img')
+          })
+          .then((res) => {
+            const result = res.data.result
+
+            if (result) {
+              querySuccess('ลบเรียบร้อย', 1000)
+            }
+
+            if (!result) {
+              queryFail('ลบสิ่งอำนวยความสะดวก', 'ลบล้มเหลว โปรดลองอีกครั้ง', '')
+            }
+          })
+          .catch((err) => {
+            statusErr()
+          })
+      }
+    })
+  })
+</script>

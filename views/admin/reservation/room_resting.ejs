@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="/css/room_resting.css">
+<div class="container">
+  <h4 class="fw-bold">เข้าพักวันนี้</h4>
+  <div class="wrapper-content-page">
+    <% if(entries.length ==0) { %>
+    <div class="empty-table">
+      <div class="empty-icon-table text-blue">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h5 class="fw-bold text-darkgray">ไม่มีรายการ</h5>
+    </div>
+    <% } else if(entries.length > 0) { %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr class="align-middle">
+            <th width="10%">ห้อง </th>
+            <th width="20%">ชื่อ</th>
+            <th width="10%">ยอดรวม</th>
+            <th width="10%">ค้างชำระ</th>
+            <th width="20%">วันเข้าพัก</th>
+            <th width="15%" class="text-center">เข้าพัก</th>
+            <th width="15%" class="text-center">ยกเลิก</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% for(let i=0;i<entries.length;i++) { %>
+          <tr class="align-middle">
+            <td>
+              <p class="text-number-r bg-teal">
+                <%= entries[i].room_number  %>
+              </p>
+
+            </td>
+            <td><%= entries[i].fname+' '+entries[i].lname  %></td>
+            <td><%= entries[i].total_display  %></td>
+            <td><%= entries[i].remain_display  %></td>
+            <td><%= entries[i].checkin  %></td>
+            <td class="text-center">
+              <button class="ac-btn bg-violet border-radius-7 confirm-checkin" data-id="<%= entries[i].booking_id %>" data-price="<%= entries[i].full_price  %>">
+                เข้าพัก
+                <i class="fa-solid fa-right-from-bracket"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="ac-btn text-red border-radius-7 cancel-checkin" data-bookingId="<%= entries[i].booking_id %>" data-roomId="<%= entries[i].room_id %>" data-numberId="<%= entries[i].room_number_id %>">
+                ยกเลิก
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </td>
+          </tr>
+          <% }  %>
+        </tbody>
+      </table>
+    </div>
+    <%} %>
+  </div>
+  <%- include('room_detail_modal') %>
+</div>
+
+<script>
+  $('.confirm-checkin').click(function() {
+    const id = $(this).attr('data-id')
+    const price = $(this).attr('data-price')
+    confirm('เข้าห้องพัก', 'คุณต้องยืนยันการเข้าห้องพัก ใช่หรือ ไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/confirm-checkin', {
+              'booking_id': id,
+              'price': price
+            })
+            .then((res) => {
+              const result = res.data.result
+              if (result) {
+                querySuccess('เข้าพักเรียบร้อย', 1000)
+              }
+
+              if (!result) {
+                queryFail('เข้าห้องพัก', 'ทำรายการล้มเหลว', res.data.err)
+              }
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+  })
+  $('.cancel-checkin').click(function() {
+    confirm('ยกเลิกการเข้าห้องพัก', 'คุณต้องยกเลิกการเขาห้องพัก ใช่หรือ ไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/cancel-checkin', {
+              'booking_id': $(this).attr('data-bookingId'),
+              'room_id': $(this).attr('data-roomId'),
+              'room_number_id': $(this).attr('data-numberId')
+            })
+            .then((res) => {
+              const result = res.data.result
+              if (result) {
+                querySuccess('ยกเลิกเรียบร้อย', 1000)
+              }
+
+              if (!result) {
+                queryFail('ยกเลิกการเข้าห้องพัก', 'ยกเลิกล้มเหลว', res.data.err)
+              }
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+  })
+</script>

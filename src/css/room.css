@@ -1,0 +1,46 @@
+#addroom-submit {
+    margin: 6px 0;
+    display: block;
+    background-color: #FDD835;
+}
+
+#room-upload-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+}
+
+
+#fileupload-preview {
+    display: none;
+}
+
+#insert-room i{
+    margin-right: 7px;
+}
+
+#room-update i {
+    margin-left: 7px;
+}
+
+.check-input-group {
+    margin: 4px 12px;
+    padding: 2px 12px;
+    border-radius: 18px;
+}
+
+#special-options .check-input-group {
+    background: none;
+}
+
+
+.form-label i {
+    margin-right: 7px;
+}
+
+#room-id{
+    background-color: white !important;
+}
+#room-upload{
+    display: none;
+}

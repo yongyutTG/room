@@ -1,0 +1,325 @@
+<link rel="stylesheet" href="/css/booking_report.css">
+<div class="container">
+  <h4 class="fw-bold">รายงานห้องพัก</h4>
+  <div class="wrapper-page">
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="input-group my-3">
+          <label class="input-group-text">
+            เวลา
+          </label>
+          <select class="form-select" name="single-include" id="now-dt" data-active="<%= reverse_p %>">
+            <option value="">เลือก</option>
+            <option value="today">วันนี้</option>
+            <option value="month">เดือนนี้</option>
+            <option value="year">ปีนี้</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="input-group my-3">
+          <span class="input-group-text">
+            จำนวนเวลา
+          </span>
+          <input type="number" min="1" name="multi-include" value="<%= reverse_count  %>" class="form-control" id="reverse-text" placeholder="ป้อนจำนวนย้อนหลัง">
+        </div>
+      </div>
+      <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="input-group my-3">
+          <label class="input-group-text">
+            หน่วยเวลา
+          </label>
+          <select class="form-select" name="multi-include" id="reverse-option" data-active="<%= reverse_unit  %>">
+            <option value="">เลือก</option>
+            <option value="day">วัน</option>
+            <option value="week">สัปดาห์</option>
+            <option value="month">เดือน</option>
+            <option value="year">ปี</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-3">
+          <button class="ac-btn text-darkgray bg-none ac-report" id="report-reset">
+            แสดงทั้งหมด
+          </button>
+          <button class="ac-btn text-blue bg-none ac-report" id="report-include">
+            ค้นหา
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      $('#now-dt').val($('#now-dt').attr('data-active'))
+      $('#reverse-option').val($('#reverse-option').attr('data-active'))
+
+      $('[name="single-include"]').change(function() {
+        $('[name="multi-include"]').val('')
+      })
+
+      $('[name="multi-include"]').keyup(function() {
+        $('[name="single-include"]').val('')
+      })
+      $('[name="multi-include"]').change(function() {
+        $('[name="single-include"]').val('')
+      })
+
+      $('[type="number"]').keyup(function() {
+        const v = $(this).val()
+        const count = Number.parseInt(v)
+        if (isNaN(count)) {
+          $(this).val('')
+        }
+      })
+
+
+      $('#report-include').click(function() {
+        const reverseOption = $('#reverse-option').val()
+        const reverseText = $('#reverse-text').val()
+        const nowDt = $('#now-dt').val()
+        const oneDay = 1000 * 60 * 60 * 24
+        const date_stamp = new Date().valueOf()
+        const d = new Date()
+        const y = d.getFullYear()
+        const m = Display.countDate(d.getMonth() + 1)
+        const today = Display.setDate(date_stamp)
+        const sum_this_month = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate()
+
+        let route = ''
+        if (nowDt != '') {
+          if (nowDt == 'today') {
+            route += `&dt=${today}`
+          }
+
+          if (nowDt == 'month') {
+            route += `&ds=${y}-${m}-01&de=${y}-${m}-${sum_this_month}`
+          }
+          if (nowDt == 'year') {
+            route += `&ds=${y}-01-01&de=${y}-12-31`
+          }
+          route += `&now=${nowDt}`
+        }
+
+        if (reverseOption != '' && reverseText != '') {
+          let dtOption = 0
+          if (reverseOption == 'day') {
+            dtOption = 1000 * 60 * 60 * 24
+          }
+          if (reverseOption == 'week') {
+            dtOption = 1000 * 60 * 60 * 24 * 7
+          }
+          if (reverseOption == 'month') {
+            dtOption = 1000 * 60 * 60 * 24 * 30
+          }
+          if (reverseOption == 'year') {
+            dtOption = 1000 * 60 * 60 * 24 * 30 * 12
+          }
+
+          const append_stamp = Number.parseInt(reverseText) * dtOption
+          const reverse_stamp = date_stamp - append_stamp
+          const reverseDate = Display.setDate(reverse_stamp)
+
+          route += `&ds=${reverseDate}&de=${today}`
+          route += `&count=${reverseText}&unit=${reverseOption}`
+        }
+
+        if (route != '') {
+          const page = Display.thisPage(window.location.href)
+          window.location.assign(`${page}${route}`)
+        }
+      })
+
+      $('#report-reset').click(function() {
+        window.location.assign(Display.thisPage(window.location.href))
+      })
+    </script>
+  </div>
+
+  <div class="wrapper-content-page" style="padding: 2px 14px;">
+    <div id="wrapper-report-switch">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <button class="ac-btn report-switch active" data-id="booking-report">รายการจอง</button>
+        </li>
+        <li class="nav-item">
+          <button class="ac-btn report-switch" data-id="r-number-report">หมายเลขห้อง</button>
+        </li>
+      </ul>
+      <div id="reverse-d">
+
+        <% if(reverse_dt != '') { %>
+
+        <span class="text-darkgray">วันที่</span>
+        <span class="fw-bold"><%= reverse_dt  %></span>
+        <% } %>
+        <% if(reverse_dt_start !='' && reverse_dt_end !=''){ %>
+        <span class="text-darkgray">วันที่</span>
+        <span class="fw-bold"><%= reverse_dt_start %></span>
+        <span class="text-darkgray">ถึง</span>
+        <span class="fw-bold"><%= reverse_dt_end  %></span>
+        <%   } %>
+
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-content-page" id="w-report">
+
+    <script>
+      $('.report-switch').click(function() {
+        const id = $(this).attr('data-id')
+        $.each($('.report-switch'), (index, element) => {
+          if ($(element).attr('data-id') == id) {
+            $(element).addClass('active')
+          }
+          if ($(element).attr('data-id') != id) {
+            $(element).removeClass('active')
+          }
+        })
+
+        $.each($('.report-entries'), (index, element) => {
+          if ($(element).attr('id') == id) {
+            $(element).css('display', 'block')
+          }
+          if ($(element).attr('id') != id) {
+            $(element).css('display', 'none')
+          }
+        })
+      })
+    </script>
+    <div class="report-entries" id="r-number-report">
+      <table class="table">
+        <thead>
+          <tr class="align-middle">
+            <th>ลำดับ</th>
+            <th>หมาเลขห้อง</th>
+            <th class="text-end">รายได้รวม</th>
+            <th class="text-end">จำนวน</th>
+            <th class="text-end">ค่าเฉลี่ย</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i =0;i<r_number_report.length;i++) { %>
+          <tr class="align-middle">
+            <th><%= i+1 %></th>
+            <td><%= r_number_report[i].room_number  %></td>
+            <td class="text-end"><%= r_number_report[i].total_format  %></td>
+            <td class="text-end"><%= r_number_report[i].count  %></td>
+            <td class="text-end"><%= r_number_report[i].avg  %> % </td>
+          </tr>
+          <%   } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="report-entries" id="booking-report">
+
+      <%  if(entries.length==0) { %>
+      <div class="empty-table">
+        <div class="empty-icon-table text-blue">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <h5 class="fw-bold text-darkgray">ไม่มีรายการจอง</h5>
+      </div>
+      <% } else if(entries.length > 0) { %>
+      <div class="entries-d">
+        <span class="entries-text">แสดง</span>
+        <span class="entries-count">
+          <%= entries.length  %>
+        </span>
+        <span>
+          รายการ
+        </span>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th class="text-center" style="width: 5%;">รายการ</th>
+              <th style="width: 25%;">ID</th>
+              <th style="width: 25%;">YYYY-MM-DD H:i:s</th>
+              <th class="text-end" style="width: 15%;">ยอดรวม</th>
+              <th class="text-center" style="width: 10%;">ดูข้อมูล</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i =0;i<entries.length;i++) { %>
+            <tr class="align-middle">
+              <td class="text-center"><%= i+1 %></td>
+              <td><%= entries[i].booking_id %></td>
+              <td><%= entries[i].created %></td>
+              <td class="text-end"><%= entries[i].total_display  %></td>
+              <td class="text-center">
+                <button class="ac-btn text-darkgray bg-none booking-report-detail" data-id="<%= entries[i].booking_id  %>">
+                  <i class="fa-brands fa-readme"></i>
+                </button>
+              </td>
+            </tr>
+            <% }%>
+
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+<%- include('booking_report_modal')  %>
+<script>
+  $('.booking-report-detail').click(function() {
+    axios.post('/api/report-booking', {
+        'booking_id': $(this).attr('data-id')
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          queryFail('ข้อมูลรายการจองห้องพัก', 'โหลดข้อมูลไม่สำเร็จ', res.data.err)
+        }
+        if (result) {
+          const entries = res.data.entries
+          const {
+            bank,
+            booking_id,
+            checkin,
+            checkout,
+            created,
+            fname,
+            lname,
+            modified,
+            pattern,
+            person_count,
+            phone,
+            room_id,
+            room_number_id,
+            room_number,
+            statement,
+          } = entries[0]
+
+          const times_count = `${entries[0].times_count} ${Display.unitTimes(entries[0].unit_times)}`
+          const price = Display.setNumberFormat(entries[0].total)
+          const payment = Display.setPayment(entries[0].payment)
+          const status = Display.bookingStatus(entries[0].status)
+          const reportData = [
+            booking_id, room_number_id,
+            room_number, fname, lname,
+            phone, created, checkin,
+            checkout, times_count,
+            person_count, price,
+            payment,
+            status
+          ]
+
+          $.each($('.text-detail'), (index, element) => {
+            $(element).text(reportData[index])
+          })
+          $('#booking-id').text(booking_id)
+          new bootstrap.Modal($('#booking-report-modal')).show()
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+</script>

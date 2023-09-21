@@ -1,0 +1,63 @@
+.form-label {
+  color: #17202A;
+  border: 2px solid #17202A;
+  padding: 2px 14px;
+  border-radius: 18px;
+}
+
+.form-label i {
+  margin-right: 7px;
+}
+
+.web-social-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.webpage-control-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 12px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+
+.webpage-save-btn,
+.webpage-del-btn {
+  display: none;
+}
+
+.manage-social {
+  border-radius: 7px;
+  padding: 12px 18px;
+  border: 2px solid #263238;
+}
+
+.webpage-save-btn {
+  color: #0066FF;
+  padding: 2px 12px !important;
+  border-radius: 8px;
+  font-weight: bold;
+  background: none;
+}
+
+.webpage-del-btn {
+  color: #263238;
+  background: none;
+  padding: 2px 12px !important;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.input-group-text {
+  background-color: #EEEEEE !important;
+  color: #263238 !important;
+}
+
+.ac-btn i {
+  margin: 0;
+  margin-left: 7px;
+}

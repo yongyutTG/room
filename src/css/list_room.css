@@ -1,0 +1,70 @@
+.q-img {
+  width: 120px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.check-input-group {
+  padding: 2px 12px;
+  color: white;
+  border-radius: 18px !important;
+}
+
+.ac-btn {
+  border-radius: 7px !important;
+}
+
+
+.room-detail i,
+.resting-room i,
+.booking-room i {
+  margin-right: 7px;
+}
+
+.input-group-text i {
+  margin-right: 7px;
+}
+
+#searchRoom-submit i {
+  margin-right: 7px;
+}
+
+
+.check-input-group {
+  background-color: #EEEEEE;
+  color: black;
+  padding: 4px 12px;
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  background-color: white;
+}
+
+#booking-insert i,
+#resting-insert i {
+  margin-right: 7px;
+}
+
+#booking-max-people,
+#max-people,
+#booking-price-over-people,
+#price-over-people {
+  border: 2px solid #000066 !important;
+  background-color: #000066;
+}
+
+#booking-max-people,
+#max-people {
+  color: white !important;
+}
+
+#booking-total,
+#resting-total {
+  color: #000066 !important;
+}
+
+#booking-price-over-people,
+#price-over-people {
+  color: white !important;
+}

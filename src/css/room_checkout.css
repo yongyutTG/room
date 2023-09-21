@@ -1,0 +1,50 @@
+#checkout-form {
+  border-radius: 12px;
+  border: 2px solid #424949;
+}
+
+
+#checkout-search i {
+  margin-right: 7px;
+}
+
+.copy-id:active {
+  background-color: #424949 !important;
+  color: white;
+}
+
+.tooltip-alert {
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  right: -50px;
+  padding: 2px 12px;
+  border-radius: 12px !important;
+}
+
+.tooltip-alert.success {
+  background-color: #616161;
+  color: white;
+}
+
+.tooltip-alert.fail {
+  color: #FF0033;
+}
+
+.checkout-price-over {
+  border: 2px solid  white !important;
+}
+#add-price-over i {
+  margin-right:7px ;
+}
+.form-label{
+  color: #000099;
+}
+#ac-control{
+  display: none;
+}
+#checkout-bookingId:disabled{
+background-color: white !important;
+color: black !important;
+border: none!important;
+}

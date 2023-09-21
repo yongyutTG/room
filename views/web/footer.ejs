@@ -1,0 +1,96 @@
+<footer>
+  <div class="container">
+    <% const about = data.about %>
+    <% if(about.length >0) { %>
+    <div class="row">
+      <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <h5 class="footer-subtitle">เกี่ยวกับเรา</h5>
+        <div class="footer-descript">
+          <p class="footer-text">
+            <%=  about[0].company %>
+          </p>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+
+        <h5 class="footer-subtitle">ติดต่อเรา</h5>
+        <div class="footer-descript">
+          <div>
+            <span>
+              <i class="fa-solid fa-phone-volume"></i>
+              <b>โทร</b>
+            </span>
+            <p><%=  about[0].contact_number %></p>
+          </div>
+          <div>
+            <span>
+              <i class="fa-regular fa-envelope"></i>
+              <b>E-mail</b>
+            </span>
+            <div><%=  about[0].email %></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <h5 class="footer-subtitle">
+          ที่ทำงาน
+          <i class="fa-solid fa-location-dot"></i>
+        </h5>
+        <div class="footer-descript">
+          <p class="footer-text"> <%= about[0].location  %></p>
+          <p class="footer-text">
+            <span><%= about[0].road_alley  %></span>
+            <span><%= about[0].sub_district  %></span>
+          </p>
+          <p class="footer-text">
+            <span><%= about[0].province %></span>
+            <span><%= about[0].postcode %></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% }%>
+
+
+    <div class="footer-wrapper" id="footer-social">
+      <% const social = data.social %>
+
+      <ul class="footer-social-icon">
+        <%  for(let i =0 ;i< social.length;i++) { %>
+        <% if(social[i].id=='fb' && social[i].status=='on'){ %>
+        <li>
+          <a href="<%= social[i].link %>" class="footer-social-link">
+            <i class="fa-brands fa-square-facebook"></i>
+          </a>
+        </li>
+        <% } %>
+        <% if(social[i].id=='twitter' && social[i].status=='on'){ %>
+        <li>
+          <a href="<%= social[i].link %>" class="footer-social-link">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+        </li>
+        <% } %>
+        <% if(social[i].id=='ig' && social[i].status=='on'){ %>
+        <li>
+          <a href="<%= social[i].link %>" class="footer-social-link">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+        </li>
+        <% } %>
+        <% if(social[i].id=='line' && social[i].status=='on'){ %>
+        <li>
+          <a href="<%= social[i].link %>" class="footer-social-link">
+            <i class="fa-brands fa-line"></i>
+          </a>
+        </li>
+        <% } %>
+        <%  } %>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        CopyRight &copy; <span><%= new Date().getFullYear() %></span>
+      </div>
+    </div>
+  </div>
+</footer>

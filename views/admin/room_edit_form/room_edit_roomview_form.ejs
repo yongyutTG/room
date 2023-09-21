@@ -1,0 +1,60 @@
+<div>
+  <input type="hidden" value="<%= entries[0].roomview %>" id="roomview-value">
+  <h6 class="fw-bold form-label"> วิวของห้อง</h6>
+  <div class="row">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" value="garden-view" id="garden-view" type="radio" name="roomview" />
+        <label class="check-label" for="garden-view"> Garden View </label>
+        <button class="roomview-viewinfo ac-btn text-darkgray bg-none" data-roomview="garden-view">
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" value="seaview" id="seaview" type="radio" name="roomview" />
+        <label class="check-label" for="seaview"> Seaview </label>
+        <button class="roomview-viewinfo ac-btn text-darkgray bg-none" data-roomview="seaview">
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" value="poolview" id="poolview" type="radio" name="roomview" />
+        <label class="check-label" for="poolview"> Poolview </label>
+        <button class="roomview-viewinfo ac-btn text-darkgray bg-none" data-roomview="poolview">
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" value="pool-access" id="pool-access" type="radio" name="roomview" />
+        <label class="check-label" for="pool-access"> Pool Access </label>
+        <button class="roomview-viewinfo ac-btn text-darkgray bg-none" data-roomview="pool-access">
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" value="beach-front" id="beach-front" type="radio" name="roomview" />
+        <label class="check-label" for="beach-front"> Beach Front </label>
+        <button class="roomview-viewinfo ac-btn text-darkgray bg-none" data-roomview="beach-front">
+          <i class="fa-solid fa-reply-all"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="check-input-group">
+        <input class="check-input" type="radio" value="view-no-specify" name="roomview" id="view-no-specify" />
+        <label class="check-label" for="view-no-specify"> ไม่ระบุ </label>
+      </div>
+    </div>
+  </div>
+
+  <p class="empty-validate" id="validate-roomview"></p>
+</div>

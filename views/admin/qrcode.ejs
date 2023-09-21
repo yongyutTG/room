@@ -1,0 +1,164 @@
+<link rel="stylesheet" href="/css/qrcode.css">
+<div class="container">
+  <% let submitDisplay = `style="display:inline-flex"` %>
+  <% let editDisplay = `style="display:none"` %>
+  <% let qrcodeUpload = `style="display:inline"` %>
+  <% let qrBank = '' %>
+  <% let qrBankVal = '' %>
+  <% let qrImg = '' %>
+  <% if(entries.length ==1) {
+    submitDisplay = `style="display:none"`
+    editDisplay = `style="display:inline-flex"`
+    qrcodeUpload = `style="display:none"`
+    qrBank = 'disabled'
+    qrBankVal = entries[0].bank
+    qrImg = entries[0].img
+  } %>
+
+  <h4 class="fw-bold"> ช่องทางการชำระเงินแบบ (QRCode)</h4>
+  <div class="wrapper-content-page">
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <input type="hidden" value="<%= qrBankVal  %>" id="active-qrbank">
+          <div class="input-group">
+            <label class="input-group-text">
+              <i class="fa-solid fa-credit-card"></i>
+            </label>
+            <select class="form-select" id="qr-bank" <%= qrBank %>>
+              <option value="" selected>เลือกธนาคาร</option>
+              <option value="kbank">ธนาคารกสิกรไทย</option>
+              <option value="bbl">ธนาคารกรุงเทพ</option>
+              <option value="scb">ธนาคารไทยพาณิชย์</option>
+              <option value="ktb">ธนาคารกรุงไทย</option>
+              <option value="bay">ธนาคารกรุงศรีอยุธยา</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="empty-validate" id="validate-qrbank"></p>
+    <div class="my-2">
+      <label for="qrcode-upload" id="qrcode-upload-label" class="fw-bold label-upload" <%- qrcodeUpload %>>
+        <input type="file" name="" id="qrcode-upload" accept="image/*">
+        <i class="fa-solid fa-barcode"></i>
+        Qr code
+      </label>
+
+      <input type="hidden" value="<%= qrImg %>" id="active-qrcode">
+      <div id="qrcode-preview"></div>
+      <p class="empty-validate" id="validate-qrcode"></p>
+    </div>
+
+    <button id="qrcode-submit" class="fw-bold ac-btn bg-darkgray border-radius-7" <%- submitDisplay %>>
+      บันทึก
+      <i class="fa-regular fa-clone"></i>
+    </button>
+    <button id="qrcode-edit" class="fw-bold ac-btn bg-none text-blue border-radius-7" <%- editDisplay %>>
+      แก้ไข
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      $('#qr-bank').val($('#active-qrbank').val())
+      const src = $('#active-qrcode').val()
+      if (src != '') {
+        $('#qrcode-preview').
+        css('border', 'none')
+          .html(`<img src="/src/qrcode/${src}">`)
+      }
+    })
+    $('#qrcode-edit').click(function() {
+      $('#qrcode-submit').css('display', 'inline-flex')
+      $(this).css('display', 'none')
+      $('#qr-bank').prop('disabled', false)
+      $('#qrcode-upload-label').css('display', 'inline')
+      $('#qrcode-preview')
+        .css('border', '2px solid #EEEEEE')
+        .children().remove()
+    })
+
+
+    $('#qrcode-upload').change(function() {
+      const file = $(this)[0].files[0]
+      if (file != undefined) {
+        const src = URL.createObjectURL(file)
+        $('#qrcode-preview').css('border', 'none').html(`<img src="${src}">`)
+      } else {
+        $('#qrcode-preview')
+          .css('border', '2px solid #EEEEEE')
+          .children().remove()
+      }
+    })
+
+    $('#qrcode-submit').click(function() {
+      const qrcodeForm = [{
+        'name': 'qr_bank',
+        'input': $('#qr-bank'),
+        'validate': $('#validate-qrbank'),
+        'msg': 'กรุณาเลือกธนาคาร'
+      }, {
+        'name': 'qrcode',
+        'input': $('#qrcode-upload'),
+        'validate': $('#validate-qrcode'),
+        'msg': 'กรุณาเลือกรูปภาพ'
+      }]
+      let emptyCount = 0
+      qrcodeForm.forEach((fd) => {
+        const {
+          input,
+          msg,
+          validate,
+          name
+        } = fd
+
+        if (name == 'qr_bank') {
+          if (input.val() == '') {
+            validateformEmpty(true, validate, msg)
+            emptyCount++
+          } else {
+            validateformEmpty(false, validate, '')
+          }
+        }
+
+        if (name == 'qrcode') {
+          const file = input[0].files.length
+          if (file == 0) {
+            validateformEmpty(true, validate, msg)
+            emptyCount++
+          } else {
+            validateformEmpty(false, validate, msg)
+          }
+        }
+      })
+
+      if (emptyCount == 0) {
+        const formData = new FormData()
+        formData.append('old_qrcode', $('#active-qrcode').val())
+        formData.append('bank', $('#qr-bank').val())
+        formData.append('qrcode', $('#qrcode-upload')[0].files[0])
+
+        axios.post('/api/add-qrcode', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then((res) => {
+            const result = res.data.result
+
+            if (result) {
+              querySuccess('บันทึกสำเร็จ', 1000)
+            }
+
+            if (!result) {
+              queryFail('บันทึกการชำระเงินด้วย QRCode', 'ไม่สามารถบันทึกได้', res.data.err)
+            }
+          })
+          .catch((err) => {
+            statusErr()
+          })
+      }
+    })
+  </script>
+</div>

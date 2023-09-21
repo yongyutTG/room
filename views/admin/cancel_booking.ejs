@@ -1,0 +1,191 @@
+<style>
+  .include-wrapper {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .include-wrapper i {
+    font-size: 4rem;
+  }
+</style>
+<div class="container">
+  <div class="container">
+    <h4 class="fw-bold">ยกเลิกการจอง และเข้าพัก</h4>
+    <div class="wrapper-page">
+      <div class="row">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+          <div class="input-group my-2">
+            <input type="text" value="<%= name  %>" id="name-text" class="form-control" placeholder="ป้อนชื่อ - นามสกุล">
+            <button class="ac-btn bg-none text-darkgray" id="name-include">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+          <div class="input-group my-2">
+            <input type="text" value="<%= id  %>" id="id-text" class="form-control" placeholder="ป้อนรหัสการจอง หรือ เข้าพัก  (ID)" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <button class="ac-btn bg-none text-darkgray" id="id-include">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="ac-btn bg-none text-blue" id="reset-include">
+        รีเซ็ต
+      </button>
+
+      <script>
+        const thisPage = Display.thisPage(window.location.href)
+        $('#name-include').click(function() {
+          const n = $('#name-text').val().trim()
+          if (n != '') {
+            const word = n.split(' ').filter((w) => w != '').join('-')
+            window.location.assign(`${thisPage}&n=${word}`)
+          }
+        })
+
+        $('#name-text').focus(function() {
+          $('#id-text').val('')
+        })
+        $('#id-text').focus(function() {
+          $('#name-text').val('')
+        })
+
+
+        $('#id-include').click(function() {
+          const id = $('#id-text').val().trim().replaceAll(' ', '')
+          if (id != '') {
+            window.location.assign(`${thisPage}&id=${id}`)
+          }
+
+        })
+
+        $('#reset-include').click(function() {
+          if ($('#name-text').val() != '' || $('#id-text').val() != '') {
+            window.location.assign(Display.thisPage(window.location.href))
+          }
+
+        })
+      </script>
+    </div>
+    <div class="wrapper-content-page" id="w-report">
+      <% if(q == 0){ %>
+      <div class="include-wrapper text-darkgray">
+        <i class="fa-solid fa-money-bills"></i>
+        <h5 class="fw-bold my-3">ค้นหารายการจอง</h5>
+      </div>
+      <% } %>
+      <% if(q == 1){ %>
+      <%  if(entries.length==0) { %>
+      <div class="empty-table">
+        <div class="empty-icon-table text-blue">
+          <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <h5 class="fw-bold text-darkgray">ไม่มีรายการจอง</h5>
+      </div>
+      <% } else if(entries.length > 0) { %>
+      <div class="entries-d">
+        <span class="entries-text">แสดง</span>
+        <span class="entries-count">
+          <%= entries.length  %>
+        </span>
+        <span>
+          รายการ
+        </span>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th class="text-center" style="width: 5%;">รายการ</th>
+              <th style="width: 25%;">ID</th>
+              <th style="width: 15%;">ชื่อ - นามสกุล</th>
+              <th class="text-end" style="width: 15%;">ยอดรวม</th>
+              <th style="width: 20%;">วันที่จอง</th>
+              <th style="width: 25%;">ยืนยัน</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i =0;i<entries.length;i++) { %>
+            <tr class="align-middle">
+              <td class="text-center"><%= i+1 %></td>
+              <td><%= entries[i].booking_id %></td>
+              <td>
+                <%= entries[i].fname + ' '+entries[i].lname %>
+              </td>
+              <td class="text-end"><%= entries[i].total_display %></td>
+              <td><%= entries[i].created %></td>
+              <td>
+                <div class="input-group my-2">
+                  <input type="number" min="0" value="0" class="form-control">
+                  <button class="ac-btn bg-none text-darkgray cancel-booking" data-id="<%= entries[i].booking_id  %>">
+                    ตกลง
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <% }%>
+
+          </tbody>
+        </table>
+      </div>
+      <script>
+        $('.cancel-booking').click(function() {
+          const money = Number.parseFloat($(this).prev().val())
+
+          if (isNaN(money)) {
+            queryFail('ยกเลิกการจอง และ การเข้าพัก', 'กรุณากรอกข้อมูลให้ถูกต้อง', '')
+          } else {
+            if (money > 0) {
+              confirm('ยกเลิกการจอง และ การเข้าพัก', 'คุณต้องการยกลเลิก การจองและ คืนเงืนใช่ หรือไม่ ?')
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    const id = $(this).attr('data-id')
+                    axios.post('/api/cancel-booking-list', {
+                        'booking_id': id,
+                        'money': money
+                      })
+                      .then((res) => {
+                        const result = res.data.result
+                        if (result) {
+                          Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: 'ยกเลิกเรียบร้อย',
+                            showConfirmButton: false,
+                            timer: 1000
+                          })
+                          setInterval(() => {
+                            window.location.assign(`${Display.thisPage(window.location.href)}`)
+                          }, 1000)
+                        }
+
+                        if (!result) {
+                          queryFail('ยกเลิกการจอง และ การเข้าพัก', 'ยกเลิกไม่สำเร็จ! โปรดลองอีกครั้ง', '')
+                        }
+                      })
+                  }
+                })
+            }
+          }
+        })
+
+
+        $('input[type="number"]').keyup(function() {
+          const money = Number.parseFloat($(this).val())
+          if (isNaN(money)) {
+            $(this).val('')
+          }
+        })
+      </script>
+      <% } %>
+      <% } %>
+    </div>
+  </div>
+</div>

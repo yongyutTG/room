@@ -1,0 +1,355 @@
+<link rel="stylesheet" href="/css/dashboard.css">
+<div class="container">
+  <div class="d-wrapper-s">
+    <div class="d-wrapper-items booking-today">
+      <div class="d-wrapper">
+        <h5 class="d-title">จองวันนี้
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-address-book"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= booking_count  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items checkin-today">
+      <div class="d-wrapper">
+        <h5 class="d-title">เข้าพักวันนี้
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-suitcase"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= checkin  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items checkout-today">
+      <div class="d-wrapper">
+        <h5 class="d-title">ออกวันนี้
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= checkout  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items room-empty">
+      <div class="d-wrapper">
+        <h5 class="d-title">
+          ห้องว่าง
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= list_rooms_empty  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items non-empty">
+      <div class="d-wrapper">
+        <h5 class="d-title">
+          จองแล้ว
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= non_empty %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items list-room-all">
+      <div class="d-wrapper">
+        <h5 class="d-title">
+          ห้องพักทั้งหมด
+          <i class="fa-solid fa-align-right"></i>
+        </h5>
+        <div class="d-text">
+          <div class="d-icon">
+            <i class="fa-solid fa-house"></i>
+          </div>
+          <div class="d-text-count">
+            <div class="d-text-count-w">
+              <%= list_rooms  %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if(admin_level !='genaral'){ %>
+
+  <h5 class="fw-bold">รายได้</h5>
+  <div class="d-wrapper-s">
+    <div class="d-wrapper-items today-total">
+      <div class="d-wrapper">
+        <h5 class="total-d-title">วันนี้</h5>
+        <div class="total-d-text">
+          <div class="total-d-icon">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+          <div class="total-d-text-count">
+            <%= sum_total_today  %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items week-total">
+      <div class="d-wrapper">
+        <h5 class="total-d-title">สัปดาห์นี้</h5>
+        <div class="total-d-text">
+          <div class="total-d-icon">
+            <i class="fa-solid fa-circle-dollar-to-slot"></i>
+          </div>
+          <div class="total-d-text-count">
+            <%= sum_total_week  %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items month-total">
+      <div class="d-wrapper">
+        <h5 class="total-d-title">เดือนนี้</h5>
+        <div class="total-d-text">
+          <div class="total-d-icon">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+          <div class="total-d-text-count">
+            <%= sum_total_month  %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-wrapper-items year-total">
+      <div class="d-wrapper">
+        <h5 class="total-d-title">ปีนี้</h5>
+        <div class="total-d-text">
+          <div class="total-d-icon">
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+          <div class="total-d-text-count">
+            <%= sum_total_year  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h5 class="fw-bold">รายได้สัปดาห์นี้</h5>
+  <% const entries =5 %>
+  <div class="wrapper-content-page">
+    <% const  week_total_page = Math.ceil(week_total.length/entries)  %>
+    <%  let w_index =  0 %>
+    <% for(let p =1;p<=week_total_page;p++){ %>
+    <div class="week-table" id="week-table-<%= p  %>">
+      <h5>หน้า <%= p  %></h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th>ลำดับ</th>
+              <th>หมาเลขห้อง</th>
+              <th class="text-end">รายได้รวม</th>
+              <th class="text-end">จำนวน</th>
+              <th class="text-end">ค่าเฉลี่ย</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%   w_index == (p*entries) %>
+            <% while (w_index< entries*p) { %>
+            <% if(w_index<week_total.length){ %>
+            <tr class="align-middle">
+              <th><%= w_index+1 %></th>
+              <td><%= week_total[w_index].room_number  %></td>
+              <td class="text-end"><%= week_total[w_index].total_format  %></td>
+              <td class="text-end"><%= week_total[w_index].count  %></td>
+              <td class="text-end"><%= week_total[w_index].avg  %> % </td>
+            </tr>
+            <%   } %>
+            <% w_index++  %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% } %>
+
+    <ul class="nav nav-pills">
+      <% for(let i=1;i<=week_total_page;i++){ %>
+      <% const  active = i==1?'active':''  %>
+      <li class="nav-item">
+        <button class="ac-btn m-1 to-week-table <%= active %>" data-target="week-table-<%=i  %>">
+          <%= i %>
+        </button>
+      </li>
+      <%   } %>
+    </ul>
+  </div>
+  <h5 class="fw-bold">รายได้เดือนนี้</h5>
+  <div class="wrapper-content-page">
+    <% const month_total_page = Math.ceil(month_total.length/entries) %>
+
+    <% let m_index = 0 %>
+    <% for(let p =1;p<=month_total_page;p++){ %>
+    <div class="month-table" id="month-table-<%= p  %>">
+      <h5>หน้า <%= p  %></h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th>ลำดับ</th>
+              <th>หมาเลขห้อง</th>
+              <th class="text-end">รายได้รวม</th>
+              <th class="text-end">จำนวน</th>
+              <th class="text-end">ค่าเฉลี่ย</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%   m_index == (p*entries) %>
+            <% while (m_index< entries*p) { %>
+            <% if(m_index<month_total.length){ %>
+            <tr>
+              <th><%= m_index+1  %></th>
+              <td><%= month_total[m_index].room_number  %></td>
+              <td class="text-end"><%= month_total[m_index].total_format  %></td>
+              <td class="text-end"><%= month_total[m_index].count  %></td>
+              <td class="text-end"><%= month_total[m_index].avg %> % </td>
+            </tr>
+            <% }  %>
+            <% m_index++  %>
+            <% }  %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% } %>
+    <ul class="nav nav-pills">
+      <% for(let i=1;i<=month_total_page;i++){ %>
+      <% const  active = i==1?'active':''  %>
+      <li class="nav-item">
+        <button class="ac-btn m-1 to-month-table <%= active %>" data-target="month-table-<%=i  %>">
+          <%= i %>
+        </button>
+      </li>
+      <%   } %>
+    </ul>
+  </div>
+
+  <h5 class="fw-bold">รายได้ปีนี้</h5>
+  <div class="wrapper-content-page">
+    <% const year_total_page = Math.ceil(year_total.length/entries) %>
+
+    <% let y_index = 0 %>
+    <% for(let p =1;p<=year_total_page;p++){ %>
+    <div class="year-table" id="year-table-<%= p  %>">
+      <h5>หน้า <%= p  %></h5>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th>ลำดับ</th>
+              <th>หมาเลขห้อง</th>
+              <th class="text-end">รายได้รวม</th>
+              <th class="text-end">จำนวน</th>
+              <th class="text-end">ค่าเฉลี่ย</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%   y_index == (p*entries) %>
+            <% while (y_index< entries*p) { %>
+            <% if(y_index<year_total.length){ %>
+            <tr>
+              <th><%= y_index+1  %></th>
+              <td><%= month_total[y_index].room_number  %></td>
+              <td class="text-end"><%= month_total[y_index].total_format  %></td>
+              <td class="text-end"><%= month_total[y_index].count  %></td>
+              <td class="text-end"><%= month_total[y_index].avg %> % </td>
+            </tr>
+            <% }  %>
+            <% y_index++  %>
+            <% }  %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <% } %>
+    <ul class="nav nav-pills">
+      <% for(let i=1;i<=year_total_page;i++){ %>
+      <% const  active = i==1?'active':''  %>
+      <li class="nav-item">
+        <button class="ac-btn m-1 to-year-table <%= active %>" data-target="year-table-<%=i  %>">
+          <%= i %>
+        </button>
+      </li>
+      <%   } %>
+    </ul>
+  </div>
+  <script>
+    function switchToTable(name, element) {
+      const id = $(element).attr('data-target')
+
+      $.each($(`.to-${name}-table`), (index, btn) => {
+        if ($(btn).attr('data-target') == id) {
+
+          $(btn).addClass('active')
+        }
+
+        if ($(btn).attr('data-target') != id) {
+          $(btn).removeClass('active')
+        }
+      })
+
+      $.each($(`.${name}-table`), (index, table) => {
+        if ($(table).attr('id') == id) {
+          $(table).css('display', 'block')
+
+        }
+        if ($(table).attr('id') != id) {
+          $(table).css('display', 'none')
+        }
+      })
+    }
+
+    $('.to-week-table').click(function() {
+      switchToTable('week', $(this))
+    })
+    $('.to-month-table').click(function() {
+      switchToTable('month', $(this))
+    })
+    $('.to-year-table').click(function() {
+      switchToTable('year', $(this))
+    })
+  </script>
+  <%  } %>
+
+</div>

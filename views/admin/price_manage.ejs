@@ -1,0 +1,357 @@
+<link rel="stylesheet" href="/css/price_manage.css">
+<div class="container">
+  <h4 class="fw-bold ">จัดการราคาห้องพัก</h4>
+  <div class="wrapper-page" id="price-m-form">
+    <div class="input-group my-2">
+      <span class="input-group-text">หมายเลขห้อง</span>
+      <select class="form-select" id="r-number" name="single-filter">
+
+        <option value="" selected>เลือกหมายเลขห้อง</option>
+        <% for (let i =0;i<room_number.length;i++) { %>
+        <% const numberSelected = q_number == room_number[i].room_id ? 'selected'  : '' %>
+        <% const number  = JSON.parse(room_number[i].room_sub).map((r)=>r.room_number).join('-') %>
+
+        <option value="<%= room_number[i].room_id  %>" <%= numberSelected  %>>
+          <%= number  %>
+        </option>
+        <% } %>
+      </select>
+    </div>
+    <div class="row my-2">
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_roomtype  %>" id="active-roomtype">
+        <div class="input-group my-2">
+          <span class="input-group-text"><i class="fa-solid fa-hotel"></i></span>
+          <select class="form-select" id="r-type" name="multi-filter">
+            <option value="" selected>ประเภทห้องพัก</option>
+            <option value="standard">Standard</option>
+            <option value="superior">Superior</option>
+            <option value="deluxe">Deluxe</option>
+            <option value="suite">Suite</option>
+            <option value="family">Family</option>
+            <option value="studio">Studio</option>
+            <option value="connecting">Connecting</option>
+            <option value="duplex">Duplex</option>
+            <option value="villa">Villa</option>
+            <option value="adjoining">Adjoining</option>
+            <option value="cabana">Cabana</option>
+            <option value="honeymoon">Honeymoon</option>
+            <option value="roomtype-no-specify">ไม่ระบุ</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_bed  %>" id="active-bed">
+        <div class="input-group my-2">
+          <span class="input-group-text">
+            <i class="fa-solid fa-bed"></i>
+          </span>
+          <select class="form-select" id="b-type" name="multi-filter">
+            <option selected value="">ประเภทเตียง</option>
+            <option value="king-sized">King Sized</option>
+            <option value="queen-sized">Queen Sized</option>
+            <option value="single-bed">Single</option>
+            <option value="twin-bed">Twin</option>
+            <option value="double-bed">Double</option>
+            <option value="triple-bed">Triple</option>
+            <option value="quad-bed">Quad</option>
+            <option value="bedtype-no-specify">ไม่ระบุ</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_view  %>" id="active-view">
+        <div class="input-group my-2">
+          <span class="input-group-text">
+            <i class="fa-solid fa-mountain-sun"></i>
+          </span>
+          <select class="form-select" id="r-view" name="multi-filter">
+            <option value="" selected>เลือกวิว</option>
+            <option value="garden-view">Garden View</option>
+            <option value="seaview">Seaview</option>
+            <option value="poolview">Poolview</option>
+            <option value="pool-access">Pool Access</option>
+            <option value="beach-front">Beach Front</option>
+            <option value="view-no-specify">ไม่ระบุ</option>
+          </select>
+        </div>
+      </div>
+
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_price  %>" id="active-price">
+        <div class="input-group my-2">
+          <span class="input-group-text">
+            <i class="fa-solid fa-hand-holding-dollar"></i>
+          </span>
+          <select class="form-select" id="list-price" name="multi-filter">
+            <option value="" selected>เลือกราคา</option>
+            <% for (let i =0;i<list_price.length;i++) { %>
+
+            <option value="<%= list_price[i].value  %>">
+              <%= list_price[i].opt  %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_min %>" id="active-min">
+        <div class="my-3">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-clock"></i>
+            </span>
+            <input type="number" class="form-control range-price" name="multi-filter" id="min-price" placeholder="ราคาเริ่มต้น">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_max  %>" id="active-max">
+        <div class="my-3">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-hourglass-end"></i>
+            </span>
+            <input type="number" class="form-control range-price" name="multi-filter" id="max-price" placeholder="ราคาสูงสุด">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+        <input type="hidden" value="<%= q_list  %>" id="active-entries">
+        <div class="my-3">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-list"></i>
+            </span>
+            <select class="form-select" id="entries" name="multi-filter">
+              <option value="" selected>แสดงรายการ</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-4 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <button class="ac-btn text-blue border-radius-7" id="price-m-reset">
+          รีเซ็ตค่า
+        </button>
+
+        <button class="ac-btn text-blue border-radius-7" id="price-m-entries">
+          ทั้งหมด
+        </button>
+
+        <button class="ac-btn bg-blue border-radius-7" id="price-m-search">
+          ค้นหา
+        </button>
+      </div>
+
+    </div>
+    <script>
+      $('#price-m-search').click(function() {
+        let route = ''
+        const rNumber = $('#r-number').val()
+        const rType = $('#r-type').val()
+        const bType = $('#b-type').val()
+        const rView = $('#r-view').val()
+        const dCreated = $('#d-created').val()
+        const entries = $('#entries').val()
+        const listPrice = $('#list-price').val()
+        const minPrice = Number.parseFloat($('#min-price').val())
+        const maxPrice = Number.parseFloat($('#max-price').val())
+
+
+        route += setqueryParams(rNumber, 'n')
+        route += setqueryParams(rType, 'rt')
+        route += setqueryParams(bType, 'bed')
+        route += setqueryParams(rView, 'view')
+        route += setqueryParams(listPrice, 'price')
+        route += setqueryParams(entries, 'list')
+
+        if (!isNaN(maxPrice) && !isNaN(minPrice)) {
+          if (maxPrice > minPrice) {
+            route += `&min=${minPrice}&max=${maxPrice}`
+          }
+        }
+
+        if (route != '') {
+          const thisPage = window.location.href
+          const end = thisPage.includes('&') ? thisPage.indexOf('&') : -1
+          route = end >= 0 ? thisPage.substring(0, end) + route : thisPage + route
+          window.location.assign(route)
+        }
+
+      })
+
+      $('.range-price').keyup(function() {
+        $('#list-price').val('')
+        if (isNaN(Number.parseFloat($(this).val()))) {
+          $(this).val('')
+        }
+      })
+      $('.range-price').change(function() {
+        $('#list-price').val('')
+      })
+
+      function setqueryParams(search, key) {
+        return search != '' ? `&${key}=${search}` : ''
+      }
+
+      $('#r-type').val($('#active-roomtype').val())
+      $('#b-type').val($('#active-bed').val())
+      $('#r-view').val($('#active-view').val())
+      $('#list-price').val($('#active-price').val())
+      $('#min-price').val($('#active-min').val())
+      $('#max-price').val($('#active-max').val())
+      $('#entries').val($('#active-entries').val())
+
+
+      $('[name="multi-filter"]').change(function() {
+        $('[name="single-filter"]').val('')
+      })
+
+      $('[name="single-filter"]').change(function() {
+        $('[name="multi-filter"]').val('')
+      })
+
+      $('#price-m-reset').click(function() {
+        $('[name="single-filter"]').val('')
+        $('[name="multi-filter"]').val('')
+      })
+
+      $('#price-m-entries').click(function() {
+        const thisPage = window.location.href
+        const route = !thisPage.includes('&') ? thisPage : thisPage.substring(0, thisPage.indexOf('&'))
+        window.location.assign(route)
+      })
+
+
+
+      $('#list-price').change(function() {
+        $('.range-price').val('')
+      })
+    </script>
+
+  </div>
+  <div class="wrapper-content-page">
+    <% if(entries.length ==0) { %>
+    <div class="empty-table">
+      <div class="empty-icon-table">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h6 class="fw-bold text-darkgray">ไม่มีข้อมูลที่ต้องการ</h6>
+    </div>
+    <% } else { %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr class="align-middle">
+            <th style="width: 5%;">รายการ</th>
+            <th style="width: 30%;">หมายเลขห้อง</th>
+            <th class="text-end" style="width: 10%;">ราคาเต็ม</th>
+            <th class="text-end" style="width: 10%;">ราคา</th>
+            <th class="text-center" style="width: 5%;">จำนวน</th>
+            <th class="text-center" style="width: 10%;">หน่วย</th>
+            <th class="text-center" style="width: 5%;">แก้ไข</th>
+            <th class="text-center" style="width: 5%;">ลบ</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          <% let idx = 1%>
+          <% for(let i = 0;i<entries.length;i++){ 
+                  const  roomJson =  JSON.parse(entries[i].room_sub)
+                  const unit_title  = entries[i].unit_title
+                  const unit  = entries[i].unit
+                  const price_id = entries[i].id
+                  const full_price = entries[i].format_fullprice
+                  const price = entries[i].format_price
+                  const count = entries[i].times
+            %>
+          <tr class="align-middle">
+            <td class="text-center">
+              <%= idx++  %>
+            </td>
+            <td>
+              <%- roomJson.map((n)=>`<p class="text-number-r">${n.room_number}</p>`).join('')   %>
+            </td>
+
+            <td class="text-end">
+              <p class="p-0 m-0 fw-bold"> <%= full_price   %></p>
+            </td>
+            <td class="text-end">
+              <p class="p-0 m-0 fw-bold"> <%= price   %></p>
+            </td>
+            <td class="text-center">
+              <%= count  %>
+            </td>
+            <td class="text-center">
+              <p class="fw-bold label-unit  <%= unit %>"><%= unit_title  %></p>
+            </td>
+            <td class="text-center">
+              <button class="m-1 ac-btn text-darkgray bg-none  edit-price " data-room="<%= entries[i].room_id  %>" data-id="<%= entries[i].price_id  %>">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="m-1 ac-btn text-darkgray bg-none delete-price" data-room="<%= entries[i].room_id  %>" data-id="<%= entries[i].price_id  %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+</div>
+
+<script>
+  $('.edit-price').click(function() {
+    const target = $(this)[0]
+    const rid = $(this).attr('data-room')
+    const price_id = $(this).attr('data-id')
+    window.location.assign(`/admin?p=price-edit&room=${rid}&id=${price_id}`)
+  })
+
+  $('.delete-price').click(function() {
+    const rid = $(this).attr('data-room')
+    const price_id = $(this).attr('data-id')
+    const data = {
+      'price_id': price_id,
+      'room_id': rid
+    }
+    confirm('ลบข้อมูลราคาห้องพัก', 'คุณต้องการลบข้อมูลรายการนี้ใช้ หรือไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/delete-price', data)
+            .then((res) => {
+              if (res.data.result == true) {
+                querySuccess('ลบสำเร็จ', 1000)
+              } else {
+                queryFail('ลบข้อมูลราคาห้องพัก', 'ลบข้อมูลล้มเหลว โปรดลองอีกครั้งภายหลัง')
+              }
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+  })
+</script>

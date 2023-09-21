@@ -1,0 +1,55 @@
+#r-number-report {
+  display: none;
+}
+
+.report-switch {
+  background: none;
+  padding: 4px 18px;
+  border-radius: 7px;
+  color: #9E9E9E;
+}
+
+.report-switch.active {
+  color: black;
+}
+
+#wrapper-report-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0;
+}
+
+
+
+#w-report {
+  position: relative;
+  padding: 0;
+}
+
+.report-entries {
+  padding: 6px 18px;
+}
+
+#reverse-include-display {
+  display: flex;
+  align-items: center;
+  color: #424949;
+}
+
+#reverse-include-display p {
+  margin: 0;
+  padding: 7px 12px;
+}
+
+#reverse-count {
+  margin-right: 7px;
+}
+
+.input-group-text i {
+  margin-right: 7px;
+}
+
+#report-include i {
+  margin-right: 7px;
+}

@@ -1,0 +1,191 @@
+<form id="resting-form">
+  <input type="hidden" id="room-id" disabled>
+  <div class="my-2">
+    <div class="input-group">
+      <span class="input-group-text">
+        หมายเลขห้อง
+      </span>
+      <input type="text" class="form-control" id="room-number" disabled>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">ชื่อ</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-address-card"></i>
+          </span>
+          <input type="text" class="form-control" id="fname" placeholder="ป้อนชื่อ">
+        </div>
+        <p class="empty-validate" id="validate-fname"></p>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">นามสกุล</label>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1">
+            <i class="fa-solid fa-signature"></i>
+          </span>
+          <input type="text" class="form-control" id="lname" placeholder="ป้อนนามสกุล">
+        </div>
+        <p class="empty-validate" id="validate-lname"></p>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">เบอร์ติดต่อ</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-phone-volume"></i>
+          </span>
+          <input type="text" class="form-control" id="phone" placeholder="ป้อนเบอร์ติดต่อ">
+        </div>
+        <p class="empty-validate" id="validate-phone"></p>
+      </div>
+    </div>
+  </div>
+  <div class="my-2">
+    <span class="form-label">
+      เข้าพักได้สูงสุด
+    </span>
+    <input type="number" class="form-control" id="max-people" disabled>
+  </div>
+  <div class="my-2">
+    <span class="form-label">
+      ราคาจำนวนเข้าพักเกิน ต่อคน
+    </span>
+    <input type="text" class="form-control" id="price-over-people" disabled>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr class="align-center">
+        <th>วันพัก</th>
+        <th class="text-end">ราคา</th>
+        <th class="text-center">
+          <i class="fa-solid fa-check-to-slot"></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="table-resting"></tbody>
+  </table>
+
+  <div class="input-group">
+    <div class="check-input-group inline-flex">
+      <input type="radio" class="check-input" name="payment" value="cash-payment" id="cash-payment">
+      <label class="check-label" for="cash-payment">จ่ายเงินสด</label>
+    </div>
+    <div class="check-input-group inline-flex">
+      <input type="radio" class="check-input" name="payment" value="bank-transfer" id="bank-tranfer">
+      <label for="bank-tranfer" class="check-label">ชำระผ่านธนาคาร</label>
+    </div>
+  </div>
+  <p class="empty-validate" id="validate-payment"></p>
+  <div class="row">
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">ราคา</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-tags"></i>
+          </span>
+          <input type="number" class="form-control" id="price" disabled placeholder="ราคา">
+        </div>
+        <p class="empty-validate" id="validate-stayprice"></p>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">จำนวนวันพัก</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+          </span>
+          <input type="number" class="form-control" id="times-count" disabled placeholder="">
+        </div>
+        <p class="empty-validate" id="validate-timescount"></p>
+      </div>
+    </div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">หน่วย</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-clock"></i>
+          </span>
+          <select class="form-select" id="unit-times" disabled>
+            <option value="">เลือกหน่วยเวลา</option>
+            <option value="minutes">นาที</option>
+            <option value="hours">ชั่วโมง</option>
+            <option value="days">วัน</option>
+            <option value="weeks">สัปดาห์</option>
+            <option value="months">เดือน</option>
+            <option value="years">ปี</option>
+          </select>
+        </div>
+        <p class="empty-validate" id="validate-unit-times"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">จำนวนคนที่พัก</label>
+        <div class="input-group">
+          <span class="input-group-text">
+            <i class="fa-solid fa-ruler"></i>
+          </span>
+          <input type="number" class="form-control" id="person-count" onkeyup="restingTotal()" onchange="restingTotal()" placeholder="ป้อนจำนวนวคนเข้าพัก">
+        </div>
+        <p class="empty-validate" id="validate-person-count"></p>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="my-2">
+        <label class="form-label">จ่ายเงิน</label>
+        <div class="input-group">
+          <input type="number" min="1" class="form-control" onkeyup="inputNumber(event)" id="resting-paid" placeholder="ป้อนยอดชำระ">
+        </div>
+        <p class="empty-validate" id="validate-resting-paid"></p>
+      </div>
+    </div>
+  </div>
+
+
+  <h5 class="my-1 form-label">วันเข้าพัก</h5>
+  <div class="row my-2">
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="form-floating my-2">
+        <input type="date" class="form-control" id="checkin-date" onchange="restingCheckout()">
+        <label for="floatingInput">วันที่</label>
+      </div>
+    </div>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="form-floating my-2">
+        <input type="time" class="form-control form-control" id="checkin-times" onclick="restingCheckout()">
+        <label for="floatingInput">เวลา</label>
+      </div>
+    </div>
+  </div>
+  <p class="empty-validate" id="validate-checkin"></p>
+</form>
+
+
+<h5 class="my-1 form-label">วันเข้าพัก</h5>
+<div class="row my-2">
+  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-floating mb-3">
+      <input type="date" id="checkout-date" class="form-control">
+      <label for="floatingInput">วันที่</label>
+    </div>
+  </div>
+  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-floating mb-3">
+      <input type="time" id="checkout-times" class="form-control">
+      <label for="floatingInput">เวลา</label>
+    </div>
+  </div>
+</div>
+<p class="empty-validate" id="validate-checkout"></p>

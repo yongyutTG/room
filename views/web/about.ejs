@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/css/web/about.css">
+<div>
+  <div class="wrapper" id="company">
+    <% const company = data.about %>
+    <% if(company.length > 0)  { %>
+    <section class="container">
+      <h3>
+        <%=  company[0].company  %>
+      </h3>
+      <div>
+        <h5> <%=  company[0].location  %>
+        </h5>
+        <h5>
+          <span><%=  company[0].road_alley  %></span>
+          <span> <%=  company[0].sub_district  %></span>
+        </h5>
+        <h5>
+          <span> <%=  company[0].district  %></span>
+          <span> <%=  company[0].province  %></span>
+          <span> <%=  company[0].postcode  %></span>
+        </h5>
+      </div>
+    </section>
+    <%  }%>
+  </div>
+
+  <div class="wrapper" id="tracking">
+    <div class="container">
+      <% if(data.about.length >0) { %>
+      <div id="contact">
+        <div class="contact-items">
+          <h5 class="contact-items-label">
+            <i class="fa-solid fa-phone-volume"></i>
+            โทร
+          </h5>
+          <h5 class="contact-items-text">
+            <%= data.about[0].contact_number %>
+          </h5>
+        </div>
+        <div class="contact-items">
+          <h5 class="contact-items-label">
+            <i class="fa-solid fa-inbox"></i>
+            อีเมล
+          </h5>
+          <h5 class="contact-items-text">
+            <%= data.about[0].email  %>
+          </h5>
+        </div>
+      </div>
+      <% } %>
+      <% if(data.social.length >0) { %>
+      <div id="social">
+        <h5 class="fw-bold" style="color:#28B463 ;">การติตตาม สอบถาม</h5>
+        <% const social = data.social %>
+        <% for(let i = 0;i<social.length;i++){ %>
+        <% if(social[i].id =='fb' && social[i]. status =='on'){ %>
+        <div class="about-tracking-items">
+          <i class="fa-brands fa-facebook"></i>
+          <div class="tracking-items-title">
+            <h5 class="tracking-items-subject">Facebook</h5>
+            <h6 class="tracking-items-text"><%= social[i].social %></h6>
+          </div>
+        </div>
+        <%  } %>
+        <% if(social[i].id =='twitter' && social[i]. status =='on'){ %>
+        <div class="about-tracking-items">
+          <i class="fa-brands fa-twitter"></i>
+          <div class="tracking-items-title">
+            <h5 class="tracking-items-subject">Twitter</h5>
+            <h6 class="tracking-items-text"><%= social[i].social %></h6>
+          </div>
+        </div>
+        <%  } %>
+        <% if(social[i].id =='ig' && social[i]. status =='on'){ %>
+        <div class="about-tracking-items">
+          <i class="fa-brands fa-instagram"></i>
+          <div class="tracking-items-title">
+            <h5 class="tracking-items-subject">Instagram</h5>
+            <h6 class="tracking-items-text"><%= social[i].social %></h6>
+          </div>
+        </div>
+        <%  } %>
+        <% if(social[i].id =='line' && social[i]. status =='on'){ %>
+        <div class="about-tracking-items">
+          <i class="bi bi-line"></i>
+          <div class="tracking-items-title">
+            <h5 class="tracking-items-subject">LINE</h5>
+            <h6 class="tracking-items-text"><%= social[i].social %></h6>
+          </div>
+        </div>
+        <%  } %>
+        <%  } %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+
+  <%- include('footer')  %>

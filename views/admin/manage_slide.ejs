@@ -1,0 +1,179 @@
+<link rel="stylesheet" href="/css/manage_slide.css">
+<div class="container">
+  <h4 class="fw-bold">จัดการภาพโฆษณา</h4>
+
+  <button class="fw-bold ac-btn  bg-blue border-radius-7 " id="add-slide">
+    <i class="fa-solid fa-plus"></i>เพิ่มสไลด์โมษณา
+  </button>
+
+
+  <%- include('manage_slide_modal')  %>
+
+  <div class="wrapper-content-page">
+    <% if(entries.length ==0)  { %>
+    <div class="empty-table">
+      <div class="empty-icon-table text-darkgray">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h5 class="fw-bold">ไม่มีข้อมูล</h5>
+    </div>
+    <% } else if(entries.length  > 0) {  %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr class="align-middle">
+            <th style="width:5% ;" class="text-center">ลำดับ</th>
+            <th style="width:15% ;">รูปภาพ</th>
+            <th style="width:25% ;">หัวเรื่อง</th>
+            <th style="width:35% ;">คำอธิบาย</th>
+            <th style="width:10% ;" class="text-center">ลบ</th>
+            <th style="width:10% ;" class="text-center">เปิด - ปิด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let idx = 1 %>
+          <% for(let i =0;i< entries.length;i++) { %>
+          <tr>
+            <td class="text-center">
+              <%=  idx++ %>
+            </td>
+            <td>
+              <img src="/src/slide/<%= entries[i].src %>" class="slide-img">
+            </td>
+            <td>
+              <% const switchTitle = entries[i].title_status=='on' ? 'checked' :'' %>
+              <p class="desc-label bg-darkgray">เปิด - ปิด หัวเรื่อง</p>
+              <label class="switch">
+                <input type="checkbox" class="switch-title" value="<%= entries[i].slide_id  %>" <%- switchTitle  %>>
+                <span class="slider round"></span>
+              </label>
+              <p class="desc-text  p-2"><%= entries[i].title  %></p>
+            </td>
+            <td>
+              <% const switchDesc = entries[i].descript_status=='on' ? 'checked' :'' %>
+              <p class="desc-label bg-darkgray">เปิด - ปิด คำอธิบาย</p>
+              <label class="switch">
+                <input type="checkbox" class="switch-desc" value="<%= entries[i].slide_id  %>" <%- switchDesc  %>>
+                <span class="slider round"></span>
+              </label>
+              <p class="desc-text p-2"><%= entries[i].descript  %></p>
+            </td>
+            <td class="text-center">
+              <button class="ac-btn text-darkgray  bg-none slide-delete" data-id="<%= entries[i].slide_id  %>" data-src="<%= entries[i].src %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <% const status = entries[i].status=='on' ? 'checked' :'' %>
+              <label class="switch">
+                <input type="checkbox" class="switch-slide" value="<%= entries[i].slide_id  %>" <%- status  %>>
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <%  } %>
+        </tbody>
+      </table>
+    </div>
+    <% }  %>
+  </div>
+</div>
+
+<script>
+  $('.switch-slide').change(function() {
+    const id = $(this).val()
+    const status = $(this).is(':checked') ? 'on' : 'off'
+    axios.post('/api/switch-slide-status', {
+        'slide_id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          $(this).prop('checked', !$(this).is(':checked'))
+          queryFail('อัพเดตสถานะการแสดงผลภาพสไลด์', 'เกิดข้อผิดพลาดในการอัพเดต', res.data.err)
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+  $('.switch-desc').change(function() {
+    const id = $(this).val()
+    const status = $(this).is(':checked') ? 'on' : 'off'
+    axios.post('/api/switch-title-descript', {
+        'slide_id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          $(this).prop('checked', !$(this).is(':checked'))
+          queryFail('อัพเดตสถานะการแสดงผลคำอธิบายภาพสไลด์', 'เกิดข้อผิดพลาดในการอัพเดต', res.data.err)
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+
+  $('.switch-title').change(function() {
+    const id = $(this).val()
+    const status = $(this).is(':checked') ? 'on' : 'off'
+    axios.post('/api/switch-title-slide', {
+        'slide_id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          $(this).prop('checked', !$(this).is(':checked'))
+          queryFail('อัพเดตสถานะการแสดงผล Title', 'เกิดข้อผิดพลาดในการอัพเดต', res.data.err)
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+  $('.slide-delete').click(function() {
+    const id = $(this).attr('data-id')
+    const src = $(this).attr('data-src')
+
+    confirm('ลบรูปภาพสไลด์', 'คุณต้องการลบสไลด์นี้ใช่ หรือไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/delete-slide', {
+              'slide_id': id,
+              'src': src
+            })
+            .then((res) => {
+              const result = res.data.result
+              if (result) {
+                querySuccess('ลบสไลด์สำเร็จ', 1000)
+              }
+
+              if (!result) {
+                queryFail('ลบรูปภาพสไลด์', 'ลบภาพสไลด์ล้มเหลว', res.data.err)
+              }
+
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+  })
+
+  $('#add-slide').click(function() {
+    new bootstrap.Modal($('#manage-slide-modal')).show()
+  })
+</script>

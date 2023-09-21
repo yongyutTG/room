@@ -1,0 +1,120 @@
+<link rel="stylesheet" href="/css/config_buliding.css">
+<div class="container">
+  <h4 class="fw-bold">แก้ไขข้อมูลอาคาร</h4>
+
+  <div class="wrapper-page">
+    <p class="fw-bold text-lightgray" style="padding: 2px 12px ;">
+      สำหรับ หมายเลขอาคาร หรือ ชื่ออาคาร เลือกป้อนอย่างน้อย 1 ช่อง
+    </p>
+    <div class="input-group my-3">
+      <span class="input-group-text">
+        ชื่ออาคาร / ตึก
+        <i class="fa-solid fa-building"></i>
+      </span>
+      <input type="text" class="form-control" value="<%= entries[0].building_name  %>" placeholder="ป้อนชื่อตึก หรือ อาคาร" id="building-name">
+    </div>
+    <div class="input-group my-3">
+      <span class="input-group-text">
+        หมายเลขอาคาร / ตึก
+        <i class="fa-solid fa-box"></i>
+      </span>
+      <input type="text" class="form-control" value="<%= entries[0].building_number  %>" placeholder="ป้อนหมายเลขตึก หรือ อาคาร " id="building-number">
+    </div>
+    <p class="empty-validate" id="validate-buildingname"></p>
+    <div class="input-400 my-3">
+      <div class="input-group">
+        <span class="input-group-text">
+          จำนวนชั้น
+          <i class="fa-solid fa-list-ul"></i>
+        </span>
+        <input type="number" class="form-control" value="<%= entries[0].floor_count  %>" placeholder="ป้อนจำนวนชั้น" id="number-floor" min="1">
+      </div>
+      <p class="empty-validate" id="validate-numberfloor"></p>
+    </div>
+
+    <button class="fw-bold ac-btn border-radius-7 bg-violet" id="update-building" data-id="<%= entries[0].building_id  %>">
+      อัพเดต
+      <i class="fa-regular fa-pen-to-square"></i>
+    </button>
+  </div>
+</div>
+<script>
+  const formAndValidate = [{
+      'name': 'building_name',
+      'input': [$('#building-name'), $('#building-number')],
+      'validate': $('#validate-buildingname'),
+      'msg': 'กรุณาป้อนอย่างน้อย 1 ช่อง'
+    },
+
+    {
+      'name': 'number-floor',
+      'input': $('#number-floor'),
+      'validate': $('#validate-numberfloor'),
+      'msg': 'กรุณากรอกจำนวนชั้น'
+    }
+  ]
+
+  $('#number-floor').keyup(function() {
+    const v = Number.parseInt($(this).val().trim())
+    const {
+      validate
+    } = formAndValidate[1]
+    if (isNaN(v) == true) {
+      $(this).val('')
+      validateformEmpty(true, validate, 'ป้อนข้อมูลที่เป็นตัวเลขเท่านั้น')
+    } else {
+      validateformEmpty(false, validate, '')
+    }
+  })
+
+  $('#update-building').click(function() {
+    let emptyCount = 0
+    formAndValidate.forEach((fd, i) => {
+      const {
+        validate,
+        msg
+      } = fd
+      if (i == 0) {
+        const inputEl = fd.input
+        const inputCount = inputEl.filter((e, i) => $(e).val().trim() != '').length
+
+        if (inputCount == 0) {
+          emptyCount++
+          validateformEmpty(true, validate, msg)
+        } else {
+          validateformEmpty(false, validate, '')
+        }
+      } else {
+        const v = $(fd.input).val().trim()
+        const count = Number.parseInt(v)
+        if (v == '') {
+          emptyCount++
+          validateformEmpty(true, validate, msg)
+        } else if (v != '') {
+          validateformEmpty(false, validate, '')
+        }
+      }
+    })
+
+    const data = {
+      'building_id': $(this).attr('data-id'),
+      'building_name': formAndValidate[0].input[0].val(),
+      'building_number': formAndValidate[0].input[1].val(),
+      'number_floor': formAndValidate[1].input.val()
+    }
+    if (emptyCount == 0) {
+      axios.post('/api/update-building', data)
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('แก้ไขสำเร็จ', 1000)
+          } else {
+            queryFail('แก้ไข้ข้อมูลอาคาร', 'บันทึกข้อมูลล้มเหลว', res.data.err)
+          }
+        })
+        .catch(function(error) {
+          statusErr()
+        });
+    }
+  })
+</script>

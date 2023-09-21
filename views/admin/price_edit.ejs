@@ -1,0 +1,408 @@
+<link rel="stylesheet" href="/css/price.css">
+<div class="container">
+  <h5 class="fw-bold">
+    เพิ่มราคาห้องพัก
+  </h5>
+  <div class="wrapper-content-page">
+    <div class="my-2">
+      <h6 class="label-text-form bg-blue ">
+        หมายเลขห้อง
+      </h6>
+      <div class="input-group">
+        <label class="input-group-text">
+          <i class="fa-solid fa-hotel"></i>
+        </label>
+        <input type="text" class="form-control" value="<%= entries.room_number %>" disabled>
+      </div>
+      <p class="empty-validate" id="validate-roomnumber"></p>
+    </div>
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <h6 class="label-text-form">
+            ราคาเต็ม
+          </h6>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </span>
+            <input type="number" class="form-control" placeholder="ป้อนราคาห้อง" id="full-price" value="<%= entries.full_price %>">
+          </div>
+          <p class="empty-validate" id="validate-fullprice"></p>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <h6 class="label-text-form">
+            ราคา
+          </h6>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+            </span>
+            <input type="number" class="form-control" placeholder="ป้อนราคาห้อง" id="price" value="<%= entries.price %>">
+          </div>
+          <p class="empty-validate" id="validate-price"></p>
+        </div>
+      </div>
+    </div>
+
+    <input type="hidden" value="<%= entries.unit %>" id="unit-val">
+    <input type="hidden" value="<%= entries.times %>" id="times-val">
+
+    <h6 class="label-text-form">เลือกเวลา</h6>
+    <div class="row">
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              นาที
+              <i class="fa-regular fa-clock"></i>
+            </span>
+            <select class="form-select" id="time-minutes" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <%
+                 i = 5
+                while (i<=55) { %>
+              <option value="<%=  i %>"><%=  i %></option>
+              <%  i+=5  }   %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              ชั่วโมง
+              <i class="fa-regular fa-clock"></i>
+            </span>
+            <select class="form-select" id="time-hours" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <% for(let i =1;i<=24;i++){%>
+              <option value="<%=  i %>"><%=  i %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              วัน
+              <i class="fa-solid fa-clock"></i>
+            </span>
+            <select class="form-select" id="time-days" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <%
+            i = 1
+            while (i<=60) { %>
+              <option value="<%=  i %>"><%=  i %></option>
+              <%  i++  }   %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              สัปดาห์
+              <i class="fa-solid fa-clock"></i>
+            </span>
+            <select class="form-select" id="time-weeks" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <%
+        i = 1
+         while (i<=36) { %>
+              <option value="<%=  i %>"><%=  i %></option>
+              <%  i++  }   %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              เดือน
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </span>
+            <select class="form-select" id="time-months" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <%
+            i = 1
+            while (i<=12) { %>
+              <option value="<%=  i %>"><%=  i %></option>
+              <%  i++  }   %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xxl-3 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <div class="input-group">
+            <span class="input-group-text">
+              ปี
+              <i class="fa-solid fa-clock-rotate-left"></i>
+            </span>
+            <select class="form-select" id="time-years" name="unit-times">
+              <option value="" selected>เลือก</option>
+              <%
+            i = 1
+            while (i<=5) { %>
+              <option value="<%=  i %>"><%=  i %></option>
+              <%  i++  }   %>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="empty-validate" id="validate-times"></p>
+
+    <button class="ac-btn bg-violet border-radius-7" id="update-price" data-roomId="<%= entries.room_id %>" data-priceId="<%= entries.id %>">
+      อัพเดต
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+
+  </div>
+
+</div>
+<script>
+  let isPriceIsset = true
+  let isUnitIsset = true
+
+  window.addEventListener('load', () => {
+    const unitActive = '#time-' + $('#unit-val').val()
+    $('[name="unit-times"]').filter(`${unitActive}`).val($('#times-val').val())
+  })
+
+  $('#update-price').click(function() {
+    const dataAndValidateForm = [{
+        'name': 'price',
+        'input': $('#price'),
+        'validate': $('#validate-price'),
+        'msg': 'กรุณาป้อนราคา'
+      }, {
+        'name': 'price',
+        'input': $('#full-price'),
+        'validate': $('#validate-fullprice'),
+        'msg': 'กรุณาป้อนราคา'
+      }, {
+        'name': 'times',
+        'input': [
+          $('#time-minutes'), $('#time-hours'),
+          $('#time-days'), $('#time-weeks'),
+          $('#time-months'), $('#time-years')
+        ],
+        'validate': $('#validate-times'),
+        'msg': 'กรุณาเลือกเวลาพักอย่างน้อย 1 ตัวเลือก'
+      }
+
+    ]
+    let emptyCount = 0
+    dataAndValidateForm.forEach((fd) => {
+      const {
+        msg,
+        validate
+      } = fd
+
+      if (fd.name == 'times') {
+        const dataval = fd.input
+        const timesEmpty = dataval.filter((v, i) => $(v).val() != '').length
+
+        if (timesEmpty < 1) {
+          validate.text(msg)
+          validate.css('display', 'block')
+          emptyCount++
+        } else {
+          validate.text('')
+          validate.css('display', 'none')
+        }
+      } else {
+        const v = fd.input.val().trim()
+        if (v == '') {
+          validate.text(msg)
+          validate.css('display', 'block')
+          emptyCount++
+        } else {
+          validate.text('')
+          validate.css('display', 'none')
+        }
+      }
+    })
+    const unitTimes = $.map($('[name="unit-times"]'), (element, index) => {
+      if ($(element).val() != '') {
+        const unit = $(element).attr('id')
+        return {
+          'unit': unit.substring(unit.indexOf('-') + 1),
+          'times': $(element).val()
+        }
+      }
+    })[0]
+
+
+    if (!isUnitIsset) {
+      validateformEmpty(true, $('#validate-times'), 'มีจำนวนนี้แล้ว')
+    }
+    if (!isPriceIsset) {
+      validateformEmpty(true, $('#validate-fullprice'), 'ห้องพักมีราคานี้อยู่แล้ว')
+    }
+    if (isPriceIsset && isUnitIsset) {
+      if (emptyCount == 0) {
+        const fd = {
+          'room_id': $(this).attr('data-roomId'),
+          'price_id': $(this).attr('data-priceId'),
+          'full_price': $('#full-price').val(),
+          'price': $('#price').val(),
+          'times': unitTimes.times,
+          'unit': unitTimes.unit
+        }
+        axios.post('/api/update-price', fd)
+          .then((res) => {
+            if (res.data.result) {
+              querySuccess('บันทึกเรียบร้อย', 1000)
+            } else {
+              queryFail('บันทึกราคาห้องพัก', 'บันทึกราคาล้มเหลว โปรดลองใหม่อีกครั้งภายหลัง', res.data.err)
+            }
+          })
+          .catch((err) => {
+            statusErr()
+          })
+      }
+    }
+  })
+
+
+  $('[name="unit-times"]').change(function() {
+    const unitSelect = [{
+        'element': $('#time-minutes'),
+        'id': 'time-minutes'
+      },
+      {
+        'element': $('#time-hours'),
+        'id': 'time-hours'
+      },
+      {
+        'element': $('#time-days'),
+        'id': 'time-days'
+      },
+      {
+        'element': $('#time-weeks'),
+        'id': 'time-weeks'
+      },
+      {
+        'element': $('#time-months'),
+        'id': 'time-months'
+      }, {
+        'element': $('#time-years'),
+        'id': 'time-years'
+      }
+    ]
+    let selectEl = ''
+    const unitId = $(this).attr('id').trim()
+    for (let i = 0; i < unitSelect.length; i++) {
+      const {
+        element,
+        id
+      } = unitSelect[i]
+
+      if (unitId != id) {
+        $(element).val('')
+      }
+
+      if (unitId == id) {
+        selectEl = $(element)
+      }
+    }
+
+    uniquePrice('unit', selectEl, $('#validate-times'))
+  })
+
+
+  function uniquePrice(ty, element, alert) {
+    let data = {
+      'price_id': $('#update-price').attr('data-priceId')
+    }
+    if (ty == 'unit') {
+      const unitId = element.attr('id')
+      const unit = unitId.substring(unitId.indexOf('-') + 1)
+      const times = Number.parseInt(element.val())
+      if (isNaN(times)) {
+        element.val('')
+      } else {
+        Object.assign(data, {
+          'unit': unit,
+          'times': times
+        })
+      }
+    }
+
+    if (ty == 'price') {
+      const price = Number.parseFloat(element.val())
+      if (isNaN(price)) {
+        element.val('')
+      } else {
+        Object.assign(data, {
+          'price': price
+        })
+      }
+    }
+
+    const roomId = $('#update-price').attr('data-roomId')
+
+    if (roomId == '') {
+      element.val('')
+      validateformEmpty(true, alert, 'กรุณาเลือกห้องพัก')
+    }
+
+    if (roomId != '') {
+      Object.assign(data, {
+        'room_id': roomId
+      })
+
+      validateformEmpty(false, alert, '')
+      axios.post('/api/unique-price', data)
+        .then((res) => {
+          const result = res.data.result
+          if (!result) {
+            if (ty == 'unit') {
+              validateformEmpty(true, alert, 'มีจำนวนนี้แล้ว')
+              isUnitIsset = false
+            }
+            if (ty == 'price') {
+              validateformEmpty(true, alert, 'ห้องพักมีราคานี้อยู่แล้ว')
+              isPriceIsset = false
+            }
+          }
+
+          if (result) {
+            validateformEmpty(false, alert, '')
+
+            if (ty == 'unit') {
+              isUnitIsset = true
+            }
+            if (ty == 'price') {
+              isPriceIsset = true
+            }
+          }
+        }).catch((err) => {
+          statusErr()
+        })
+    }
+
+  }
+
+  $('#full-price').keyup(function() {
+    uniquePrice('price', $(this), $('#validate-fullprice'))
+  })
+
+  $('#full-price').change(function() {
+    uniquePrice('price', $(this), $('#validate-fullprice'))
+  })
+</script>

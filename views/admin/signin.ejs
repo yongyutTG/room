@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ลงชื่อเข้าสู่ระบบ</title>
+  <script src="/src/jquery-3.6.3.min.js"></script>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/sidebar.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/axios"></script>
+  <script src="/sweetalert2/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
+  <script src="/js/validate.js"></script>
+  <script src="/js/sweetalert.js"></script>
+  <script src="/js/display_web.js"></script>
+  <link rel="stylesheet" href="/css/signin.css">
+</head>
+
+<body>
+  <div id="signin-wrapper">
+
+    <div class="text-center">
+      <span class="h5 fw-bold " id="signin-subtitle">ลงชื่อเข้าสู่ระบบ</span>
+      <span class="border-radius-4 subtitle-label ">ระบบห้องพัก</span>
+    </div>
+    <div class="my-2">
+      <label class="fw-bold form-label text-lightgray">
+        ผู้ใช้
+      </label>
+      <input type="text" class="form-control" id="username">
+    </div>
+    <div class="my-2">
+      <label class="fw-bold form-label text-lightgray">
+        รหัสผ่าน
+      </label>
+      <input type="password" class="form-control" id="password">
+    </div>
+    <button class="ac-btn" id="signin-submit">
+      เข้าสู่ระบบ
+    </button>
+  </div>
+
+
+  <script>
+    $('#signin-submit').click(function() {
+      axios.post('/api/sign-in', {
+          'username': $('#username').val(),
+          'password': $('#password').val()
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            querySuccess('เข้าสู้ระบบเรียบร้อย', 1000)
+          }
+          if (!result) {
+            queryFail('ลงชื่อเข้าสู่ระบบ', 'เกิดข้อผิดพลาด ไม่สามารถลงชื่อเข้าสู่ระบบได้ ', '')
+          }
+        })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<div id="sidebar">
+  <h5 id="username-bar">
+
+    <% if(admin_profile == 'icon') { %>
+    <i class="fa-solid fa-user"></i>
+    <% } else { %>
+    <img src="/src/profile/<%= admin_profile %>" class="admin-profile">
+    <% }  %>
+
+
+    <span class="user">
+      <h6 class="user-text">
+        <%= admin %>
+      </h6>
+      <% if(admin !='admin') { %>
+      <h6 class="user-text">
+        <%= admin_fname %>
+      </h6>
+      <%  } %>
+    </span>
+  </h5>
+
+  <ul class="sidebar-menu">
+    <li class="menu-items">
+      <a href="/admin?p=dashboard" class="menu-link">
+        <i class="fa-solid fa-chart-simple"></i>
+        <span>
+          Dashboard
+        </span>
+      </a>
+    </li>
+    <% if(admin_level!='genaral'){ %>
+    <li class="menu-items">
+      <a href="/admin?p=booking-report" class="menu-link">
+        <i class="fa-solid fa-paste"></i>
+        <span>
+          รายงานการจอง
+        </span>
+      </a>
+    </li>
+    <% } %>
+    <li class="menu-items">
+      <a href="/admin?p=cancel-booking" class="menu-link">
+        <i class="fa-regular fa-circle-xmark"></i>
+        <span>
+          ยกเลิก และคืนเงิน
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=list-room" class="menu-link">
+        <i class="fa-solid fa-mattress-pillow"></i>
+        <span>
+          ห้องพัก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=resting" class="menu-link">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>
+          เข้าพัก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=checkout" class="menu-link">
+        <i class="fa-solid fa-shuffle"></i>
+        <span>
+          ลงทะเบียนออก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=price-manage" class="menu-link">
+        <i class="fa-solid fa-wallet"></i>
+        <span>
+          จัดการราคาห้องพัก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=price-insert" class="menu-link">
+        <i class="fa-solid fa-plus"></i>
+        <span>
+          เพิ่มราคาห้องพัก
+        </span>
+      </a>
+    </li>
+
+    <li class="menu-items">
+      <a href="/admin?p=config-building" class="menu-link">
+        <i class="fa-solid fa-building"></i>
+        <span>
+          การกำหนดค่าที่พักและอาคาร
+        </span>
+      </a>
+    </li>
+
+    <li class="menu-items">
+      <a href="/admin?p=room-manage" class="menu-link">
+        <i class="fa-solid fa-hammer"></i>
+        <span>
+          จัดการห้องพัก
+        </span>
+      </a>
+    </li>
+
+    <li class="menu-items">
+      <a href="/admin?p=room-insert" class="menu-link">
+        <i class="fa-solid fa-plus"></i>
+        <span>
+          เพิ่มห้องพัก
+        </span>
+      </a>
+    </li>
+    <% if(admin_level=='admin-p'){ %>
+    <li class="menu-items">
+      <a href="/admin?p=social-contact" class="menu-link">
+        <i class="fa-brands fa-twitter"></i>
+        <span>
+          ช่องการติดตามข้อมูล
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=facility" class="menu-link">
+        <i class="fa-solid fa-martini-glass-citrus"></i>
+        <span>
+          สิ่งอำนวยความสะดวก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=add-facility" class="menu-link">
+        <i class="fa-solid fa-plus"></i>
+        <span>
+          เพิ่มสิ่งอำนวยความสะดวก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=web-about" class="menu-link">
+        <i class="fa-solid fa-globe"></i>
+        <span>
+          เกี่ยวกับเว็บไซต์
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=mlogo" class="menu-link">
+        <i class="fa-solid fa-r"></i>
+        <span>
+          แบรนด์
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=kword" class="menu-link">
+        <i class="fa-solid fa-key"></i>
+        <span>
+          คำค้นหา (Keyword)
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=room-about" class="menu-link">
+        <i class="fa-solid fa-table"></i>
+        <span>
+          เกี่ยวกับห้องพัก
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin?p=manage-slide" class="menu-link">
+        <i class="fa-solid fa-photo-film"></i>
+        <span>
+          จัดการภาพสไลด์
+        </span>
+      </a>
+    </li>
+
+    <li class="menu-items">
+      <a href="/admin/?p=payment" class="menu-link">
+        <i class="bi bi-paypal"></i>
+        <span>
+          ช่องทางการชำระเงิน
+        </span>
+      </a>
+    </li>
+    <li class="menu-items">
+      <a href="/admin/?p=qrcode" class="menu-link">
+        <i class="fa-solid fa-barcode"></i>
+        <span>
+          การชำระเงิน (QRCode)
+        </span>
+      </a>
+    </li>
+    <%} %>
+    <% if(admin=='admin' && admin_fname=='admin' ) { %>
+    <li class="menu-items">
+      <a href="/admin?p=user-admin" class="menu-link">
+        <i class="fa-solid fa-hammer"></i>
+        <span>
+          ผู้ดูแลระบบ
+        </span>
+      </a>
+    </li>
+
+    <li class="menu-items">
+      <a href="/admin?p=admin-insert" class="menu-link">
+        <i class="fa-solid fa-plus"></i>
+        <span>
+          เพิ่มผู้ดูแลระบบ
+        </span>
+      </a>
+    </li>
+    <% }%>
+
+  </ul>
+
+</div>

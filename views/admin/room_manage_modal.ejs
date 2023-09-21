@@ -1,0 +1,110 @@
+<div class="modal fade" tabindex="-1" id="room-modal">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="room-title"></h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body p-4">
+        <table class="table">
+          <thead>
+            <tr class="align-middle">
+              <th class="text-center">ลำดับ</th>
+              <th>หมายเลขห้อง</th>
+              <th>ตึก / อาคาร</th>
+              <th>ชั้น</th>
+              <th>สถานะ</th>
+            </tr>
+          </thead>
+          <tbody id="room-entries"></tbody>
+        </table>
+        <h6 class="fw-bold text-title-form text-dark-pink">ข้อมูลเฉพาะ</h6>
+        <table class="table">
+          <tr class="align-middle">
+            <th>
+              <p class="text-label-table room-type">ประเภทห้อง</p>
+            </th>
+            <td>
+              <p class="text-room"></p>
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th>
+              <p class="text-label-table bed-type">ประเภทเตียง</p>
+            </th>
+            <td>
+              <p class="text-room"></p>
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th>
+              <p class="text-label-table room-view">วิวของห้อง</p>
+            </th>
+            <td>
+              <p class="text-room"></p>
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th>
+              <p class="text-label-table created">วันที่เพิ่ม</p>
+            </th>
+            <td>
+              <p class="text-room"></p>
+            </td>
+          </tr>
+          <tr class="align-middle">
+            <th>
+              <p class="text-label-table modified">แก้ไขล่าสุด</p>
+            </th>
+            <td>
+              <p class="text-room"></p>
+            </td>
+          </tr>
+        </table>
+
+        <table class="table" id="price-table">
+          <thead>
+            <tr class="align-middle">
+              <th class="text-center">ลำดับ</th>
+              <th>จำนวน</th>
+              <th>หน่วย</th>
+              <th class="text-end">ราคา</th>
+            </tr>
+          </thead>
+          <tbody id="price-entries"></tbody>
+        </table>
+        <div class="my-2">
+          <h6 class="fw-bold text-title-form text-dark-pink">
+            <i class="fa-solid fa-mug-saucer"></i>
+            สิ่งอำนวยความสะดวก และของใช้เพิ่มเติม
+          </h6>
+          <div id="more-options"></div>
+        </div>
+
+        <div class="my-3" id="descript-section">
+          <h6 class="fw-bold text-title-form text-dark-pink">
+            <i class="fa-solid fa-minimize"></i>
+            คำอธิบาย - รายละเอียด
+          </h6>
+          <div id="text-desc-room"></div>
+        </div>
+
+        <div id="fileupload-preview" class="my-2">
+          <h6 class="fw-bold text-title-form text-dark-pink">
+            <i class="fa-solid fa-panorama"></i>
+            รูปภาพตัวอย่าง
+          </h6>
+          <div id="room-example-preview" class="modal-example-room"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="edit-room" class="fw-bold ac-btn text-dark-pink border-radius-7">
+          แก้ไข
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

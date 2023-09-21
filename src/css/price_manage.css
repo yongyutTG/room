@@ -1,0 +1,38 @@
+.label-unit {
+  border-radius: 18px;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 12px;
+  margin: 0;
+}
+
+.days {
+  color: #4D5656;
+}
+
+.weeks {
+  color: #0D47A1;
+}
+
+.months {
+  color: #E91E63;
+}
+
+.years {
+  color: #00796B;
+}
+
+.hours {
+  color: #263238;
+}
+
+.minutes {
+  color: #283593;
+}
+
+#price-m-search i,
+#price-m-reset i,
+#price-m-entries i {
+  margin-right: 7px;
+}

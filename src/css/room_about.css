@@ -1,0 +1,60 @@
+.room-about-items {
+  border: 1px solid gainsboro;
+  background-color: #F4F6F7;
+  margin: 12px 0;
+  padding: 12px;
+}
+
+.room-about-title {
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.room-upload-file {
+  display: none;
+}
+
+.wrapper-room-img {
+  width: 150px;
+  height: 150px;
+}
+
+.room-about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.control-btn {
+  display: none;
+  justify-content: center;
+}
+
+.confirm-upload,
+.cancel-upload {
+  display: none;
+}
+
+.room {
+  text-transform: capitalize;
+}
+
+.label-upload {
+  font-weight: bold;
+}
+
+.confirm-upload {
+  color: #1E88E5;
+}
+
+
+.cancel-upload {
+  background-color: #263238;
+  color: white;
+}
+
+.confirm-upload i,
+.cancel-upload i {
+  margin-right: 7px;
+  align-self: center;
+}

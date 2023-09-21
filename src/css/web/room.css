@@ -1,0 +1,115 @@
+.card-body {
+  background-color: #FBFCFC;
+}
+
+.label-text-r {
+  padding: 4px 12px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-weight: bolder;
+}
+
+.label-text-r i {
+  margin-right: 7px;
+}
+
+.room-number {
+  background-color: #0066FF;
+  color: white;
+  display: block;
+}
+
+.room-type {
+  background-color: #CC0033;
+  color: white;
+}
+
+.room-link-more {
+  display: block !important;
+  color: #ABB2B9;
+}
+
+.room-link-more:hover {
+  color: #ABB2B9 !important;
+}
+
+
+.text-price {
+  padding: 4px 12px;
+}
+
+.text-price .label-text-r {
+  color: #CC0000;
+}
+
+label[for="spread"] {
+  margin: 0px 7px;
+}
+
+.query-room-form {
+  background-color: #F5F5F5;
+  padding: 24px;
+  background-image: url('/src/bg/company-w.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 24px 0;
+}
+
+.query-room-form >.container {
+  padding: 2rem;
+  background-color: white !important;
+}
+
+#title-form {
+  color: #000066;
+}
+
+#searchRoom-submit {
+  background-color: #CC0000;
+  color: white;
+  border: 0;
+  outline: 0;
+  padding: 6px 12px;
+  font-weight: bolder;
+}
+
+#roomfind-reset {
+  padding: 6px 12px;
+  color: #9E9E9E;
+  background: none;
+}
+
+.query-wrapper {
+  background-color: #EEEEEE;
+  padding: 14px 22px;
+  margin: 12px 0;
+  border-radius: 7px;
+}
+
+.query-text-label {
+  color: #9E9E9E;
+}
+
+.query-text {
+  color: #009966;
+  font-weight: bolder;
+}
+
+.include-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 32px;
+}
+
+.include-empty i {
+  font-size: 2rem;
+}
+
+.include-empty h6 {
+  font-weight: bolder;
+}

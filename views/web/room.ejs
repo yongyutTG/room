@@ -1,0 +1,307 @@
+<link rel="stylesheet" href="/css/web/room.css">
+<%- include('room_query_form') %>
+<div class="container">
+  <% if(entries.length ==0) { %>
+  <div class="include-empty">
+    <i class="fa-solid fa-circle-xmark"></i>
+    <h6 class="fw-bold mt-2 text-secondary">ไม่มีห้องพัก</h6>
+  </div>
+  <% } else if(entries.length > 0) { %>
+  <div class="row g-3">
+    <% for(let i=0;i<entries.length;i++){ %>
+    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <img src="/src/img/example_room/<%= entries[i].example_room[0]  %> " class="card-img-top" alt="...">
+        <div class="option-room card-body">
+          <h5 class="label-text-r room-number">
+            หมายเลข
+            <%= entries[i].room_number  %>
+          </h5>
+
+          <%  if(entries[i].room_type != 'roomtype-no-specify') { %>
+          <span class="label-text-r room-type" id="">
+            <i class="fa-solid fa-registered"></i>
+            <%= entries[i].room_type_display  %>
+          </span>
+          <% } %>
+          <%  if(entries[i].room_type != 'bedtype-no-specify') { %>
+          <span class="label-text-r" id="">
+            <i class="fa-solid fa-bed"></i>
+            <%= entries[i].bed_type_display  %>
+          </span>
+          <% } %>
+          <%  if(entries[i].roomview != 'view-no-specify') { %>
+          <span class="label-text-r" id="">
+            <i class="fa-solid fa-mountain"></i>
+            <%= entries[i].display_roomview  %>
+          </span>
+          <% } %>
+          <span class="label-text-r">
+            <i class="fa-solid fa-toilet"></i>
+            <%= entries[i].toilet_count  %>
+          </span>
+          <div>
+
+          </div>
+
+          <div class="text-price">
+            <label class="fw-bold">
+              <i class="fa-solid fa-tags"></i>
+              ราคา</label>
+            <div class="label-text-r">
+              <span>
+                <%= entries[i].min_price_format %>
+              </span>
+
+              <% if(entries[i].max != entries[i].min){ %>
+              <label for="spread"> - </label>
+              <span>
+                <%= entries[i].max_price_format %>
+              </span>
+              <%  } %>
+            </div>
+          </div>
+          <% const link = `/room/${btoa(entries[i].room_id)}/${btoa(entries[i].room_number_id)}?n=${entries[i].room_number}` %>
+          <a class="ac-btn room-link-more" href="<%= link  %>">
+            ดูรายละเอียดเพิ่มเติม
+          </a>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <% }  %>
+</div>
+<script>
+  const _0x1a0ed8 = _0x107b;
+  (function(_0x125994, _0x4ad196) {
+    const _0xa96d8d = _0x107b,
+      _0x3b1284 = _0x125994();
+    while (!![]) {
+      try {
+        const _0x207354 = -parseInt(_0xa96d8d(0x1c3)) / 0x1 + parseInt(_0xa96d8d(0x1ca)) / 0x2 + -parseInt(_0xa96d8d(0x1c7)) / 0x3 * (parseInt(_0xa96d8d(0x1c2)) / 0x4) + parseInt(_0xa96d8d(0x1c6)) / 0x5 + parseInt(_0xa96d8d(0x1c8)) / 0x6 + parseInt(_0xa96d8d(0x1c0)) / 0x7 * (parseInt(_0xa96d8d(0x1c1)) / 0x8) + -parseInt(_0xa96d8d(0x1bf)) / 0x9;
+        if (_0x207354 === _0x4ad196) break;
+        else _0x3b1284['push'](_0x3b1284['shift']());
+      } catch (_0x118805) {
+        _0x3b1284['push'](_0x3b1284['shift']());
+      }
+    }
+  }(_0x2b83, 0xe9470));
+  const minPrice = $(_0x1a0ed8(0x1c9)),
+    maxPrice = $(_0x1a0ed8(0x1c5)),
+    setPrice = $(_0x1a0ed8(0x1c4));
+
+  function _0x107b(_0xbe5a2e, _0x59f0ea) {
+    const _0x2b8399 = _0x2b83();
+    return _0x107b = function(_0x107b65, _0x575dba) {
+      _0x107b65 = _0x107b65 - 0x1bf;
+      let _0x1874a8 = _0x2b8399[_0x107b65];
+      return _0x1874a8;
+    }, _0x107b(_0xbe5a2e, _0x59f0ea);
+  }
+
+  function _0x2b83() {
+    const _0x4587d4 = ['#set-price', '#max-price', '7588045rgbTKC', '27uafNXO', '11185476qQRBqA', '#min-price', '2402282MkdUXN', '7445430gaTZzX', '348747wdoOpq', '136FouJeP', '822264buvlPH', '1797085suZVkz'];
+    _0x2b83 = function() {
+      return _0x4587d4;
+    };
+    return _0x2b83();
+  }
+
+  function _0x402d(_0x468af0, _0x29d1a0) {
+    const _0x3e4c23 = _0x3e4c();
+    return _0x402d = function(_0x402ddb, _0x30e2ad) {
+      _0x402ddb = _0x402ddb - 0x13c;
+      let _0x1f5775 = _0x3e4c23[_0x402ddb];
+      return _0x1f5775;
+    }, _0x402d(_0x468af0, _0x29d1a0);
+  }
+  const _0x3f8f7c = _0x402d;
+  (function(_0xca95c3, _0x16955b) {
+    const _0x4ef497 = _0x402d,
+      _0x5afe26 = _0xca95c3();
+    while (!![]) {
+      try {
+        const _0x4a3fee = parseInt(_0x4ef497(0x14a)) / 0x1 * (-parseInt(_0x4ef497(0x146)) / 0x2) + -parseInt(_0x4ef497(0x13e)) / 0x3 * (-parseInt(_0x4ef497(0x142)) / 0x4) + parseInt(_0x4ef497(0x141)) / 0x5 * (-parseInt(_0x4ef497(0x14b)) / 0x6) + -parseInt(_0x4ef497(0x13d)) / 0x7 * (parseInt(_0x4ef497(0x13c)) / 0x8) + parseInt(_0x4ef497(0x148)) / 0x9 + parseInt(_0x4ef497(0x149)) / 0xa * (-parseInt(_0x4ef497(0x140)) / 0xb) + parseInt(_0x4ef497(0x143)) / 0xc;
+        if (_0x4a3fee === _0x16955b) break;
+        else _0x5afe26['push'](_0x5afe26['shift']());
+      } catch (_0x247b8b) {
+        _0x5afe26['push'](_0x5afe26['shift']());
+      }
+    }
+  }(_0x3e4c, 0xa0905), $(_0x3f8f7c(0x147))[_0x3f8f7c(0x13f)](function() {
+    const _0x1c6ec2 = _0x3f8f7c,
+      _0x10effe = Number[_0x1c6ec2(0x144)]($(this)[_0x1c6ec2(0x145)]());
+    isNaN(_0x10effe) && $(this)[_0x1c6ec2(0x145)]('');
+  }));
+
+  function _0x3e4c() {
+    const _0x27fd02 = ['11ltIfRy', '5xLqZly', '4AeRmgX', '41343276jJieQY', 'parseFloat', 'val', '1009158IYtQFD', '[type=\x22number\x22]', '6514920FyeSbs', '5313740UfDgRi', '2IWfYLJ', '5484870ncvnjO', '8791968UjdHBS', '7IfLyOf', '126567vrQSRh', 'keyup'];
+    _0x3e4c = function() {
+      return _0x27fd02;
+    };
+    return _0x3e4c();
+  }
+
+  const _0x557678 = _0x3a50;
+  (function(_0x507467, _0x1ba772) {
+    const _0x22b027 = _0x3a50,
+      _0x3244d7 = _0x507467();
+    while (!![]) {
+      try {
+        const _0x575fb2 = parseInt(_0x22b027(0xf2)) / 0x1 + -parseInt(_0x22b027(0xf7)) / 0x2 * (parseInt(_0x22b027(0xdc)) / 0x3) + parseInt(_0x22b027(0xf1)) / 0x4 * (parseInt(_0x22b027(0xe2)) / 0x5) + parseInt(_0x22b027(0xea)) / 0x6 * (-parseInt(_0x22b027(0xec)) / 0x7) + -parseInt(_0x22b027(0xf3)) / 0x8 * (-parseInt(_0x22b027(0xe3)) / 0x9) + -parseInt(_0x22b027(0xed)) / 0xa + parseInt(_0x22b027(0xe1)) / 0xb;
+        if (_0x575fb2 === _0x1ba772) break;
+        else _0x3244d7['push'](_0x3244d7['shift']());
+      } catch (_0x44b089) {
+        _0x3244d7['push'](_0x3244d7['shift']());
+      }
+    }
+  }(_0x3f33, 0xc14ba), $(_0x557678(0xf5))[_0x557678(0xe6)](function() {
+    const _0x3e80bc = _0x557678;
+    let _0x3026a1 = ![],
+      _0x8292d9 = ![];
+    const _0x372965 = $(_0x3e80bc(0xda))['filter'](_0x3e80bc(0xe7))[_0x3e80bc(0xdf)](),
+      _0x5513fa = $(_0x3e80bc(0xe0)),
+      _0x5b6c7e = $('#room-type')['val'](),
+      _0x35d2d8 = $(_0x3e80bc(0xeb))['val'](),
+      _0x37af21 = $(_0x3e80bc(0xe8))[_0x3e80bc(0xdf)]();
+    let _0x5417a1 = '';
+    const _0x94a563 = Number[_0x3e80bc(0xde)](minPrice[_0x3e80bc(0xdf)]()),
+      _0x50f8c0 = Number[_0x3e80bc(0xde)](maxPrice[_0x3e80bc(0xdf)]()),
+      _0x5204e5 = $('#count-times')[_0x3e80bc(0xdf)]();
+    minPrice[_0x3e80bc(0xdf)]() != '' && maxPrice[_0x3e80bc(0xdf)]() != '' && (_0x3026a1 = !![], isNaN(_0x94a563) == !![] && isNaN(_0x50f8c0) == !![] ? validateformEmpty(!![], _0x5513fa, _0x3e80bc(0xf0)) : _0x50f8c0 < _0x94a563 ? validateformEmpty(!![], _0x5513fa, _0x3e80bc(0xe9)) : (validateformEmpty(![], _0x5513fa, ''), _0x8292d9 = !![], _0x5417a1 += checkOperator(_0x5417a1) + _0x3e80bc(0xf4) + _0x94a563 + _0x3e80bc(0xdb) + _0x50f8c0));
+    if (_0x5204e5 != '') {
+      const [_0x4464ce, _0x5bf48d] = _0x5204e5[_0x3e80bc(0xe5)]('-');
+      _0x5417a1 += checkOperator(_0x5417a1) + _0x3e80bc(0xef) + _0x4464ce + _0x3e80bc(0xee) + _0x5bf48d;
+    }
+    _0x5b6c7e != '' && (_0x5417a1 += checkOperator(_0x5417a1) + _0x3e80bc(0xe4) + _0x5b6c7e), _0x35d2d8 != '' && (_0x5417a1 += checkOperator(_0x5417a1) + 'b=' + _0x35d2d8), _0x37af21 != '' && (_0x5417a1 += checkOperator(_0x5417a1) + _0x3e80bc(0xf6) + _0x37af21), _0x5417a1 != '' && (_0x5417a1 = _0x3e80bc(0xdd) + _0x5417a1, _0x3026a1 == !![] ? _0x8292d9 == !![] && route(_0x5417a1) : route(_0x5417a1));
+  }));
+
+  function _0x3a50(_0x3c489d, _0x5ab0f5) {
+    const _0x3f3327 = _0x3f33();
+    return _0x3a50 = function(_0x3a50cf, _0xb5303c) {
+      _0x3a50cf = _0x3a50cf - 0xda;
+      let _0x25d360 = _0x3f3327[_0x3a50cf];
+      return _0x25d360;
+    }, _0x3a50(_0x3c489d, _0x5ab0f5);
+  }
+
+  function _0x3f33() {
+    const _0x2c8953 = ['#room-view', 'กรุณาป้อนข้อมูลที่ถูกต้อง', '2952VLlEQL', '#bedtype', '22414MGmEJv', '8684190MHEfFm', '&unit=', 'times=', 'กรุณาป้อนราคาก่อน', '16tIuwem', '821512rGxlvS', '12528392TQmLGF', 'min=', '#searchRoom-submit', 'view=', '11148QMYOlN', '[name=\x22price-choice\x22]', '&max=', '504FwjDMj', '/room', 'parseFloat', 'val', '#validate-price', '10926960bKLJMK', '988815UtDhGu', '9YVhmec', 'rt=', 'split', 'click', ':checked'];
+    _0x3f33 = function() {
+      return _0x2c8953;
+    };
+    return _0x3f33();
+  }
+
+  (function(_0x4cf7eb, _0x103a85) {
+    var _0x4b26ec = _0x3153,
+      _0x465836 = _0x4cf7eb();
+    while (!![]) {
+      try {
+        var _0x530986 = -parseInt(_0x4b26ec(0x1c7)) / 0x1 + -parseInt(_0x4b26ec(0x1c4)) / 0x2 * (parseInt(_0x4b26ec(0x1c6)) / 0x3) + -parseInt(_0x4b26ec(0x1ca)) / 0x4 * (-parseInt(_0x4b26ec(0x1c2)) / 0x5) + parseInt(_0x4b26ec(0x1cb)) / 0x6 * (parseInt(_0x4b26ec(0x1cc)) / 0x7) + -parseInt(_0x4b26ec(0x1c3)) / 0x8 + -parseInt(_0x4b26ec(0x1c1)) / 0x9 + -parseInt(_0x4b26ec(0x1c8)) / 0xa * (-parseInt(_0x4b26ec(0x1c0)) / 0xb);
+        if (_0x530986 === _0x103a85) break;
+        else _0x465836['push'](_0x465836['shift']());
+      } catch (_0x29faf1) {
+        _0x465836['push'](_0x465836['shift']());
+      }
+    }
+  }(_0x3650, 0x4ef06));
+
+  function _0x3650() {
+    var _0x518dc4 = ['4091931MYIWHd', '10sBkJUF', '2778008nZNwJY', '547782DwaYIJ', 'location', '3NcaixV', '410336jnvawg', '194970lJBEKR', 'assign', '316696CrjMZJ', '431196eeGjAg', '7xzWGGE', '891KrOwQz'];
+    _0x3650 = function() {
+      return _0x518dc4;
+    };
+    return _0x3650();
+  }
+
+  function _0x3153(_0x3d3c37, _0x2c5863) {
+    var _0x365053 = _0x3650();
+    return _0x3153 = function(_0x3153f4, _0x418a2b) {
+      _0x3153f4 = _0x3153f4 - 0x1c0;
+      var _0x1f1cc1 = _0x365053[_0x3153f4];
+      return _0x1f1cc1;
+    }, _0x3153(_0x3d3c37, _0x2c5863);
+  }
+
+  function route(_0x39e78d) {
+    var _0x3ddaaa = _0x3153;
+    window[_0x3ddaaa(0x1c5)][_0x3ddaaa(0x1c9)](_0x39e78d);
+  }
+  (function(_0x121182, _0x1741a3) {
+    const _0xcadfd4 = _0x1492,
+      _0x50fb29 = _0x121182();
+    while (!![]) {
+      try {
+        const _0xc5c847 = -parseInt(_0xcadfd4(0x1b8)) / 0x1 * (-parseInt(_0xcadfd4(0x1af)) / 0x2) + parseInt(_0xcadfd4(0x1b6)) / 0x3 * (-parseInt(_0xcadfd4(0x1b1)) / 0x4) + parseInt(_0xcadfd4(0x1ae)) / 0x5 + -parseInt(_0xcadfd4(0x1b9)) / 0x6 * (parseInt(_0xcadfd4(0x1b5)) / 0x7) + -parseInt(_0xcadfd4(0x1b2)) / 0x8 * (parseInt(_0xcadfd4(0x1b0)) / 0x9) + -parseInt(_0xcadfd4(0x1b4)) / 0xa + -parseInt(_0xcadfd4(0x1b7)) / 0xb * (-parseInt(_0xcadfd4(0x1b3)) / 0xc);
+        if (_0xc5c847 === _0x1741a3) break;
+        else _0x50fb29['push'](_0x50fb29['shift']());
+      } catch (_0x2f02da) {
+        _0x50fb29['push'](_0x50fb29['shift']());
+      }
+    }
+  }(_0x32f4, 0xb8118));
+
+  function _0x1492(_0x3f0135, _0x52a5d1) {
+    const _0x32f479 = _0x32f4();
+    return _0x1492 = function(_0x149209, _0x10fca5) {
+      _0x149209 = _0x149209 - 0x1ad;
+      let _0x4db4 = _0x32f479[_0x149209];
+      return _0x4db4;
+    }, _0x1492(_0x3f0135, _0x52a5d1);
+  }
+
+  function checkOperator(_0x3c4989) {
+    const _0x420ca3 = _0x1492;
+    let _0x349e45 = '';
+    if (_0x3c4989[_0x420ca3(0x1ad)]('?') == !![]) _0x349e45 = '&';
+    else _0x3c4989[_0x420ca3(0x1ad)]('?') == ![] && (_0x349e45 = '?');
+    return _0x349e45;
+  }
+
+  function _0x32f4() {
+    const _0x3e5156 = ['12RGNIJW', 'includes', '386815fvSLfy', '572lBwsLt', '88425RaGdbD', '932ynnxJS', '1048VqGDBG', '5300340jMBRVH', '14484800SXQYuC', '4731461luKrnb', '14865UaRgyv', '143yixZYJ', '617UrRdiv'];
+    _0x32f4 = function() {
+      return _0x3e5156;
+    };
+    return _0x32f4();
+  }
+
+  function _0x2500(_0xcc2d25, _0x3a8466) {
+    var _0x47bdd9 = _0x47bd();
+    return _0x2500 = function(_0x250036, _0x11a1fd) {
+      _0x250036 = _0x250036 - 0x178;
+      var _0x1f288d = _0x47bdd9[_0x250036];
+      return _0x1f288d;
+    }, _0x2500(_0xcc2d25, _0x3a8466);
+  }
+
+  function _0x47bd() {
+    var _0x38a8ce = ['590980AmzSMZ', '42ebTqqn', '90uDuRYQ', '550671VYcDET', '#roomfind-reset', '1802nlgnty', 'location', '16XCCjCY', '14776ODQLjR', '1625980zKrdSu', 'click', '77462uhYzFe', '277706dNoiQG', '153OgngmU', 'pathname', 'assign'];
+    _0x47bd = function() {
+      return _0x38a8ce;
+    };
+    return _0x47bd();
+  }
+  var _0x1c0e1b = _0x2500;
+  (function(_0x5f04dc, _0x50c0b7) {
+    var _0x2bb3a0 = _0x2500,
+      _0x50ce19 = _0x5f04dc();
+    while (!![]) {
+      try {
+        var _0x308911 = parseInt(_0x2bb3a0(0x17c)) / 0x1 * (parseInt(_0x2bb3a0(0x17a)) / 0x2) + parseInt(_0x2bb3a0(0x178)) / 0x3 + parseInt(_0x2bb3a0(0x185)) / 0x4 + parseInt(_0x2bb3a0(0x17e)) / 0x5 + parseInt(_0x2bb3a0(0x186)) / 0x6 * (-parseInt(_0x2bb3a0(0x180)) / 0x7) + parseInt(_0x2bb3a0(0x17d)) / 0x8 * (-parseInt(_0x2bb3a0(0x182)) / 0x9) + -parseInt(_0x2bb3a0(0x187)) / 0xa * (parseInt(_0x2bb3a0(0x181)) / 0xb);
+        if (_0x308911 === _0x50c0b7) break;
+        else _0x50ce19['push'](_0x50ce19['shift']());
+      } catch (_0x3c3134) {
+        _0x50ce19['push'](_0x50ce19['shift']());
+      }
+    }
+  }(_0x47bd, 0x51bf7), $(_0x1c0e1b(0x179))[_0x1c0e1b(0x17f)](function() {
+    var _0x4f234b = _0x1c0e1b;
+    window[_0x4f234b(0x17b)][_0x4f234b(0x184)](window[_0x4f234b(0x17b)][_0x4f234b(0x183)]);
+  }));
+</script>
+
+
+<%- include('footer') %>

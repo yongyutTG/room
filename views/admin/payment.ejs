@@ -1,0 +1,205 @@
+<link rel="stylesheet" href="/css/payment.css">
+<div class="container">
+  <button class="ac-btn bg-blue border-radius-7" id="add-payment">
+    <i class="fa-solid fa-plus"></i>
+    เพิ่ม
+  </button>
+  <div class="wrapper-content-page">
+    <% if(entries.length==0){ %>
+    <div class="empty-table">
+      <div class="empty-icon-table text-darkgray">
+        <i class="fa-solid fa-circle-exclamation"></i>
+      </div>
+      <h6 class="fw-bold">ไม่มีข้อมูล</h6>
+    </div>
+    <% }else { %>
+    <div class="entries-d">
+      <span class="entries-text">แสดง</span>
+      <span class="entries-count">
+        <%= entries.length  %>
+      </span>
+      <span>
+        รายการ
+      </span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr class="align-middle">
+            <th class="text-center"> รายการ </th>
+            <th>ธนาคาร</th>
+            <th>สาขา</th>
+            <th>หมายเลขบัญชี</th>
+            <th>หมายชื่อบัญชี</th>
+            <th class="text-center">แก้ไข</th>
+            <th class="text-center">ลบ</th>
+            <th class="text-center">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let i=0;i<entries.length;i++){ %>
+          <tr class="align-middle">
+
+            <td class="text-center"><%= i+1  %></td>
+            <td><%= entries[i].display_bank  %></td>
+            <td><%= entries[i].bank_branch  %></td>
+            <td><%= entries[i].bank_number  %></td>
+            <td><%= entries[i].account_name %></td>
+            <td class="text-center">
+              <button class="ac-btn text-darkgray bg-none payment-edit" data-id="<%= entries[i].payment_id  %>">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="ac-btn text-darkgray bg-none payment-delete" data-id="<%= entries[i].payment_id  %>">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+            <td class="text-center">
+
+              <% const  bankSwitch =  entries[i].toggle=='on' ?'checked' :''  %>
+              <label class="switch">
+                <input type="checkbox" class="bank-switch" value="<%= entries[i].payment_id  %>" <%= bankSwitch  %>>
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </div>
+</div>
+<%- include('payment_modal')  %>
+<%- include('payment_modal_edit')  %>
+<script>
+  $('.bank-switch').change(function() {
+    const id = $(this).val()
+    const status = $(this).is(':checked') ? 'on' : 'off'
+
+    axios.post('/api/bank-switch', {
+        'id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (!result) {
+          const err = res.data.err
+          queryFail('ปิด - เปิด สถานะการชำนะเงิน', 'การอัพเดตล้มเหลว', err)
+          $(this).prop('checked', !$(this).is(':checked'))
+        }
+      })
+      .catch((err) => {
+        statusErr()
+      })
+  })
+
+
+  $('.payment-delete').click(function() {
+    const id = $(this).attr('data-id')
+    confirm('ลบช่องทางการขำระเงิน', 'คุณต้องการลบรายการนี้ใช่ หรือ ไม่ ?')
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/delete-payment', {
+              'id': id
+            })
+            .then((res) => {
+              const result = res.data.result
+              if (result == true) {
+                querySuccess('ลบเรียบร้อย', 1200)
+              } else if (result == false) {
+                const err = res.data.err
+                queryFail('ลบข้อมูลช่องทางการชำระเงิน', 'ลบไม่สำเร็จ', err)
+              }
+            })
+            .catch((err) => {
+              statusErr()
+            })
+        }
+      })
+
+  })
+
+
+
+  $('#add-payment').click(function() {
+    $('#bankname').val('')
+    $('#bank-branch').val('')
+    $('#bank-number').val('')
+    $('#account-name').val('')
+    const paymentModal = new bootstrap.Modal($('#payment-modal'))
+    paymentModal.show()
+
+  })
+
+  $('#payment-submit').click(function() {
+    const paymentForm = [{
+        'name': 'bankname',
+        'input': $('#bankname'),
+        'validate': $('#validate-bankname'),
+        'msg': 'เลือกธนาคาร'
+      },
+      {
+        'name': 'bank_branch',
+        'input': $('#bank-branch'),
+        'validate': $('#validate-bankbranch'),
+        'msg': 'ป้อนสาขาธนาคาร'
+      }, {
+        'name': 'bank_number',
+        'input': $('#bank-number'),
+        'validate': $('#validate-banknumber'),
+        'msg': 'ป้อนหมายเลขบัญชี'
+      },
+      {
+        'name': 'account_name',
+        'input': $('#account-name'),
+        'validate': $('#validate-accountname'),
+        'msg': 'ป้อนชื่อบัญชี'
+      }
+    ]
+
+    let emptyCount = 0
+    paymentForm.forEach((fd) => {
+      const {
+        name,
+        input,
+        validate,
+        msg
+      } = fd
+
+      const v = input.val().trim()
+      console.log(v)
+      if (v == '') {
+        validateformEmpty(true, validate, msg)
+        emptyCount++
+      } else {
+        validateformEmpty(false, validate, '')
+      }
+
+    })
+    const fd = {
+      'bankname': $('#bankname').val(),
+      'bank_branch': $('#bank-branch').val(),
+      'bank_number': $('#bank-number').val(),
+      'account_name': $('#account-name').val()
+    }
+    if (emptyCount == 0) {
+      axios.post('/api/add-payment', fd)
+        .then((res) => {
+          console.log(res)
+
+          const result = res.data.result
+          if (result == true) {
+            querySuccess('เพิ่มสำเร็จ', 1200)
+          } else if (result == false) {
+            const err = res.data.err
+            queryFail('เพิ่มข่องทางการชำระเงิน', 'เพิ่มล้มเหลว', err)
+          }
+
+        }).catch((err) => {
+          statusErr()
+        })
+    }
+  })
+</script>

@@ -1,0 +1,27 @@
+<div class="modal fade" id="booking-room-modal">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="booking-title"></h5>
+        <button type="button" class="ac-btn ac-close-modal" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%- include('booking_room_form')  %>
+      </div>
+      <div class="modal-footer">
+
+        <div class="d-flex justify-content-center">
+          <div class="me-3">
+            <input type="text" class="form-control" id="booking-total" disabled>
+          </div>
+          <button class="ac-btn  bg-red border-radius-7" id="booking-insert" data-="">
+            <i class="fa-solid fa-shuffle"></i>
+            จองห้องพัก
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

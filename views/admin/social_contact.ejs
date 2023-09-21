@@ -1,0 +1,305 @@
+<link rel="stylesheet" href="/css/social_contact.css">
+<div class="container" id="manage-webpage">
+  <h4 class="fw-bold">ช่องการติดตามข้อมูล</h4>
+  <div class="wrapper-content-page" id="manage-webpage-fb">
+    <% const fbText  = fb.length > 0 ? fb[0].social : '' %>
+    <% const fbLink  = fb.length > 0 ? fb[0].link : ''  %>
+    <% const fbStatus  = fb.length > 0 ? fb[0].status : ''  %>
+    <% const fbChecked  = fbStatus =='on' ? 'checked' : ''  %>
+    <label class="form-label">
+      <i class="fa-brands fa-square-facebook"></i>
+      Facebook
+    </label>
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-notes-medical"></i>
+      </span>
+      <input type="text" value="<%= fbText  %>" class="form-control" name="fb-text" id="fb" placeholder="Enter your Facebook name" disabled>
+    </div>
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-link"></i>
+      </span>
+      <input type="text" value="<%= fbLink  %>" class="form-control  form-control-sm" name="fb-link" id="fb" placeholder="link" disabled>
+    </div>
+    <p class="empty-validate"></p>
+    <div class="webpage-control-btn">
+      <button class="ac-btn mx-1 p-2 text-darkgray bg-none  webpage-edit-btn" data-id="fb">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-save-btn" data-id="fb" onclick="saveData(event)">
+        ตกลง
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-del-btn" data-id="fb" onclick="cancelSave(event)">
+        ยกเลิก
+      </button>
+      <label class="switch">
+        <input type="checkbox" data-id="fb" class="switch-social" <%= fbChecked  %> disabled>
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+
+  <div class="wrapper-content-page" id="manage-webpage-twitter">
+    <% const twText  = twitter.length > 0 ? twitter[0].social : '' %>
+    <% const twLink  = twitter.length > 0 ? twitter[0].link : ''  %>
+    <% const twStatus  = twitter.length > 0 ? twitter[0].status : ''  %>
+    <% const twChecked  = twStatus =='on' ? 'checked' : ''  %>
+    <label class="form-label">
+      <i class="fa-brands fa-twitter"></i>
+      Twitter
+    </label>
+
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-notes-medical"></i>
+      </span>
+      <input type="text" value="<%= twText  %>" class="form-control" name="twitter-text" id="twitter" placeholder="Enter your Twitter name" disabled>
+    </div>
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-link"></i>
+      </span>
+      <input type="text" value="<%= twLink  %>" class="form-control  form-control-sm" name="twitter-link" id="twitter" placeholder="link" disabled>
+    </div>
+
+    <p class="empty-validate"></p>
+    <div class="webpage-control-btn">
+      <button class="ac-btn mx-1 p-2 text-darkgray  bg-none webpage-edit-btn" data-id="twitter">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-save-btn" data-id="twitter" onclick="saveData(event)">
+        ตกลง
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-del-btn" data-id="twitter" onclick="cancelSave(event)">
+        ยกเลิก
+      </button>
+      <label class="switch">
+        <input type="checkbox" data-id="twitter" class="switch-social" <%= twChecked  %> disabled>
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+  </div>
+  <div class="wrapper-content-page" id="manage-webpage-ig">
+    <% const igText  = ig.length > 0 ? ig[0].social : '' %>
+    <% const igLink  = ig.length > 0 ? ig[0].link : ''  %>
+    <% const igStatus  = ig.length > 0 ? ig[0].status : ''  %>
+    <% const igChecked  = ig =='on' ? 'checked' : ''  %>
+    <label class="form-label">
+      <i class="fa-brands fa-square-instagram"></i>
+      Instagram
+    </label>
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-notes-medical"></i>
+      </span>
+      <input type="text" value="<%= igText  %>" class="form-control" name="ig-text" id="ig" placeholder="Enter your Instagram name" disabled>
+    </div>
+    <div class="input-group my-2">
+      <span class="input-group-text">
+        <i class="fa-solid fa-link"></i>
+      </span>
+      <input type="text" value="<%= igLink  %>" class="form-control form-control-sm " name="ig-link" id="ig" placeholder="link" disabled>
+    </div>
+    <p class="empty-validate"></p>
+    <div class="webpage-control-btn">
+      <button class="ac-btn mx-1 p-2 text-darkgray  bg-none webpage-edit-btn" data-id="ig">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-save-btn" data-id="ig" onclick="saveData(event)">
+        ตกลง
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-del-btn" data-id="ig" onclick="cancelSave(event)">
+        ยกเลิก
+      </button>
+      <label class="switch">
+        <input type="checkbox" data-id="ig" class="switch-social" <%= igChecked  %> disabled>
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+  <div class="wrapper-content-page" id="manage-webpage-line">
+    <% const lineText  = line.length > 0 ? line[0].social : '' %>
+    <% const lineLink  = line.length > 0 ? line[0].link : ''  %>
+    <% const lineStatus  = line.length > 0 ? line[0].status : ''  %>
+    <% const lineChecked  = line =='on' ? 'checked' : ''  %>
+    <label class="form-label">
+      <i class="bi bi-line"></i>
+      LINE
+    </label>
+    <div class="input-group my-2">
+      <span class="input-group-text" id="basic-addon2">
+        <i class="fa-solid fa-notes-medical"></i>
+      </span>
+      <input type="text" value="<%= lineText  %>" class="form-control" name="line-text" id="line" placeholder="Enter your LINE name" disabled>
+    </div>
+    <div class="input-group my-2">
+      <span class="input-group-text" id="basic-addon2">
+        <i class="fa-solid fa-link"></i>
+      </span>
+      <input type="text" value="<%= lineLink  %>" class="form-control  form-control-sm" name="line-link" id="ig" placeholder="link" disabled>
+    </div>
+
+    <p class="empty-validate"></p>
+    <div class="webpage-control-btn">
+      <button class="ac-btn mx-1 p-2 text-darkgray  bg-none webpage-edit-btn" data-id="line">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-save-btn" data-id="line" onclick="saveData(event)">
+        ตกลง
+      </button>
+      <button class="ac-btn mx-1 p-2  webpage-del-btn" data-id="line" onclick="cancelSave(event)">
+        ยกเลิก
+      </button>
+      <label class="switch">
+        <input type="checkbox" data-id="line" class="switch-social" <%= lineChecked  %> disabled>
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+  </div>
+</div>
+<script>
+  $('.switch-social').change(function() {
+
+
+    console.log('w')
+    const id = $(this).attr('data-id')
+    const status = $(this).is(':checked') ? 'on' : 'off'
+    axios.post('/api/switch-social', {
+        'id': id,
+        'status': status
+      })
+      .then((res) => {
+        const result = res.data.result
+        if (result) {
+          const isCheck = res.data.is_check != undefined ? res.data.is_check : false
+          $(this).prop('checked', isCheck)
+        }
+        if (!result) {
+          const err = res.data.err
+          $(this).prop('checked', !$(this).is(':checked'))
+          queryFail('เปิด - ปิด การแสดงผลช่องทางการติดต่อ', 'เกิดข้อผิดพลาด ไม่สามารถเปลี่ยนได้', err)
+        }
+
+      })
+      .catch((err) => {
+        statusErr()
+      })
+
+
+  })
+
+
+  $('.webpage-edit-btn').click(function(e) {
+    const saveBtn = $(this).parent().children(':eq(1)')
+    const cancelBtn = $(this).parent().children(':eq(2)')
+    const tagName = e.target.tagName
+
+    const text = tagName == 'BUTTON' ?
+      $(event.target).parent().parent() :
+      $(event.target).parent().parent().parent()
+    const socialText = text.children(':eq(1)').children('[type="text"]')
+    const linkText = text.children(':eq(2)').children('[type="text"]')
+
+    socialText.prop('disabled', false)
+    linkText.prop('disabled', false)
+    saveBtn.css('display', 'inline-flex')
+    cancelBtn.css('display', 'inline-flex')
+    $(cancelBtn)
+      .next()
+      .children(':eq(0)')
+      .prop('disabled', false)
+    $(this).css('display', 'none')
+  })
+
+
+  function saveData(event) {
+    const id = $(event.target).attr('data-id')
+    const text = $(event.target).parent().parent()
+
+    const socialText = text.children(':eq(1)').children(':eq(1)')
+    const linkText = text.children(':eq(2)').children(':eq(1)')
+
+    const social = socialText.val()
+    const link = linkText.val()
+
+    const saveBtn = $(event.target)
+    const cancelBtn = $(saveBtn).next()
+    const editBtn = $(saveBtn).prev()
+    const switchToggle = $(cancelBtn).next().children()
+
+
+    if (social == '' || link == '') {
+      validateformEmpty(true, $(event.target).parent().prev(), 'กรอกข้อมูลให้ครบ')
+    } else {
+      validateformEmpty(false, $(event.target).parent().prev(), '')
+      axios.post('/api/add-social', {
+          'id': id,
+          'social': social,
+          'link': link
+        })
+        .then((res) => {
+          const result = res.data.result
+          if (result) {
+            socialText.prop('disabled', true)
+            linkText.prop('disabled', true)
+
+            saveBtn.css('display', 'none')
+            cancelBtn.css('display', 'none')
+            editBtn.css('display', 'inline')
+            switchToggle.prop('checked', true)
+          }
+          if (!result) {
+            switchToggle.prop('checked', false)
+            const err = res.data.err
+            queryFail('บันทึกข้อมูลช่องทางการติดต่อ', 'บันทึกไม่สำเร็จ', err)
+          }
+        })
+        .catch((err) => {
+          statusErr()
+        })
+    }
+
+  }
+
+  function cancelSave(event) {
+
+    const cancelBtn = $(event.target)
+    const saveBtn = $(cancelBtn).prev()
+    const editBtn = saveBtn.prev()
+    const switchToggle = $(cancelBtn).next().children(':eq(0)')
+    let defaultTogle = switchToggle.is(':checked')
+
+    const text = $(event.target).parent().parent()
+    const socialText = text.children(':eq(1)').children('[type="text"]')
+    const linkText = text.children(':eq(2)').children('[type="text"]')
+    const defaultSocialText = socialText.val()
+    const defaultLinkText = linkText.val()
+
+
+    socialText.val(defaultSocialText)
+    linkText.val(defaultLinkText)
+    socialText.prop('disabled', true)
+    linkText.prop('disabled', true)
+    saveBtn.css('display', 'none')
+    cancelBtn.css('display', 'none')
+    editBtn.css('display', 'inline-flex')
+
+    $(cancelBtn)
+      .parent()
+      .prev()
+      .css('display', 'none')
+
+
+
+    if (defaultLinkText == '' || defaultSocialText == '') {
+      defaultTogle = defaultTogle
+    }
+
+    switchToggle.prop('checked', defaultTogle)
+    switchToggle.prop('disabled', true)
+  }
+</script>

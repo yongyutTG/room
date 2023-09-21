@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="/css/room.css">
+<div class="container">
+  <h4 class="fw-bold">เพิ่มห้องพัก</h4>
+  <div class="wrapper-content-page">
+    <div class="row">
+      <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-8 col-sm-12 col-xs-12">
+        <div class="input-group my-3">
+          <span class="input-group-text">จำนวนห้อง</span>
+          <input type="number" value="1" min="1" class="form-control" id="count-room" />
+          <button class="ac-btn text-blue bg-none" id="add-count-room">
+            <i class="fa-solid fa-circle-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <%- include('room_insert_form/room_insert_roomnumber_form') %>
+    <div>
+      <p class="my-1 fw-bold">
+        * หากไม่ทราบว่าห้องพักของท่านตรงกับตัวเลือกไหน โปรดคลิกเพื่อดูรายละเอียด
+      </p>
+      <p class="my-1 fw-bold">
+        * หากห้องพักของท่านไม่ตรงกับตัวเลือกเหล่านี้โปรดเลือกไม่ระบุ
+      </p>
+    </div>
+
+    <%- include('room_insert_form/room_insert_typeroom_form') %>
+    <%- include('./roomtype-modal-info') %>
+
+    <%- include('room_insert_form/room_insert_bedtype_form') %>
+    <%- include('./bedtype-modal-info') %>
+
+    <%- include('room_insert_form/room_insert_roomview_form') %>
+    <%- include('./roomview-modal-info') %>
+
+    <%- include('room_insert_form/room_insert_spicialoptions_form') %>
+    <div class="row">
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <label class="form-label">จำนวนคนเข้าพักสูงสุด</label>
+          <input type="number" id="maxPeople" class="form-control" placeholder="ป้อนจำนวน">
+          <p class="empty-validate" id="validate-maxpeople"></p>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <label class="form-label">จำนวนห้องน้ำ</label>
+          <input type="number" id="toiletCount" class="form-control" placeholder="ป้อนจำนวน">
+          <p class="empty-validate" id="validate-toilet-count"></p>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <label class="form-label">ค่าของเสียหาย</label>
+          <input type="number" id="damage" class="form-control" placeholder="ป้อนราคา">
+          <p class="empty-validate" id="validate-damage"></p>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-8 col-sm-12 col-xs-12">
+        <div class="my-2">
+          <label class="form-label">เพิ่มราคาจำนวนคนเกิน</label>
+          <input type="number" id="priceOverPeople" class="form-control" placeholder="ป้อนราคาต่อคน">
+          <p class="empty-validate" id="validate-over-people"></p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h6 class="form-label">เพิ่มราคาเวลาพักเกิน</h6>
+      <div class="row">
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" max="59" id="priceOverMinutes" class="form-control" placeholder="ต่อนาที">
+            <p class="empty-validate" id="validate-over-minutes"></p>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" max="23" id="priceOverHour" class="form-control" placeholder="ต่อชั่วโมง">
+            <p class="empty-validate" id="validate-over-hour"></p>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" id="priceOverDay" class="form-control" placeholder="ต่อวัน">
+            <p class="empty-validate" id="validate-over-day"></p>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" id="priceOverWeek" class="form-control" placeholder="ต่อสัปดาห์">
+            <p class="empty-validate" id="validate-over-week"></p>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" id="priceOverMonth" class="form-control" placeholder="ต่อเดือน">
+            <p class="empty-validate" id="validate-over-month"></p>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12">
+          <div class="my-2">
+            <input type="number" min="0" id="priceOverYear" class="form-control" placeholder="ต่อปี">
+            <p class="empty-validate" id="validate-over-year"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="my-3">
+      <h6 class="fw-bold form-label">
+        <i class="fa-solid fa-comments"></i>
+        คำอธิบาย - รายละเอียด
+      </h6>
+      <textarea class="form-control" id="desc-room" rows="12"></textarea>
+      <p class="empty-validate" id="validate-descript"></p>
+    </div>
+
+    <div class="my-3">
+      <label for="room-upload" class="ac-btn label-upload bg-violet">
+        <i class="fa-solid fa-paperclip"></i>
+        อัพโหลดรูปภาพ
+        <input type="file" class="input-file" id="room-upload" multiple accept="image/*" />
+      </label>
+      <h6 class="fw-bold form-label">
+        <i class="fa-solid fa-photo-film"></i>
+        รูปภาพที่ต้องการอัพโหลด
+      </h6>
+      <div id="example-group-preview" class="example-preview"></div>
+      <p class="empty-validate" id="validate-roomupload"></p>
+    </div>
+
+    <button type="button" class="fw-bold my-2 ac-btn bg-blue border-radius-12" id="insert-room">
+      <i class="fa-solid fa-plus"></i>
+      บันทึก
+    </button>
+  </div>
+</div>
+<script src="/js/Admin/RoomInsert.js"></script>
+<script>
+  $("#room-upload").change(function(e) {
+    const file = e.target.files;
+    let imgItem = ``;
+    for (let i = 0; i < file.length; i++) {
+      const src = URL.createObjectURL(file[i]);
+      const img = `<img src="${src}" class="example-imgview ">`;
+      imgItem += img;
+    }
+    $("#example-group-preview").html(imgItem);
+  })
+
+  $('[type="number"]').keyup(function() {
+    if (isNaN(Number.parseInt($(this).val()))) {
+      $(this).val('')
+    }
+  })
+</script>
