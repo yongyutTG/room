@@ -13,6 +13,7 @@ const mysql2 = require('mysql2')
 const { display } = require('./src/js/display')
 const multer = require('multer')
 
+
 const {
     CONFIG_ADMIN_USER,
     CONFIG_ADMIN_PASSWOED,
