@@ -86,6 +86,7 @@ const {
 } = require('./src/js/function')
 
 
+
 app.set('view engine', 'ejs')
 app.use('/js', express.static(path.join(__dirname, 'src/js')))
 app.use('/css', express.static(path.join(__dirname, 'src/css')))
